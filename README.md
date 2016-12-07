@@ -1,11 +1,11 @@
 #MishMash User Stories
 ##Overview
 
-##Elevator Pitch
+###Elevator Pitch
 
 >A progressive web application (PWA) that takes the hassle out of deciding where to eat for lunch. Simply shake your phone and MishMash will pick the best place to eat lunch based upon preferences and history. Easily access restaurant information and create reservations.
 
-##High level Process
+###High level Process
 
 - Create Circle - Create and mange your circle of lunch friends.
 
@@ -15,9 +15,9 @@
 
 - Shake - Shake the app to start a session. Let MishMash pick the best place to eat based upon your circle's preferences.
 
-- Rate - LaunchIt knows when its time to rate your dining experience. Your preferences are saved to your favs for future MishMash sessions.
+- Rate - MishMash knows when its time to rate your dining experience. Your preferences are saved to your favs for future MishMash sessions.
 
-- Create Circle
+###Create Circle
 
 _As a user, I often eat with the same group of people from work. I want to define a circle of friends in order to make the process of deciding who is going to lunch easy. I desire an easy step by step process where I:_
 
@@ -41,9 +41,9 @@ _As a user, I want to designate a specific circle as my default in order to stre
 
 _As a user, I desire the ability to find a restaurant by:_
 
-[zip](http://opentable.herokuapp.com/api/restaurants?zip=29466)
-[price (and zip)](http://opentable.herokuapp.com/api/restaurants?zip=29464&price=2)
-[name](http://opentable.herokuapp.com/api/restaurants?name=red%20drum)
+- [zip](http://opentable.herokuapp.com/api/restaurants?zip=29466)
+- [price (and zip)](http://opentable.herokuapp.com/api/restaurants?zip=29464&price=2)
+- [name](http://opentable.herokuapp.com/api/restaurants?name=red%20drum)
 
 List the search results that include the restaurant name, address, and price rating (1-4). Selecting an item on the list displays an image of the restaurant, the location on a map, and restaurant name, address, and price.
 
@@ -92,4 +92,122 @@ _As a friend who is in a circle, I want the ability to open the current MishMash
  +* Node.js
  +* Express.js
  +* HTML / CSS
- +Bootstrap
+ +* Bootstrap
+
+
+##Process:
+###Step 1: Setup
+-installation of dependencies
+
+-react, react-dom, react-router, pouchdb-server, pouchdb
+
+Install React
+
+```
+
+$ npm init -y
+$ npm install react react-dom react-scripts react-router@next -S
+$ json -I -f package.json -e 'this.scripts = { "start": "react-scripts start", "build": "react-scripts build"}'
+$ mkdir src public
+$ touch src/index.js public/index.html
+
+```
+index.html
+
+```
+<!doctype html>
+<html>
+  <head>
+    <title>App Name</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
+
+```
+index.js
+
+```
+
+
+```const React = require('react')
+const ReactDOM = require('react-dom')
+
+const App = () => <h1>Hello React</h1>
+
+ReactDOM.render(<App />, document.getElementById('root'))
+
+```
+app.js
+
+```
+const React = require('react')
+const { BrowserRouter, Match } = require('react-router')
+
+const App = React.createClass({
+  render() {
+     return (
+         <BrowserRouter>
+             <div>
+                <h1>Hello App</h1>
+             </div>
+          </BrowserRouter>
+      )
+  }
+})
+
+module.exports = App
+```
+
+```
+const App = () => <h1>Hello React</h1>
+
+const App = require('./app')
+
+```
+
+
+pages folder
+home.js
+about.js
+
+home.js
+```
+const React = require('react')
+const { Link } = require('react-router')
+
+const Home = React.createClass({
+  render() {
+     return (
+         <div>
+             <h1>Home</h1>
+             <Link to="/about">About</Link>
+         </div>
+      )
+  }
+})
+
+module.exports = Home
+```
+about.js
+
+```
+const React = require('react')
+const { Link } = require('react-router')
+
+const About = React.createClass({
+  render() {
+     return (
+         <div>
+             <h1>About</h1>
+             <Link to="/">Home</Link>
+         </div>
+      )
+  }
+})
+
+module.exports = About
+```
+
+pages folder create model folders with index.js, show.js, form.js
