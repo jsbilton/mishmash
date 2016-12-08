@@ -14,6 +14,7 @@ const Circles = React.createClass({
         console.log(circles)
         this.setState({circles: circles.rows})
       })
+      .catch(err => console.log("error", err.message))
   },
   render() {
     const li = circle => <li key={circle.id}>{circle.title}</li>

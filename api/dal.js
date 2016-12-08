@@ -6,13 +6,11 @@ const fetchConfig = require('zero-config')
 var config = fetchConfig(path.join(__dirname, '..'), {
   dcValue: 'test'
 })
-const urlFormat = require('url').format
-const db = new PouchDB('DB_URL=https://cantops:cantops@cantops.cloudant.com/mishmash')
-
+const urlFormat = require("url").format
+const db = new PouchDB(config.get("cloudant"))
 
 const dal = {
-  listDocs: listDocs,
-  //////////////////////////
+
   createView: createView,
   //////////////////////////
   createFriend: createFriend,
@@ -45,16 +43,26 @@ const dal = {
 //////   Utility function   ///////
 ///////////////////////////////////
 
+
+/////     List Docs    ////////
 function listDocs(sortBy, startKey, limit, callback) {
- db.query(sortBy, {        //TELL IT TO SHOW DOCS
-   include_docs: true,
-   startkey: startKey,
-   limit: limit
- }, function(err, data) {
-   if (err) return callback(err)
-   if (startKey !== '') data.rows.shift()
-   callback(null, data)
- })
+  if (typeof startkey == 'undefined' || startkey === null) {
+    return callback(new Error('Missing search parameter'))
+  } else if (typeof limit == 'undefined' || limit === null) {
+    return callback (new Error('Missing limit parameter'))
+  } else {
+
+
+         db.query(sortBy, {
+           include_docs: true,
+           startkey: startKey,
+           limit: limit
+         }, function(err, data) {
+           if (err) return callback(err)
+           if (startKey !== '') data.rows.shift()
+           callback(null, data)
+         })
+   }
 }
 // Promise version -- maybe
 // db.query(sortBy, {
@@ -67,6 +75,59 @@ function listDocs(sortBy, startKey, limit, callback) {
 // }).catch(function(err) {
 //   console.log(err)
 // })
+
+
+//////   Update Doc   /////////////
+function updateDoc(data, callback) {
+  if (typeof data === 'undefined' || data === null) {
+    return callback(new Error('400Missing data for update'))
+  } else if (data.hasOwnProperty('_id') !== true) {
+      return callback(new Error('400Missing id for update'))
+  } else if (data.hasOwnProperty('_rev') !== true ) {
+    return callback(new Error('400Missing rev for update'))
+  } else {
+
+
+      db.put(data).then(function(response) {
+        return callback(null, response)
+      }).catch(function(err) {
+          return callback(err)
+      })
+  }
+}
+
+
+
+//////   Delete Doc   /////////////
+function deleteDoc (data, callback) {
+  if (typeof data === 'undefined' || data === null) {
+    return callback(new Error('400Missing data for delete'))
+  } else if (data.hasOwnProperty('_id') !== true) {
+      return callback(new Error('400Missing id property from delete'))
+  } else if (data.hasOwnProperty('_rev') !== true) {
+      return callback(new Error('400Missing rev property from delete'))
+  } else {
+
+      db.remove(data, function(err, response) {
+        if (err) return callback(err)
+        if (response) return callback(null, response)
+      })
+  }
+}
+
+//////   Get Doc   /////////////
+function getDocById(id, callback) {
+  if (typeof id === 'undefined' || id === null) {
+    return callback(new Error('400Missing id parameter'))
+  } else {
+  db.get(id, function(err, data) {
+    if (err) return callback(err)
+    if (data) return callback(null, data)
+   })
+  }
+}
+
+
 
 /////       Design Doc View      ///
 function createView(ddoc, callback) {
@@ -81,6 +142,7 @@ function createView(ddoc, callback) {
        })
    }
 }
+
 
 ///////////////////////////////////
 //////     Friends DAL      ///////
@@ -116,126 +178,92 @@ function createFriend(friend, callback) {
 }
 
 function deleteFriend(id, callback) {
-  return callback(null, {
-    ok: true,
-    id: id,
-    rev: "1-A09739A80B7509FFF837509F"
-  })
+  deleteDoc(id, callback)
 }
 
-function updateFriend(friend, callback) {
-// friend._id = 'James'
-// friend._rev =
-// friend.lastname = "Rodgers"
-  const friendResponse = {
-    ok: true,
-    id: friend._id,
-    rev: "1-A09739A80B7509FFF837509F"
-  }
-  return callback(null, friendResponse)
-}
-
-function listFriends(callback) {
-  callback(null, {
-      "offset": 0,
-      "total_rows": 1,
-      "rows": [{
-        "doc": {
-          "_id": "0B3358C1-BA4B-4186-8795-9024203EB7DD",
-          "_rev": "1-5782E71F1E4BF698FA3793D9D5A96393",
-          "title": "Sound and Vision",
-          "_attachments": {
-          	"attachment/its-id": {
-          	  "content_type": "image/jpg",
-          	  "data": "R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==",
-          	  "digest": "md5-57e396baedfe1a034590339082b9abce"
-          	}
-          }
-        },
-       "id": "0B3358C1-BA4B-4186-8795-9024203EB7DD",
-       "key": "0B3358C1-BA4B-4186-8795-9024203EB7DD",
-       "value": {
-        "rev": "1-5782E71F1E4BF698FA3793D9D5A96393"
-       }
-     }]
-  })
+function updateFriend(data, callback) {
+  updateDoc(data, callback)
 }
 
 function getFriend(id, callback) {
-  return callback(null, {
-    ok: true,
-    id: id,
-    rev: "1-A09739A80B7509FFF837509F"
-  })
+  getDocById(id, callback)
 }
+
+function listFriends(callback) {
+      const sortBy = 'circles'
+      const sortToken = ''
+      const limit = 10
+      listDocs(sortBy, sortToken, limit, (e, r) => {
+        if (e) callback(e, null)
+        callback(null, r)
+      })
+}
+
+
 
 ///////////////////////////////////
 //////   Circles DAL   ///////////
 ///////////////////////////////////
 
+// function createCircle(circle, callback) {
+//   const id = "circle_" + circle.title
+//   return callback(null, {
+//       ok: true,
+//       id: id,
+//       rev: "1-A09739A80B7509FFF837509F"
+//   })
+// }
+
 function createCircle(circle, callback) {
-  const id = "circle_" + circle.title
-  return callback(null, {
-      ok: true,
-      id: id,
-      rev: "1-A09739A80B7509FFF837509F"
-  })
+  if (typeof circle === 'undefined' || circle === null) {
+    return callback(new Error('400Missing circle circle for create circle'))
+  } else if (circle.hasOwnProperty('_id') === true) {
+      return callback(new Error('400Unnecessary id property for create circle'))
+  } else if (circle.hasOwnProperty('_rev') === true) {
+      return callback(new Error('400Unnecessary rev property for create circle'))
+  } else if (circle.hasOwnProperty('title') !== true) {
+      return callback(new Error('400Missing title for create circle'))
+  } else {
+
+///  defaults properites if success
+      circle.type = 'circle'
+      circle._id = 'circle_' + circle.title
+      circle.isDefault = false
+
+      db.put(circle).then(function(response) {
+        return callback(null, response)
+      }).catch(function(err) {
+        return callback(err)
+      })
+   }
+
 }
 
 function getCircle(id, callback) {
-  callback(null, {
-    "ok": true,
-    "id": "circle_undefined",
-    "rev": "1-A09739A80B7509FFF837509F"
-  })
+  getDocById(id, callback)
 }
 
 function updateCircle(circle, callback) {
-  callback(null, {
-    "ok": true,
-    "id": "circle_undefined",
-    "rev": "1-A09739A80B7509FFF837509F"
-  })
+  updateDoc(circle, callback)
 }
 function deleteCircle(id, callback) {
-  callback(null, {
-    "ok": true,
-    "id": "circle_undefined",
-    "rev": "1-A09739A80B7509FFF837509F"
-  })
+  deleteDoc(circle, callback)
 }
 
 function listCircles(callback) {
-  callback(null, {
-      "offset": 0,
-      "total_rows": 1,
-      "rows": [{
-        "doc": {
-          "_id": "0B3358C1-BA4B-4186-8795-9024203EB7DD",
-          "_rev": "1-5782E71F1E4BF698FA3793D9D5A96393",
-          "title": "Sound and Vision",
-          "_attachments": {
-          	"attachment/its-id": {
-          	  "content_type": "image/jpg",
-          	  "data": "R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==",
-          	  "digest": "md5-57e396baedfe1a034590339082b9abce"
-          	}
-          }
-        },
-       "id": "0B3358C1-BA4B-4186-8795-9024203EB7DD",
-       "key": "0B3358C1-BA4B-4186-8795-9024203EB7DD",
-       "value": {
-        "rev": "1-5782E71F1E4BF698FA3793D9D5A96393"
-       }
-     }]
-  })
+      const sortBy = 'circles'
+      const sortToken = ''
+      const limit = 10
+      listDocs(sortBy, sortToken, limit, (e, r) => {
+        if (e) callback(e, null)
+        callback(null, r)
+      })
 }
-
 
 ///////////////////////////////////
 //////   Restaurants DAL   ////////
 ///////////////////////////////////
-function createRestaurant(restaurant, callback) {
+function createRestaurant(data, callback) {
   const id = "restaurant_" + restaurant._id
   callback(null, {
     ok: true,
@@ -245,53 +273,25 @@ function createRestaurant(restaurant, callback) {
 }
 
 function getRestaurant(id, callback) {
-  callback(null, {
-    ok: true,
-    id: "restaurant._id",
-    rev: "1-A23423423423423SFDS089"
-  })
+  getDocById(id, callback)
 }
 
-function updateRestaurant(restaurant, callback) {
-  callback(null, {
-    ok: true,
-    id: "restaurant._id",
-    rev: "1-A23423423423423SFDS089"
-  })
+function updateRestaurant(data, callback) {
+  updateDoc(data, callback)
 }
 
 function deleteRestaurant(id, callback) {
-  callback(null, {
-    ok: true,
-    id: "restaurant._id",
-    rev: "1-A23423423423423SFDS089"
-  })
+  deleteDoc(id, callback)
 }
 
 function listRestaurants(callback) {
-  callback(null, {
-    "offset": 0,
-    "total_rows": 1,
-    "rows": [{
-      "doc": {
-        "_id": "0B3358C1-BA4B-4186-8795-9024203EB7DD",
-        "_rev": "1-5782E71F1E4BF698FA3793D9D5A96393",
-        "title": "Sound and Vision",
-        "_attachments": {
-          "attachment/its-id": {
-            "content_type": "image/jpg",
-            "data": "R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==",
-            "digest": "md5-57e396baedfe1a034590339082b9abce"
-          }
-        }
-      },
-     "id": "0B3358C1-BA4B-4186-8795-9024203EB7DD",
-     "key": "0B3358C1-BA4B-4186-8795-9024203EB7DD",
-     "value": {
-      "rev": "1-5782E71F1E4BF698FA3793D9D5A96393"
-     }
-   }]
-  })
+      const sortBy = 'circles'
+      const sortToken = ''
+      const limit = 10
+      listDocs(sortBy, sortToken, limit, (e, r) => {
+        if (e) callback(e, null)
+        callback(null, r)
+      })
 }
 
 ///////////////////////////////////
@@ -307,55 +307,26 @@ function createSession(session, callback) {
 }
 
 function getSession(id, callback) {
-  callback(null, {
-    "ok": true,
-    "id": "session._id",
-    "rev": "1-A23423423423423SFDS089"
-  })
+  getDocById(id, callback)
 }
 
-function updateSession(session, callback) {
-  callback(null, {
-    "ok": true,
-    "id": "session._id",
-    "rev": "1-A23423423423423SFDS089"
-  })
+function updateSession(data, callback) {
+  updateDoc(data, callback)
 }
 
 function deleteSession(id, callback) {
-  callback(null, {
-    "ok": true,
-    "id": "session._id",
-    "rev": "1-A23423423423423SFDS089"
-  })
+  deleteDoc(id, callback)
 }
 
 function listSessions(callback) {
-  callback(null, {
-    "offset": 0,
-    "total_rows": 1,
-    "rows": [{
-      "doc": {
-        "_id": "0B3358C1-BA4B-4186-8795-9024203EB7DD",
-        "_rev": "1-5782E71F1E4BF698FA3793D9D5A96393",
-        "title": "Sound and Vision",
-        "_attachments": {
-          "attachment/its-id": {
-            "content_type": "image/jpg",
-            "data": "R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==",
-            "digest": "md5-57e396baedfe1a034590339082b9abce"
-          }
-        }
-      },
-     "id": "0B3358C1-BA4B-4186-8795-9024203EB7DD",
-     "key": "0B3358C1-BA4B-4186-8795-9024203EB7DD",
-     "value": {
-      "rev": "1-5782E71F1E4BF698FA3793D9D5A96393"
-     }
-    }]
-  })
+      const sortBy = 'circles'
+      const sortToken = ''
+      const limit = 10
+      listDocs(sortBy, sortToken, limit, (e, r) => {
+        if (e) callback(e, null)
+        callback(null, r)
+      })
 }
-
 
 
 module.exports = dal

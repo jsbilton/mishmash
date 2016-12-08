@@ -1,7 +1,7 @@
 const PouchDB = require('pouchdb')
 
 // const db = new PouchDB('http://127.0.0.1:5984/lunch/')
-const db = new PouchDB('https://cantops:cantops@cantops.cloudant.com/mishmash')
+const db = new PouchDB(urlFormat(config.get('cloudant')))
 
 var circles = [
     {

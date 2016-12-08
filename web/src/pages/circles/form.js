@@ -5,34 +5,60 @@ const CircleForm = React.createClass({
   getInitialState() {
     return {
       circle: {
-        name: ''
+        title: '',
+        friends: ''
       },
       resolved: false
     }
   },
+  // componentDidMOunt() {
+  //   if (this.props.params.id) {
+  //     data.get('circles', this.props.params.id)
+  //     .then(circle => this.setState({circle}))
+  //   }
+  // },
   handleChange(field) {
     return (e) => {
-      let circle = {...this.state}
+      let circle = {...this.state.circle}
       circle[field] = e.target.value
       this.setState({circle})
     }
   },
   handleSubmit(e) {
     e.preventDefault()
+    // if (this.state.circle.id) {
+    //   return data.put('circles', this.state.circle.id, this.state.circle)
+    //     .then(response => {
+    //       if (response.id) {
+    //         this.setState({resolved: response.id})
+    //       }
+    //     })
+    // }
+    console.log(this.state.circle);
     data.post('circles', this.state.circle)
-      .then(res => this.setState({resolved: true}))
-  },
+      .then(response => {
+        if(response.id) {
+          this.setState({resolved: response.id})
+      }
+   })
+ },
   render() {
+    const formState = this.state.circle.id ? 'Edit' : 'New'
     return (
       <div>
         {this.state.resolved ? <Redirect to='/circles' /> : null }
-        <h1>New Circle Form </h1>
+        <h1>{formState} Circle Form</h1>
         <div>
           <form onSubmit={this.handleSubmit}>
-            <label htmlFor="">Name</label>
+            <label>Name</label>
             <input
-              value={this.state.circle.name}
-              onChange={this.handleChange('name')}
+              value={this.state.circle.title}
+              onChange={this.handleChange('title')}
+              type="text"/>
+            <label>Friends</label>
+            <input
+              value={this.state.circle.friends}
+              onChange={this.handleChange('friends')}
               type="text"/>
             <div>
               <button>Submit</button>

@@ -1,6 +1,6 @@
 const PouchDB = require('pouchdb')
 
-const db = new PouchDB('https://cantops:cantops@cantops.cloudant.com/mishmash')
+const db = new PouchDB(urlFormat(config.get('cloudant')))
 
 
     var restaurants = [

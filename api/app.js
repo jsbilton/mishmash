@@ -67,6 +67,8 @@ app.put('/friends/:id', function(req, res, next) {
 
 app.post('/circles', function(req, res, next) {
   dal.createCircle(req.body, function(err, result) {
+    console.log(err);
+
     res.status(201).send(result)
   })
 })
