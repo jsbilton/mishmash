@@ -9,10 +9,6 @@ const Circles = React.createClass({
     }
   },
   componentDidMount() {
-    // data.list('circles')
-    //   .then(rows => {
-    //     const circles = pluck(doc, rows)
-    //     this.setState({circles})
     data.list('circles')
       .then(circles => {
         console.log(circles)
@@ -20,7 +16,7 @@ const Circles = React.createClass({
       })
   },
   render() {
-    const li = circle => <li key={circle.id}>{circle.name}</li>
+    const li = circle => <li key={circle.id}>{circle.title}</li>
     return (
       <div>
         <h1>Circles</h1>
@@ -28,8 +24,7 @@ const Circles = React.createClass({
           <ul>
             {this.state.circles.map(li)}
           </ul>
-          <Link to='/circles'>Return</Link>
-        
+          <Link to='/circles'>Return to Circles</Link>
       </div>
     )
   }
