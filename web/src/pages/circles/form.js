@@ -37,7 +37,7 @@ const CircleForm = React.createClass({
     console.log(this.state.circle);
     data.post('circles', this.state.circle)
       .then(response => {
-        if(response.id) {
+        if (response.id) {
           this.setState({resolved: response.id})
       }
    })

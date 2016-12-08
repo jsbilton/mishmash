@@ -4,15 +4,18 @@ const { Redirect, Link } = require('react-router')
 const data = require('../../utils/data')()
 const FriendForm = React.createClass({
   getInitialState() {
-    return{
+    return {
       friend: {
-        name: ''
+        name: '',
+        phone: '',
+        email: ''
       },
       resolved: false
     }
   },
   handleChange(field){
     return (e) => {
+      console.log("something", e.target.value)
       let friend = {...this.state.friend}
       friend[field] = e.target.value
       this.setState({friend})
@@ -20,9 +23,14 @@ const FriendForm = React.createClass({
   },
   handleSubmit(e){
     e.preventDefault()
+    console.log(this.state.friend)
     data.post('friends', this.state.friend)
-      .then(response => this.setState({resolved: true}))
-  },
+      .then(response => {
+        if (response.id) {
+          this.setState({resolved: response.id})
+      }
+   })
+ },
     render () {
         return (
             <div>
@@ -30,24 +38,19 @@ const FriendForm = React.createClass({
                 <h1>New Friend Form</h1>
                 <div>
                     <form onSubmit={this.handleSubmit}>
-                        <label style={labelStyle}>First Name</label>
+                        <label style={labelStyle}>Name</label>
                         <input
-                          onClick={this.handleChange}
-                          value={this.state.friend.firstname}
-                          type="text"/>
-                        <label style={labelStyle}>Last Name</label>
-                        <input
-                          onClick={this.handleChange}
-                          value={this.state.friend.lastname}
+                          onChange={this.handleChange('name')}
+                          value={this.state.friend.name}
                           type="text"/>
                         <label style={labelStyle}>Phone</label>
                         <input
-                          onClick={this.handleChange}
+                          onChange={this.handleChange('phone')}
                           value={this.state.friend.phone}
                           type="text"/>
                         <label style={labelStyle}>Email</label>
                         <input
-                          onClick={this.handleChange}
+                          onChange={this.handleChange('email')}
                           value={this.state.friend.email}
                           type="text"/>
                         <div>

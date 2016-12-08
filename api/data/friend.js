@@ -7,7 +7,7 @@ var friends = [
     {
         "_id": "friend_lulubills@gmail.com",
         "type": "friend",
-        "name": "Lulu Bilton",
+        "first": "Lulu Bilton",
         "phone": "843.478.1189",
         "email": "lulubills@gmail.com",
         "preference": [

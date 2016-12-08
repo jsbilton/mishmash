@@ -127,8 +127,6 @@ function getDocById(id, callback) {
   }
 }
 
-
-
 /////       Design Doc View      ///
 function createView(ddoc, callback) {
    if (typeof ddoc == "undefined" || ddoc === null) {
@@ -148,33 +146,60 @@ function createView(ddoc, callback) {
 //////     Friends DAL      ///////
 ///////////////////////////////////
 
-function createFriend(friend, callback) {
-// send this back to the caller via the callback (from pouch)
-  // {
-  //   "ok": true,
-  //   "id": "",
-  //   "rev": ""
-  // }
-// need an object to create our response
-// mocking up db call
-
-
-// db.put({
-//   _id: "friend_" + friend.email,
-//   title: ""
-// }).then(function(response) {
+// function createFriend(friend, callback) {
+// // send this back to the caller via the callback (from pouch)
+//   // {
+//   //   "ok": true,
+//   //   "id": "",
+//   //   "rev": ""
+//   // }
+// // need an object to create our response
+// // mocking up db call
 //
-// })
+//
+// // db.put({
+// //   _id: "friend_" + friend.email,
+// //   title: ""
+// // }).then(function(response) {
+// //
+// // })
+//
+//   const id = "friend_" + friend.email
+//
+//   const friendResponse = {
+//     ok: true,
+//     id: id,
+//     rev: "1-A09739A80B7509FFF837509F"
+//   }
+// // how do we get that back to the callback and say success
+//   return callback(null, friendResponse)
+// }
 
-  const id = "friend_" + friend.email
+function createFriend(friend, callback) {
+  if (typeof friend === 'undefined' || friend === null) {
+    return callback(new Error('400Missing friend for create circle'))
+} else if (friend.hasOwnProperty('_id') !== true) {
+    return callback(new Error('400Unnecessary id property for create friend'))
+} else if (friend.hasOwnProperty('_rev') !== true) {
+    return callback(new Error('400Unnecessary rev property for create friend'))
+} else if (friend.hasOwnProperty('name') === true) {
+    return callback(new Error('400Missing name for create circle'))
+} else if (friend.hasOwnProperty('phone') === true) {
+    return callback(new Error('400Missing phone for create circle'))
+} else if (friend.hasOwnProperty('email') === true) {
+    return callback(new Error('400Missing email for create circle'))
+} else {
 
-  const friendResponse = {
-    ok: true,
-    id: id,
-    rev: "1-A09739A80B7509FFF837509F"
+      friend.type = 'friend_'
+      friend._id = 'friend_' + friend.email
+
+      db.put(friend).then(function(response) {
+        return callback(null, response)
+      }).catch(function(err) {
+        return callback(err)
+      })
+
   }
-// how do we get that back to the callback and say success
-  return callback(null, friendResponse)
 }
 
 function deleteFriend(id, callback) {
@@ -216,7 +241,7 @@ function listFriends(callback) {
 
 function createCircle(circle, callback) {
   if (typeof circle === 'undefined' || circle === null) {
-    return callback(new Error('400Missing circle circle for create circle'))
+    return callback(new Error('400Missing circle for create circle'))
   } else if (circle.hasOwnProperty('_id') === true) {
       return callback(new Error('400Unnecessary id property for create circle'))
   } else if (circle.hasOwnProperty('_rev') === true) {
