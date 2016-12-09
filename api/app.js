@@ -143,6 +143,7 @@ app.get('/friends/:id', function(req, res, next) {
   })
 })
 
+//update will need id and rev could do friend._id and friend_.rev if choose
 
 app.put('/friends/:id', function(req, res, next) {
   dal.updateFriend(req.body, function(err, result) {
@@ -158,7 +159,6 @@ app.put('/friends/:id', function(req, res, next) {
     }
   })
 })
-//update will need id and rev could do friend._id and friend_.rev if choose
 
 ///////////////////////////////////
 //////     Circles Api      ///////
@@ -184,7 +184,8 @@ app.post('/circles', function(req, res, next) {
 ///   Retrieve Circle   ////
 
 app.get('/circles/:id', function(req, res, next) {
-  dal.getCircle(req.params.id, function(err, result) {
+  const circleId = req.params.id
+  dal.getCircle(circleId, function(err, result) {
     if (err)  {
       const responseError = BuildResponseError(err)
       return next(new HTTPError(responseError.status, responseError.message, responseError))
@@ -217,18 +218,29 @@ app.put('/circles/:id', function(req, res, next) {
 ///   Delete Circle   ////
 
 app.delete('/circles/:id', function(req, res, next) {
-  dal.deleteCircle(req.params.id, function(err, result) {
+  const circleId = req.params.id
+
+  dal.getCircle(circleId, function callback(err, result) {
     if (err)  {
       const responseError = BuildResponseError(err)
       return next(new HTTPError(responseError.status, responseError.message, responseError))
     }
     if (result) {
-      console.log("DELETE", req.path, result)
-      res.append("Content-type", "application/json")
-      res.status(200).send(result)
+      dal.deleteCircle(result, function callback(deleteErr, deletedCircle) {
+        if (deleteErr)  {
+          const responseError = BuildResponseError(deleteErr)
+          return next(new HTTPError(responseError.status, responseError.message, responseError))
+        }
+        if (deletedCircle) {
+          console.log("DELETE", req.path, deletedCircle)
+          res.append("Content-type", "application/json")
+          res.status(200).send(deletedCircle)
+        }
+      })
     }
   })
 })
+
 
 ///   List Circle   ////
 
@@ -239,9 +251,9 @@ app.get('/circles', function(req, res, next) {
       return next(new HTTPError(responseError.status, responseError.message, responseError))
     }
     if (result) {
-      console.log("PUT", req.path, result)
+      console.log("GET", req.path, result)
       res.append("Content-type", "application/json")
-      res.status(201).send(result)
+      res.status(200).send(result)
     }
   })
 })
@@ -267,27 +279,64 @@ app.post('/restaurants', function(req, res, next) {
   })
 })
 
-///   Retrieve Restaurants   ////
+///   Retrieve Restaurant  ////
 
 app.get('/restaurants/:id', function(req, res, next) {
-  dal.getRestaurant(req.params.id, function(err, result) {
-    res.status(200).send(result)
+  const restId = req.params.id
+
+  dal.getRestaurant(restId, function(err, result) {
+    if (err)  {
+      const responseError = BuildResponseError(err)
+      return next(new HTTPError(responseError.status, responseError.message, responseError))
+    }
+    if (result) {
+      console.log("GET", req.path, result)
+      res.append("Content-type", "application/json")
+      res.status(200).send(result)
+    }
   })
 })
 
-///   Update Restaurants   ////
+
+///   Update Restaurant  ////
 
 app.put('/restaurants/:id', function(req, res, next) {
   dal.updateRestaurant(req.body, function(err, result) {
-    res.status(200).send(result)
+    if (err)  {
+      const responseError = BuildResponseError(err)
+      return next(new HTTPError(responseError.status, responseError.message, responseError))
+    }
+    if (result) {
+      console.log("PUT", req.path, result)
+      res.append("Content-type", "application/json")
+      res.status(201).send(result)
+    }
   })
 })
 
 ///   Delete Restaurants   ////
 
 app.delete('/restaurants/:id', function(req, res, next) {
-  dal.deleteRestaurant(req.params.id, function(err, result) {
-    res.status(200).send(result)
+  const restaurantId = req.params.id
+
+  dal.getRestaurant(restaurantId, function callback(err, result) {
+    if (err)  {
+      const responseError = BuildResponseError(err)
+      return next(new HTTPError(responseError.status, responseError.message, responseError))
+    }
+    if (result) {
+      dal.deleteRestaurant(result, function(deleteErr, deletedRest) {
+        if (deleteErr)  {
+          const responseError = BuildResponseError(deleteErr)
+          return next(new HTTPError(responseError.status, responseError.message, responseError))
+        }
+        if (deletedRest) {
+          console.log("DELETE", req.path, deletedRest)
+          res.append("Content-type", "application/json")
+          res.status(200).send(deletedRest)
+        }
+      })
+    }
   })
 })
 
@@ -296,7 +345,15 @@ app.delete('/restaurants/:id', function(req, res, next) {
 app.get('/restaurants', function(req, res, next) {
 
   dal.listRestaurants(function(err, result) {
-    res.status(200).send(result)
+    if (err)  {
+      const responseError = BuildResponseError(err)
+      return next(new HTTPError(responseError.status, responseError.message, responseError))
+    }
+    if (result) {
+      console.log("GET", req.path, result)
+      res.append("Content-type", "application/json")
+      res.status(200).send(result)
+    }
   })
 })
 
@@ -324,7 +381,8 @@ app.post('/sessions', function(req, res, next) {
 ///   Retrieve Session   ////
 
 app.get('/sessions/:id', function(req, res, next) {
-  dal.getSession(req.params.id, function(err, result) {
+  const sessionId = req.params.id
+  dal.getSession(sessionId, function(err, result) {
     if (err)  {
       const responseError = BuildResponseError(err)
       return next(new HTTPError(responseError.status, responseError.message, responseError))
@@ -355,15 +413,25 @@ app.put('/sessions/:id', function(req, res, next) {
 ///   Delete Sessions   ////
 
 app.delete('/sessions/:id', function(req, res, next) {
-  dal.deleteSession(req.params.id, function(err, result) {
+  const sessionId = req.params.id
+
+  dal.getSession(sessionId, function(err, result) {
     if (err)  {
       const responseError = BuildResponseError(err)
       return next(new HTTPError(responseError.status, responseError.message, responseError))
     }
     if (result) {
-      console.log("DELETE", req.path, result)
-      res.append("Content-type", "application/json")
-      res.status(200).send(result)
+      dal.deleteSession(result, function callback(deleteErr, deletedSession) {
+        if (deleteErr)  {
+          const responseError = BuildResponseError(deleteErr)
+          return next(new HTTPError(responseError.status, responseError.message, responseError))
+        }
+        if (deletedSession) {
+          console.log("DELETE", req.path, deletedSession)
+          res.append("Content-type", "application/json")
+          res.status(200).send(deletedSession)
+        }
+      })
     }
   })
 })

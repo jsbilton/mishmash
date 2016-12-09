@@ -46,11 +46,14 @@ const dal = {
 
 /////     List Docs    ////////
 function listDocs(sortBy, startKey, limit, callback) {
-  if (typeof startkey == 'undefined' || startkey === null) {
-    return callback(new Error('Missing search parameter'))
-  } else if (typeof limit == 'undefined' || limit === null) {
-    return callback(new Error('Missing limit parameter'))
-  } else {
+  // if (typeof startkey === 'undefined' || startkey === null) {
+  //   return callback(new Error('Missing search parameter'))
+  // } else if (typeof limit === 'undefined' || limit === null) {
+  //   return callback(new Error('Missing limit parameter'))
+  // } else if (typeof startKey === 'undefined' || startKey === null) {
+  //   return callback(new Error('Missing startkey parameter'))
+  // }
+  // else {
 
          db.query(sortBy, {
            include_docs: true,
@@ -61,7 +64,7 @@ function listDocs(sortBy, startKey, limit, callback) {
            if (startKey !== '') data.rows.shift()
            callback(null, data)
          })
-   }
+  //  }
 }
 
 //////   Update Doc   /////////////
@@ -148,7 +151,7 @@ function createFriend(friend, callback) {
 } else {
 
       friend.type = 'friend'
-      friend._id = 'friend_' + friend.email
+      friend._id = 'friend_' + friend.name + friend.email
 
       db.put(friend).then(function(response) {
         return callback(null, response)
@@ -249,8 +252,8 @@ function createRestaurant(restaurant, callback) {
       return callback(new Error('400Missing postal code for create restaurant'))
   }  else {
 
-     restaurant.type = 'restaurant_'
-     restaurant._id = 'restaurant_' + restaurant.postal_code
+     restaurant.type = 'restaurant'
+     restaurant._id = 'restaurant_' + restaurant.name + restaurant.postal_code
 
 
     db.put(restaurant).then(function(res) {

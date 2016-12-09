@@ -29,7 +29,7 @@ var ddoc2 = {
 }
 
 var ddoc3 = {
-  _id: '_design/restaurant',
+  _id: '_design/restaurants',
   views: {
     "restaurants": {
       map: function(doc) {
@@ -42,7 +42,7 @@ var ddoc3 = {
 }
 
 var ddoc4 = {
-  _id: '_design/session',
+  _id: '_design/sessions',
   views: {
     "sessions": {
       map: function(doc) {
