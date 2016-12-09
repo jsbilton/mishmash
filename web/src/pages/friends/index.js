@@ -13,6 +13,7 @@ const Friends = React.createClass({
         console.log(friends)
         this.setState({friends: friends.rows})
       })
+      .catch(err => console.log("error", err.message))
   },
   render () {
     const li = friend => <li key={friend.id}>{friend.name}</li>

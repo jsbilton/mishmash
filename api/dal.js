@@ -40,17 +40,17 @@ const dal = {
 
 
 ///////////////////////////////////
-//////   Utility function   ///////
+//////   Utility functions   ///////
 ///////////////////////////////////
 
 
 /////     List Docs    ////////
 function listDocs(sortBy, startKey, limit, callback) {
-  if (typeof startkey == 'undefined' || startkey === null) {
-    return callback(new Error('Missing search parameter'))
-  } else if (typeof limit == 'undefined' || limit === null) {
-    return callback (new Error('Missing limit parameter'))
-  } else {
+  // if (typeof startkey == 'undefined' || startkey === null) {
+  //   return callback(new Error('Missing search parameter'))
+  // } else if (typeof limit == 'undefined' || limit === null) {
+  //   return callback(new Error('Missing limit parameter'))
+  // } else {
 
 
          db.query(sortBy, {
@@ -62,9 +62,10 @@ function listDocs(sortBy, startKey, limit, callback) {
            if (startKey !== '') data.rows.shift()
            callback(null, data)
          })
-   }
+  //  }
 }
-// Promise version -- maybe
+
+// Promise
 // db.query(sortBy, {
 //   include_docs: true,
 //   startkey: startKey,
@@ -177,21 +178,25 @@ function createView(ddoc, callback) {
 
 function createFriend(friend, callback) {
   if (typeof friend === 'undefined' || friend === null) {
-    return callback(new Error('400Missing friend for create circle'))
-} else if (friend.hasOwnProperty('_id') !== true) {
+    return callback(new Error('400Missing friend for create friend'))
+} else if (friend.hasOwnProperty('_id') === true) {
     return callback(new Error('400Unnecessary id property for create friend'))
-} else if (friend.hasOwnProperty('_rev') !== true) {
+} else if (friend.hasOwnProperty('_rev') === true) {
     return callback(new Error('400Unnecessary rev property for create friend'))
-} else if (friend.hasOwnProperty('name') === true) {
-    return callback(new Error('400Missing name for create circle'))
-} else if (friend.hasOwnProperty('phone') === true) {
-    return callback(new Error('400Missing phone for create circle'))
-} else if (friend.hasOwnProperty('email') === true) {
-    return callback(new Error('400Missing email for create circle'))
+} else if (friend.hasOwnProperty('name') !== true) {
+    return callback(new Error('400Missing name for create friend'))
+} else if (friend.hasOwnProperty('phone') ===true) {
+    return callback(new Error('400Unnecessary phone for create friend'))
+} else if (friend.hasOwnProperty('email') !== true) {
+    return callback(new Error('400Missing email for create friend'))
 } else {
 
-      friend.type = 'friend_'
+      friend.type = 'friend'
       friend._id = 'friend_' + friend.email
+
+      // console.log('friend',friend)
+
+
 
       db.put(friend).then(function(response) {
         return callback(null, response)
@@ -215,7 +220,7 @@ function getFriend(id, callback) {
 }
 
 function listFriends(callback) {
-      const sortBy = 'circles'
+      const sortBy = 'friends'
       const sortToken = ''
       const limit = 10
       listDocs(sortBy, sortToken, limit, (e, r) => {
@@ -229,15 +234,6 @@ function listFriends(callback) {
 ///////////////////////////////////
 //////   Circles DAL   ///////////
 ///////////////////////////////////
-
-// function createCircle(circle, callback) {
-//   const id = "circle_" + circle.title
-//   return callback(null, {
-//       ok: true,
-//       id: id,
-//       rev: "1-A09739A80B7509FFF837509F"
-//   })
-// }
 
 function createCircle(circle, callback) {
   if (typeof circle === 'undefined' || circle === null) {
@@ -271,6 +267,7 @@ function getCircle(id, callback) {
 function updateCircle(circle, callback) {
   updateDoc(circle, callback)
 }
+
 function deleteCircle(id, callback) {
   deleteDoc(circle, callback)
 }
@@ -288,13 +285,40 @@ function listCircles(callback) {
 ///////////////////////////////////
 //////   Restaurants DAL   ////////
 ///////////////////////////////////
-function createRestaurant(data, callback) {
-  const id = "restaurant_" + restaurant._id
-  callback(null, {
-    ok: true,
-    id: id,
-    rev: "1-A23423423423423SFDS089"
-  })
+function createRestaurant(restaurant, callback) {
+
+  if (typeof restaurant === 'undefined' || restaurant === null) {
+    return callback(new Error('400Missing restaurant for create restaurant'))
+  } else if (restaurant.hasOwnProperty('_id') === true) {
+      return callback(new Error('400Unnecessary id property for create restaurant'))
+  } else if (restaurant.hasOwnProperty('_rev') === true) {
+      return callback(new Error('400Unnecessary rev property for create restaurant'))
+  } else if (restaurant.hasOwnProperty('name') !== true) {
+      return callback(new Error('400Missing name for create restaurant'))
+  } else if (restaurant.hasOwnProperty('address') === true) {
+      return callback(new Error('400Unnecessary address for create restaurant'))
+  } else if (restaurant.hasOwnProperty('city') === true) {
+      return callback(new Error('400Unnecessary city for create restaurant'))
+  } else if (restaurant.hasOwnProperty('state') === true) {
+      return callback(new Error('400Unnecessary state for create restaurant'))
+  } else if (restaurant.hasOwnProperty('postal_code') !== true) {
+      return callback(new Error('400Missing postal code for create restaurant'))
+  } else if (restaurant.hasOwnProperty('phone') === true) {
+      return callback(new Error('400Unnecessary phone for create restaurant'))
+  } else if (restaurant.hasOwnProperty('price_rating') === true) {
+      return callback(new Error('400Unnecessary price rating for create restaurant'))
+  } else {
+
+     restaurant.type = 'restaurant_'
+     restaurant._id = 'restaurant_' + restaurant.postal_code
+
+
+    db.put(restaurant).then(function(res) {
+      return callback(null, res)
+    }).catch(function(err) {
+      return callback(err)
+    })
+  }
 }
 
 function getRestaurant(id, callback) {
@@ -310,7 +334,7 @@ function deleteRestaurant(id, callback) {
 }
 
 function listRestaurants(callback) {
-      const sortBy = 'circles'
+      const sortBy = 'restaurants'
       const sortToken = ''
       const limit = 10
       listDocs(sortBy, sortToken, limit, (e, r) => {
@@ -324,12 +348,33 @@ function listRestaurants(callback) {
 ///////////////////////////////////
 
 function createSession(session, callback) {
-  callback(null, {
-    ok: true,
-    id: "session._id",
-    rev: "1-A23423423423423SFDS089"
-  })
+  if (typeof session === 'undefined' || session === null) {
+    return callback(new Error('400Missing session for create session'))
+  } else if (session.hasOwnProperty('_id') === true) {
+      return callback(new Error('400Unnecessary id property for create session'))
+  } else if (session.hasOwnProperty('_rev') === true) {
+      return callback(new Error('400Unnecessary rev property for create session'))
+  } else if (session.hasOwnProperty('name') !== true) {
+      return callback(new Error('400Missing name for create session'))
+  } else if (session.hasOwnProperty('circleId') === true) {
+      return callback(new Error('400Unnecessary circleId for create session'))
+  } else if (session.hasOwnProperty('friendId') === true) {
+      return callback(new Error('400Unnecessary friendId for create session'))
+  } else {
+
+        session.type = 'session'
+        session._id = 'session_' + session.name
+
+        //session_ + Date.now()
+
+          db.put(session).then(function(res) {
+            return callback(null, res)
+          }).catch(function(err) {
+            return callback(err)
+          })
+   }
 }
+
 
 function getSession(id, callback) {
   getDocById(id, callback)
@@ -344,7 +389,7 @@ function deleteSession(id, callback) {
 }
 
 function listSessions(callback) {
-      const sortBy = 'circles'
+      const sortBy = 'sessions'
       const sortToken = ''
       const limit = 10
       listDocs(sortBy, sortToken, limit, (e, r) => {

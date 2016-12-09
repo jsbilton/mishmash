@@ -3,6 +3,33 @@ const PouchDB = require('pouchdb')
 // const db = new PouchDB('http://127.0.0.1:5984/lunch/')
 const db = new PouchDB(urlFormat(config.get('cloudant')))
 var sessions = [
+  {
+      "_id": "session_singleCircleOfFriends",
+      "type": "session",
+      "name": "Lunch with the friends",
+      "circleId": "circle_musicLovers",
+      "friendId": "friend_jerry@gmail.com",
+      "time": new Date().toISOString(),  //Date.now()
+      "recommendations": [
+          {
+              "restaurantId": "restaurant_Home_Team_29403",
+              "friendVote": [
+                  {
+                      "friendId": "friend_suz@gmail.com",
+                      "vote": + 1,
+                      "comment": "Yeah, I'm always down for this"
+                  }, {
+                      "friendId": "friend_biltons@gmail.com",
+                      "vote": + 1,
+                      "comment": "Lets get some BBQ!"
+                  }
+              ],
+              "matchRank": 3,
+              "selectedRestaurant": true,
+              "isCheckedIn": false
+          }
+      ]
+  },
     {
         "_id": "session_family",
         "type": "session",

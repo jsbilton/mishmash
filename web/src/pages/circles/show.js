@@ -6,8 +6,9 @@ const Circle = React.createClass({
   getInitialState() {
     return {
       circle: {
-        id: -1,
-        name: ''
+        id: '',
+        title: ''
+        // friend: []
       },
       removed: false
     }
@@ -19,7 +20,7 @@ const Circle = React.createClass({
   handleRemove(e) {
     e.preventDefault()
     confirm('Are you sure you want to remove this Circle?', () => {
-      data.remove('circles', this.props.params.id, this.state.favorite)
+      data.remove('circles', this.props.params.id, this.state.circle)
         .then(response => this.setState({removed: true}))
     })
   },

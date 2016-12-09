@@ -11,15 +11,74 @@ app.use(bodyParser.json())
 
 
 ///////////////////////////////////
+//////     Response Error      ///////
+///////////////////////////////////
+
+function BuildResponseError(err) {
+
+
+    // no sql error message example
+    //     { id: 'person_jackiekennedyo1922@gmail.org',
+    // error: 'conflict',
+    // reason: 'Document update conflict.',
+    // name: 'conflict',
+    // status: 409,
+    // message: 'Document update conflict.',
+    // ok: true }
+    //
+    // // custom DAL validation message example
+    //
+    // {
+    // error: 'Bad Request',
+    // reason: 'Unnecessary _id property within data.'
+    // name: 'Bad Request',
+    // status: 400,
+    // message: 'Unnecessary _id property within data.',
+    // ok: true }
+
+    const statuscheck = isNaN(err.message.substring(0, 3)) === true ? "400" : err.message.substring(0, 3)
+    const status = err.status ? Number(err.status) : Number(statuscheck)
+    const message = err.status ? err.message : err.message.substring(3)
+    const reason = message
+    const error = status === 400 ? "Bad Request" : err.name
+    const name = error
+
+    var errormsg = {}
+    errormsg.error = error
+    errormsg.reason = reason
+    errormsg.name = name
+    errormsg.status = status
+    errormsg.message = message
+
+
+    //   { error: 'Bad Request',
+    // reason: 'Missing email property within data',
+    // name: 'Bad Request',
+    // status: 400,
+    // message: 'Missing email property within data' }
+    console.log("BuildResponseError-->", errormsg)
+    return errormsg
+}
+
+///////////////////////////////////
 //////     Friends Api      ///////
 ///////////////////////////////////
 
 ////  Create a friend  ///
+
 app.post('/friends', function(req, res, next) {
   console.log(req.body)
   dal.createFriend(req.body, function(err, result) {
-    // console.log(result);
-    res.status(201).send(result)
+    if (err)  {
+
+      const responseError = BuildResponseError(err)
+      return next(new HTTPError(responseError.status, responseError.message, responseError))
+    }
+    if (result) {
+      console.log("POST", req.path, result)
+      res.append("Content-type", "application/json")
+      res.status(201).send(result)
+    }
   })
 })
 
@@ -68,8 +127,17 @@ app.put('/friends/:id', function(req, res, next) {
 ///   Create Circle   ////
 
 app.post('/circles', function(req, res, next) {
+
   dal.createCircle(req.body, function(err, result) {
-    res.status(201).send(result)
+    if (err)  {
+      const responseError = BuildResponseError(err)
+      return next(new HTTPError(responseError.status, responseError.message, responseError))
+    }
+    if (result) {
+      console.log("POST", req.path, result)
+      res.append("Content-type", "application/json")
+      res.status(201).send(result)
+    }
   })
 })
 
@@ -113,8 +181,17 @@ app.get('/circles', function(req, res, next) {
 ///   Create Restaurants   ////
 
 app.post('/restaurants', function(req, res, next) {
+
   dal.createRestaurant(req.body, function(err, result) {
-    res.status(201).send(result)
+    if (err)  {
+      const responseError = BuildResponseError(err)
+      return next(new HTTPError(responseError.status, responseError.message, responseError))
+    }
+    if (result) {
+      console.log("POST", req.path, result)
+      res.append("Content-type", "application/json")
+      res.status(201).send(result)
+    }
   })
 })
 
@@ -145,6 +222,7 @@ app.delete('/restaurants/:id', function(req, res, next) {
 ///   List Restaurants   ////
 
 app.get('/restaurants', function(req, res, next) {
+
   dal.listRestaurants(function(err, result) {
     res.status(200).send(result)
   })
@@ -157,8 +235,17 @@ app.get('/restaurants', function(req, res, next) {
 ///   Create Session  ////
 
 app.post('/sessions', function(req, res, next) {
+
   dal.createSession(req.body, function(err, result) {
-    res.status(201).send(result)
+    if (err)  {
+      const responseError = BuildResponseError(err)
+      return next(new HTTPError(responseError.status, responseError.message, responseError))
+    }
+    if (result) {
+      console.log("POST", req.path, result)
+      res.append("Content-type", "application/json")
+      res.status(201).send(result)
+    }
   })
 })
 
@@ -198,6 +285,15 @@ app.get('*', (req, res) => res.send({
    ok: true
 }))
 
+//////////////////////
+//   Error handler
+//////////////////////
+
+app.use(function(err, req, res, next) {
+    console.log(req.method, " ", req.path, " err: ", err)
+    res.status(err.status || 500)
+    res.send(err);
+})
 
 // port listener
 var server = http.createServer(app);

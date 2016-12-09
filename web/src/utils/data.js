@@ -1,45 +1,53 @@
 const fetch = require('isomorphic-fetch')
-
+const toJSON = res => res.json()
 const url = process.env.REACT_APP_API
 
 module.exports = function(){
 
-  const list = function(model) {
-    return fetch(`${url}/${model}`)
-      .then(res => res.json())
-  }
+  const list = (model) =>
+    fetch(`${url}/${model}`)
+      .then(toJSON)
 
-  const post = function(model, doc) {
-    return fetch(`${url}/${model}`, {
-      method: 'post',
+
+  const post = (model, doc) =>
+    fetch(`${url}/${model}`, {
+      method: "post",
       body: JSON.stringify(doc),
       headers: {
-        'content-type': 'application/json'
+        'Content-type': 'application/json'
       }
-    })
-    .then(res => res.json())
-  }
+    })  
+    .then(toJSON)
 
-  const get = function(model, id) {
-    return fetch(`${url}/${model}/${id}`)
-      .then(res => res.json())
+  const get = (model, id) =>
+    fetch(`${url}/${model}/${id}`)
+      .then(toJSON)
       .then(response => {
         console.log(response)
         return response
       })
-  }
 
-  // const put = function(model, id, doc){
-  //   return fetch(`${url}/${model}/${id}`)
-  // }
+  const put = (model, id, doc) => fetch(`${url}/${model}/${id}`, {
+      method: "put",
+      body: JSON.stringify(doc),
+      headers: {
+        'Content-type': 'application/json'
+      }
+    }).then(toJSON)
 
-  // const delete = function(model, id, body) {
-  //     return fetch(`${url}/${model}/${id}`)
-  // }
+    const remove = (model, id, doc) => fetch(`${url}/${model}/${id}`, {
+       method: "delete",
+       body: JSON.stringify(doc),
+       headers: {
+         'Content-type': 'application/json'
+       }
+     }).then(toJSON)
 
   return {
     list,
     post,
-    get
+    get,
+    remove,
+    put
   }
 }

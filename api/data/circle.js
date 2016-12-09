@@ -4,6 +4,19 @@ const PouchDB = require('pouchdb')
 const db = new PouchDB(urlFormat(config.get('cloudant')))
 
 var circles = [
+  {
+      "_id": "circle_nameOfTitle",
+      "type": "circle",
+      "title": "nameOfFriendsInCircle",
+      "isDefault": false,
+      "friends": [
+          {
+              "friendId": "friend_friend@gmail.com"
+          }, {
+              "friendId": "friend_friend@gmail.com"
+          }
+      ]
+  }
     {
         "_id": "circle_classmates",
         "type": "circle",

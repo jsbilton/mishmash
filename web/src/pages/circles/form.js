@@ -6,7 +6,7 @@ const CircleForm = React.createClass({
     return {
       circle: {
         title: '',
-        friends: ''
+        friends: []
       },
       resolved: false
     }

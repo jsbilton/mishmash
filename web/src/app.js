@@ -30,14 +30,17 @@ const App = React.createClass({
                     <Match exactly pattern='/friends' component={Friends} />
                     <Match pattern='/friends/new' component={FriendForm} />
                     <Match pattern='/friends/:id/show' component={Friend} />
+                    <Match pattern='/friends/:id/edit' component={FriendForm} />
 
                     <Match exactly pattern='/restaurants' component={Restaurants} />
                     <Match pattern='/restaurants/new' component={RestaurantForm} />
                     <Match pattern='/restaurants/:id/show' component={Restaurant} />
+                    <Match pattern='/restaurants/:id/edit' component={RestaurantForm} />
 
                     <Match exactly pattern='/sessions' component={Sessions} />
                     <Match pattern='/sessions/new' component={SessionForm} />
                     <Match pattern='/sessions/:id/show' component={Session} />
+                    <Match pattern='/sessions/:id/edit' component={SessionForm} />
 
                     <Match pattern='/about' component={About} />
                     <Match pattern='/home' component={Home} />
