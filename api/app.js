@@ -85,37 +85,77 @@ app.post('/friends', function(req, res, next) {
 ///  Retrieve List of friends  ///
 app.get('/friends', function(req, res, next) {
   dal.listFriends(function(err, result) {
-    res.status(200).send(result)
+    if (err)  {
+
+      const responseError = BuildResponseError(err)
+      return next(new HTTPError(responseError.status, responseError.message, responseError))
+    }
+    if (result) {
+      console.log("GET", req.path, result)
+      res.append("Content-type", "application/json")
+      res.status(200).send(result)
+    }
   })
 })
 
 ///  Retrieve a friend  ///
 app.get('/friends/:id', function(req, res, next) {
-  dal.getFriend(req.params.id, function(err, result) {
-    res.status(200).send(result)
+
+  const friendId = req.params.id
+
+  dal.getFriend(friendId, function(err, result) {
+    if (err)  {
+      const responseError = BuildResponseError(err)
+      return next(new HTTPError(responseError.status, responseError.message, responseError))
+    }
+    if (result) {
+      console.log("GET", req.path, result)
+      res.append("Content-type", "application/json")
+      res.status(200).send(result)
+    }
   })
 })
 
 ///  Delete friend  ///
 /// have to include the id and rev in postman so it deletes the correct id and version
   app.delete('/friends/:id', function(req, res, next) {
-    dal.deleteFriend(req.params.id, function(err, result) {
-      res.status(200).send(result)
-    })
+
+    const friendId = req.params.id
+
+    dal.getFriend(friendId, function callback(err, result) {
+      if (err)  {
+        const responseError = BuildResponseError(err)
+        return next(new HTTPError(responseError.status, responseError.message, responseError))
+      }
+      if (result) {
+        dal.deleteFriend(result, function callback(deleteErr, deletedFriend) {
+          if (deleteErr)  {
+            const responseError = BuildResponseError(deleteErr)
+            return next(new HTTPError(responseError.status, responseError.message, responseError))
+          }
+          if (deletedFriend) {
+            console.log("DELETE", req.path, deletedFriend)
+            res.append("Content-type", "application/json")
+            res.status(200).send(deletedFriend)
+          }
+        })
+      }
+  })
 })
 
-// once a delete is done you will get the following
 
-// {
-//   "ok": true,
-//   "id": "mydoc",
-//   "rev": "2-934958745937JK8907"
-// }
-
-///  Update friend  ///
 app.put('/friends/:id', function(req, res, next) {
   dal.updateFriend(req.body, function(err, result) {
-    res.status(200).send(result)
+
+    if (err)  {
+      const responseError = BuildResponseError(err)
+      return next(new HTTPError(responseError.status, responseError.message, responseError))
+    }
+    if (result) {
+      console.log("PUT", req.path, result)
+      res.append("Content-type", "application/json")
+      res.status(200).send(result)
+    }
   })
 })
 //update will need id and rev could do friend._id and friend_.rev if choose
@@ -145,7 +185,15 @@ app.post('/circles', function(req, res, next) {
 
 app.get('/circles/:id', function(req, res, next) {
   dal.getCircle(req.params.id, function(err, result) {
-    res.status(200).send(result)
+    if (err)  {
+      const responseError = BuildResponseError(err)
+      return next(new HTTPError(responseError.status, responseError.message, responseError))
+    }
+    if (result) {
+      console.log("GET", req.path, result)
+      res.append("Content-type", "application/json")
+      res.status(200).send(result)
+    }
   })
 })
 
@@ -153,7 +201,15 @@ app.get('/circles/:id', function(req, res, next) {
 
 app.put('/circles/:id', function(req, res, next) {
   dal.updateCircle(req.body, function(err, result) {
-    res.status(200).send(result)
+    if (err)  {
+      const responseError = BuildResponseError(err)
+      return next(new HTTPError(responseError.status, responseError.message, responseError))
+    }
+    if (result) {
+      console.log("PUT", req.path, result)
+      res.append("Content-type", "application/json")
+      res.status(201).send(result)
+    }
   })
 })
 
@@ -162,7 +218,15 @@ app.put('/circles/:id', function(req, res, next) {
 
 app.delete('/circles/:id', function(req, res, next) {
   dal.deleteCircle(req.params.id, function(err, result) {
-    res.status(200).send(result)
+    if (err)  {
+      const responseError = BuildResponseError(err)
+      return next(new HTTPError(responseError.status, responseError.message, responseError))
+    }
+    if (result) {
+      console.log("DELETE", req.path, result)
+      res.append("Content-type", "application/json")
+      res.status(200).send(result)
+    }
   })
 })
 
@@ -170,7 +234,15 @@ app.delete('/circles/:id', function(req, res, next) {
 
 app.get('/circles', function(req, res, next) {
   dal.listCircles(function(err, result) {
-    res.status(200).send(result)
+    if (err)  {
+      const responseError = BuildResponseError(err)
+      return next(new HTTPError(responseError.status, responseError.message, responseError))
+    }
+    if (result) {
+      console.log("PUT", req.path, result)
+      res.append("Content-type", "application/json")
+      res.status(201).send(result)
+    }
   })
 })
 
@@ -253,7 +325,15 @@ app.post('/sessions', function(req, res, next) {
 
 app.get('/sessions/:id', function(req, res, next) {
   dal.getSession(req.params.id, function(err, result) {
-    res.status(200).send(result)
+    if (err)  {
+      const responseError = BuildResponseError(err)
+      return next(new HTTPError(responseError.status, responseError.message, responseError))
+    }
+    if (result) {
+      console.log("GET", req.path, result)
+      res.append("Content-type", "application/json")
+      res.status(201).send(result)
+    }
   })
 })
 
@@ -261,14 +341,30 @@ app.get('/sessions/:id', function(req, res, next) {
 
 app.put('/sessions/:id', function(req, res, next) {
   dal.updateSession(req.body, function(err, result){
-    res.status(200).send(result)
+    if (err)  {
+      const responseError = BuildResponseError(err)
+      return next(new HTTPError(responseError.status, responseError.message, responseError))
+    }
+    if (result) {
+      console.log("PUT", req.path, result)
+      res.append("Content-type", "application/json")
+      res.status(200).send(result)
+    }
   })
 })
 ///   Delete Sessions   ////
 
 app.delete('/sessions/:id', function(req, res, next) {
   dal.deleteSession(req.params.id, function(err, result) {
-    res.status(200).send(result)
+    if (err)  {
+      const responseError = BuildResponseError(err)
+      return next(new HTTPError(responseError.status, responseError.message, responseError))
+    }
+    if (result) {
+      console.log("DELETE", req.path, result)
+      res.append("Content-type", "application/json")
+      res.status(200).send(result)
+    }
   })
 })
 
@@ -276,7 +372,15 @@ app.delete('/sessions/:id', function(req, res, next) {
 
 app.get('/sessions', function(req, res, next) {
   dal.listSessions(function(err, result) {
-    res.status(200).send(result)
+    if (err)  {
+      const responseError = BuildResponseError(err)
+      return next(new HTTPError(responseError.status, responseError.message, responseError))
+    }
+    if (result) {
+      console.log("GET", req.path, result)
+      res.append("Content-type", "application/json")
+      res.status(200).send(result)
+    }
   })
 })
 

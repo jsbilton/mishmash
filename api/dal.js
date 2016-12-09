@@ -46,12 +46,11 @@ const dal = {
 
 /////     List Docs    ////////
 function listDocs(sortBy, startKey, limit, callback) {
-  // if (typeof startkey == 'undefined' || startkey === null) {
-  //   return callback(new Error('Missing search parameter'))
-  // } else if (typeof limit == 'undefined' || limit === null) {
-  //   return callback(new Error('Missing limit parameter'))
-  // } else {
-
+  if (typeof startkey == 'undefined' || startkey === null) {
+    return callback(new Error('Missing search parameter'))
+  } else if (typeof limit == 'undefined' || limit === null) {
+    return callback(new Error('Missing limit parameter'))
+  } else {
 
          db.query(sortBy, {
            include_docs: true,
@@ -62,21 +61,8 @@ function listDocs(sortBy, startKey, limit, callback) {
            if (startKey !== '') data.rows.shift()
            callback(null, data)
          })
-  //  }
+   }
 }
-
-// Promise
-// db.query(sortBy, {
-//   include_docs: true,
-//   startkey: startKey,
-//   limit: limit
-// }).then(function(result){
-//   if (startKey !== '') data.rows.shift()
-//   callback(null, data)
-// }).catch(function(err) {
-//   console.log(err)
-// })
-
 
 //////   Update Doc   /////////////
 function updateDoc(data, callback) {
@@ -97,8 +83,6 @@ function updateDoc(data, callback) {
   }
 }
 
-
-
 //////   Delete Doc   /////////////
 function deleteDoc (data, callback) {
   if (typeof data === 'undefined' || data === null) {
@@ -109,22 +93,25 @@ function deleteDoc (data, callback) {
       return callback(new Error('400Missing rev property from delete'))
   } else {
 
-      db.remove(data, function(err, response) {
-        if (err) return callback(err)
-        if (response) return callback(null, response)
+      db.remove(data).then(function(response) {
+        return callback(null, response)
+      }).catch(function(err) {
+        return callback(err)
       })
   }
 }
 
-//////   Get Doc   /////////////
+//////      Get Doc   /////////////
 function getDocById(id, callback) {
-  if (typeof id === 'undefined' || id === null) {
+  if (typeof id == 'undefined' || id === null) {
     return callback(new Error('400Missing id parameter'))
   } else {
-  db.get(id, function(err, data) {
-    if (err) return callback(err)
-    if (data) return callback(null, data)
-   })
+
+      db.get(id).then(function(response) {
+        return callback(null, response)
+      }).catch(function(err) {
+          return callback(err)
+      })
   }
 }
 
@@ -133,6 +120,7 @@ function createView(ddoc, callback) {
    if (typeof ddoc == "undefined" || ddoc === null) {
        return callback(new Error('400Missing design document.'))
    } else {
+
        db.put(ddoc).then(function(response) {
          console.log('Design Doc View Complete')
            return callback(null, response)
@@ -142,39 +130,9 @@ function createView(ddoc, callback) {
    }
 }
 
-
 ///////////////////////////////////
 //////     Friends DAL      ///////
 ///////////////////////////////////
-
-// function createFriend(friend, callback) {
-// // send this back to the caller via the callback (from pouch)
-//   // {
-//   //   "ok": true,
-//   //   "id": "",
-//   //   "rev": ""
-//   // }
-// // need an object to create our response
-// // mocking up db call
-//
-//
-// // db.put({
-// //   _id: "friend_" + friend.email,
-// //   title: ""
-// // }).then(function(response) {
-// //
-// // })
-//
-//   const id = "friend_" + friend.email
-//
-//   const friendResponse = {
-//     ok: true,
-//     id: id,
-//     rev: "1-A09739A80B7509FFF837509F"
-//   }
-// // how do we get that back to the callback and say success
-//   return callback(null, friendResponse)
-// }
 
 function createFriend(friend, callback) {
   if (typeof friend === 'undefined' || friend === null) {
@@ -185,18 +143,12 @@ function createFriend(friend, callback) {
     return callback(new Error('400Unnecessary rev property for create friend'))
 } else if (friend.hasOwnProperty('name') !== true) {
     return callback(new Error('400Missing name for create friend'))
-} else if (friend.hasOwnProperty('phone') ===true) {
-    return callback(new Error('400Unnecessary phone for create friend'))
-} else if (friend.hasOwnProperty('email') !== true) {
+}  else if (friend.hasOwnProperty('email') !== true) {
     return callback(new Error('400Missing email for create friend'))
 } else {
 
       friend.type = 'friend'
       friend._id = 'friend_' + friend.email
-
-      // console.log('friend',friend)
-
-
 
       db.put(friend).then(function(response) {
         return callback(null, response)
@@ -207,8 +159,8 @@ function createFriend(friend, callback) {
   }
 }
 
-function deleteFriend(id, callback) {
-  deleteDoc(id, callback)
+function deleteFriend(data, callback) {
+  deleteDoc(data, callback)
 }
 
 function updateFriend(data, callback) {
@@ -228,8 +180,6 @@ function listFriends(callback) {
         callback(null, r)
       })
 }
-
-
 
 ///////////////////////////////////
 //////   Circles DAL   ///////////
@@ -264,12 +214,12 @@ function getCircle(id, callback) {
   getDocById(id, callback)
 }
 
-function updateCircle(circle, callback) {
-  updateDoc(circle, callback)
+function updateCircle(data, callback) {
+  updateDoc(data, callback)
 }
 
-function deleteCircle(id, callback) {
-  deleteDoc(circle, callback)
+function deleteCircle(data, callback) {
+  deleteDoc(data, callback)
 }
 
 function listCircles(callback) {
@@ -295,19 +245,9 @@ function createRestaurant(restaurant, callback) {
       return callback(new Error('400Unnecessary rev property for create restaurant'))
   } else if (restaurant.hasOwnProperty('name') !== true) {
       return callback(new Error('400Missing name for create restaurant'))
-  } else if (restaurant.hasOwnProperty('address') === true) {
-      return callback(new Error('400Unnecessary address for create restaurant'))
-  } else if (restaurant.hasOwnProperty('city') === true) {
-      return callback(new Error('400Unnecessary city for create restaurant'))
-  } else if (restaurant.hasOwnProperty('state') === true) {
-      return callback(new Error('400Unnecessary state for create restaurant'))
   } else if (restaurant.hasOwnProperty('postal_code') !== true) {
       return callback(new Error('400Missing postal code for create restaurant'))
-  } else if (restaurant.hasOwnProperty('phone') === true) {
-      return callback(new Error('400Unnecessary phone for create restaurant'))
-  } else if (restaurant.hasOwnProperty('price_rating') === true) {
-      return callback(new Error('400Unnecessary price rating for create restaurant'))
-  } else {
+  }  else {
 
      restaurant.type = 'restaurant_'
      restaurant._id = 'restaurant_' + restaurant.postal_code
@@ -329,8 +269,8 @@ function updateRestaurant(data, callback) {
   updateDoc(data, callback)
 }
 
-function deleteRestaurant(id, callback) {
-  deleteDoc(id, callback)
+function deleteRestaurant(data, callback) {
+  deleteDoc(data, callback)
 }
 
 function listRestaurants(callback) {
@@ -356,10 +296,6 @@ function createSession(session, callback) {
       return callback(new Error('400Unnecessary rev property for create session'))
   } else if (session.hasOwnProperty('name') !== true) {
       return callback(new Error('400Missing name for create session'))
-  } else if (session.hasOwnProperty('circleId') === true) {
-      return callback(new Error('400Unnecessary circleId for create session'))
-  } else if (session.hasOwnProperty('friendId') === true) {
-      return callback(new Error('400Unnecessary friendId for create session'))
   } else {
 
         session.type = 'session'
@@ -384,8 +320,8 @@ function updateSession(data, callback) {
   updateDoc(data, callback)
 }
 
-function deleteSession(id, callback) {
-  deleteDoc(id, callback)
+function deleteSession(data, callback) {
+  deleteDoc(data, callback)
 }
 
 function listSessions(callback) {
