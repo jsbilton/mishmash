@@ -32,7 +32,7 @@ const SessionForm = React.createClass({
   render() {
     return (
       <div>
-        {this.state.resolved ? <Redirect to='/restaurants' /> : null}
+        {this.state.resolved ? <Redirect to='/sessions' /> : null}
         <h1>Session Form Page</h1>
         <div>
           <form onSubmit={this.handleSubmit}>

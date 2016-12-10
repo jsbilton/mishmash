@@ -15,7 +15,7 @@ const Sessions = React.createClass({
     .catch(err => console.log("error", err.message))
   },
     render() {
-      const li = session => <li key={session.id}>{session.name}</li>
+      const li = session => <li key={session.doc.name}>{session.doc.name}</li>
 
         return (
             <div>
@@ -28,7 +28,11 @@ const Sessions = React.createClass({
                 <Link to='/sessions'>Return to sessions list</Link>
                 |
                 <Link to='/'>Return to App Resource</Link>
+                <pre>
+                  {JSON.stringify(this.state, null, 2)}
+                </pre>
             </div>
+
         )
     }
 })

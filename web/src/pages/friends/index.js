@@ -16,7 +16,7 @@ const Friends = React.createClass({
       .catch(err => console.log("error", err.message))
   },
   render () {
-    const li = friend => <li key={friend.id}>{friend.name}</li>
+    const li = friend => <li key={friend.doc.name}>{friend.doc.name}</li>
     return (
       <div>
         <h1>Say hello to my little friends</h1>
@@ -27,6 +27,9 @@ const Friends = React.createClass({
         <Link to='/friends'>Return to Friend List: This Page</Link>
         |
         <Link to='/'>Return to App Resource</Link>
+        <pre>
+          {JSON.stringify(this.state, null, 2)}
+        </pre>
       </div>
     )
   }

@@ -34,7 +34,7 @@ const FriendForm = React.createClass({
     render () {
         return (
             <div>
-              {this.state.resolved ? <Redirect to='friends' /> : null}
+              {this.state.resolved ? <Redirect to='/friends' /> : null}
                 <h1>New Friend Form</h1>
                 <div>
                     <form onSubmit={this.handleSubmit}>

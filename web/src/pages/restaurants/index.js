@@ -10,12 +10,15 @@ const Restaurants = React.createClass({
   componentDidMount() {
     data.list('restaurants')
     .then(restaurants => {
-      this.setState(restaurants: restaurants.rows)
+      console.log(restaurants)
+      this.setState({
+        restaurants: restaurants.rows
+      })
     })
     .catch(err => console.log("error", err.message))
   },
   render () {
-    const li = restaurant => <li key={restaurant.id}>{restaurant.name}</li>
+    const li = restaurant => <li key={restaurant.doc.name}>{restaurant.doc.name}</li>
     return (
       <div>
         <h1>Restaurants List</h1>
@@ -26,6 +29,9 @@ const Restaurants = React.createClass({
         <Link to='/restaurants'>Return to Restaurant List</Link>
         |
         <Link to='/'>Return to App Resource</Link>
+        <pre>
+          {JSON.stringify(this.state, null, 2)}
+        </pre>
       </div>
     )
   }

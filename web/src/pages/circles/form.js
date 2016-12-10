@@ -1,4 +1,5 @@
 const React = require('react')
+const labelStyle = { display: 'block' }
 const data = require('../../utils/data')()
 const { Link, Redirect } = require('react-router')
 const CircleForm = React.createClass({
@@ -11,12 +12,12 @@ const CircleForm = React.createClass({
       resolved: false
     }
   },
-  // componentDidMOunt() {
-  //   if (this.props.params.id) {
-  //     data.get('circles', this.props.params.id)
-  //     .then(circle => this.setState({circle}))
-  //   }
-  // },
+  componentDidMount() {
+    // if (this.props.params.id) {
+    //   data.get('circles', this.props.params.id)
+    //   .then(circle => this.setState({circle}))
+    // }
+  },
   handleChange(field) {
     return (e) => {
       let circle = {...this.state.circle}
@@ -34,7 +35,7 @@ const CircleForm = React.createClass({
     //       }
     //     })
     // }
-    console.log(this.state.circle);
+    console.log(this.state.circle)
     data.post('circles', this.state.circle)
       .then(response => {
         if (response.id) {
@@ -50,12 +51,12 @@ const CircleForm = React.createClass({
         <h1>{formState} Circle Form</h1>
         <div>
           <form onSubmit={this.handleSubmit}>
-            <label>Name</label>
+            <label style={labelStyle}>Name</label>
             <input
               value={this.state.circle.title}
               onChange={this.handleChange('title')}
               type="text"/>
-            <label>Friends</label>
+            <label style={labelStyle}>Friends</label>
             <input
               value={this.state.circle.friends}
               onChange={this.handleChange('friends')}
