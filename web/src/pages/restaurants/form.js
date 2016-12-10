@@ -17,6 +17,12 @@ const RestaurantForm = React.createClass({
             resolved: false
         }
     },
+    componentDidMount() {
+      if(this.props.params.id) {
+        data.get('restaurants', this.props.params.id)
+        .then(restaurant => this.setState({restaurant}))
+      }
+    },
     handleChange(field) {
       return (e) => {
         let restaurant = {...this.state.restaurant}
@@ -26,18 +32,31 @@ const RestaurantForm = React.createClass({
     },
     handleSubmit(e) {
       e.preventDefault()
-      data.post('restaurants', this.state.restaurant)
+      if(this.state.restaurant.id) {
+        return data.put('restaurants', this.state.restaurant)
         .then(res => {
           if (res.id) {
-            this.setState({resolved: res.id})
+            this.setState({resolved: true})
           }
         })
+      }
+      // adding model, and then add document
+      data.post('restaurants', this.state.restaurant)
+      // then if successsful get a result
+        .then(res => {
+          if (res.id) {
+            //then set the state and change state and if introducing a new node need to add un the intial state a setting
+            this.setState({resolved: true})
+          }
+        })
+
     },
     render() {
+      const formState = this.state.restaurant.id ? 'Edit' : 'Name'
         return (
             <div>
-              {this.state.resolved ? <Redirect to='/restaurants' /> : null}
-                <h1>Restaurant Form</h1>
+              {this.state.resolved ? <Redirect to={`/restaurants`} /> : null}
+                <h1>{formState} Restaurant Form</h1>
                 <div>
                     <form onSubmit={this.handleSubmit}>
                         <label style={labelStyle}>Name</label>
@@ -62,6 +81,9 @@ const RestaurantForm = React.createClass({
                     </form>
                     <Link to='/restaurants'>Return to Restaurants List</Link>
                 </div>
+                <pre>
+                  {JSON.stringify(this.state, null, 2)}
+                </pre>
             </div>
         )
     }

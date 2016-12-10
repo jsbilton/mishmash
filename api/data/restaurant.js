@@ -118,19 +118,6 @@ const db = new PouchDB(urlFormat(config.get('cloudant')))
             "reservation_url": ""
         },
         {
-            "_id": "restaurant_Home_Team_29409",
-            "type": "restaurant",
-            "name": "Home Team BBQ",
-            "address": "1223 Savannah Highway",
-            "city": "Charleston",
-            "state": "SC",
-            "postal_code": "29409",
-            "phone": "843.227.6536",
-            "price_rating": "3",
-            "image_url": "http://www.fillmurray.com/50/50",
-            "reservation_url": ""
-        },
-        {
           "_id": "restaurant_Fleet_Landing_29401",
           "type": "restaurant",
           "name": "Fleet Landing",
