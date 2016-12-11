@@ -1,7 +1,7 @@
 const React = require('react')
 const { Link, Redirect} = require('react-router')
 const data = require('../../utils/data')()
-const confirm = require('react-confirm2')
+const Confirm = require('../../components/confirm.js')
 const Friend = React.createClass({
   getInitialState(){
     return {
@@ -15,8 +15,7 @@ const Friend = React.createClass({
   },
   handleRemove(e){
     e.preventDefault()
-      data.remove('friends', this.props.params.id)
-        .then(result => this.setState({ resolved: true }))
+    this.setState({ showconfirm: true })
   },
   handleConfirm(e) {
     data.remove('friends', this.props.params.id, this.state.friend)
@@ -26,7 +25,7 @@ const Friend = React.createClass({
       })
       .then(res => {
         this.setState({
-          deleted: true,
+          resolved: true,
           showconfirm: false
         })
       })
@@ -38,13 +37,22 @@ const Friend = React.createClass({
         return (
             <div>
               {this.state.resolved ? <Redirect to='/friends' /> : null}
+              {this.state.showconfirm ?
+                <Confirm
+                  msg="Are you sure?"
+                  onCancel={this.handleCancel}
+                  onConfirm={this.handleConfirm} /> : null
+              }
+              {this.state.showconfirm ? null : <div>
               <h1>Show</h1>
               <h3>{this.state.friend.name}</h3>
-              <nav>
-                <Link to={`/friends/${this.state.friend._id}/edit`}>Edit</Link>
-                <a href="#" onClick={this.handleRemove}>Remove Circle</a>
-                <Link to={`/friends`}>Back to Friends</Link>
-              </nav>
+                <nav>
+                  <Link to={`/friends/${this.state.friend._id}/edit`}>Edit</Link>
+                  <a href="#" onClick={this.handleRemove}>Remove Circle</a>
+                  <Link to={`/friends`}>Back to Friends</Link>
+                </nav>
+              </div>
+            }
               <pre>
                 {JSON.stringify(this.state, null, 2)}
               </pre>
