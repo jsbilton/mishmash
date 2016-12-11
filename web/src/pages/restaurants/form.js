@@ -45,7 +45,7 @@ const RestaurantForm = React.createClass({
      }
    },
     render() {
-      const formState = this.state.restaurant.id ? 'Edit' : 'Name'
+      const formState = this.state.restaurant._id ? 'Edit' : 'Name'
         return (
             <div>
               {this.state.resolved ? <Redirect to={`/restaurants`} /> : null}
