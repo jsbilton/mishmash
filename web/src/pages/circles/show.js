@@ -16,8 +16,7 @@ const Circle = React.createClass({
   handleRemove(e) {
     e.preventDefault()
      data.remove('circles', this.props.params.id)
-       .then(result =>
-         this.setState({resolved: true}))
+       .then(result => this.setState({resolved: true}))
    },
   handleConfirm(e) {
     data.remove('circles', this.props.params.id, this.state.c)
@@ -28,7 +27,6 @@ const Circle = React.createClass({
       .then(res => {
         this.setState({
           deleted: true,
-          // you want to hide the
           showconfirm: false
         })
       })
@@ -47,6 +45,9 @@ const Circle = React.createClass({
             <a href="#" onClick={this.handleRemove}>Remove Circle</a>
             <Link to={`/circles`}>Return</Link>
           </nav>
+          <pre>
+            {JSON.stringify(this.state, null, 2)}
+          </pre>
       </div>
     )
   }

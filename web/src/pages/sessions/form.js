@@ -13,26 +13,34 @@ const SessionForm = React.createClass({
       resolved: false
     }
   },
-  handleChange(field){
-  return (e) => {
-    let session = {...this.state.session}
-    session[field]= e.target.value
-    this.setState({session})
-   }
+  componentDidMount() {
+    if (this.props.params.id) {
+      data.get('sessions', this.props.params.id)
+      .then(session => this.setState({session}))
+    }
   },
-  handleSubmit(e){
+  handleChange(field){
+    return (e) => {
+      let session = {...this.state.session}
+      session[field]= e.target.value
+      this.setState({session})
+     }
+  },
+  handleSubmit(e) {
     e.preventDefault()
-    data.post('sessions', this.state.session)
-      .then(res => {
-        if (res.id) {
-          this.setState({resolved: res.id})
-        }
-      })
+    if (!this.state.session._id) {
+      data.post('sessions', this.state.session)
+      .then(res =>  this.setState({resolved: true}))
+    } else {
+      data.put('sessions', this.state.session._id, this.state.session)
+      .then(res => this.setState({ resolved: true}))
+    }
   },
   render() {
-    return (
+    const formState = this.state.session._id ? 'Edit' : 'Name'
+   return (
       <div>
-        {this.state.resolved ? <Redirect to='/sessions' /> : null}
+        {this.state.resolved ? <Redirect to={`/sessions`} /> : null}
         <h1>Session Form Page</h1>
         <div>
           <form onSubmit={this.handleSubmit}>
@@ -57,6 +65,9 @@ const SessionForm = React.createClass({
           </form>
           <Link to='/sessions'>Return to Sessions List</Link>
         </div>
+        <pre>
+          {JSON.stringify(this.state, null, 2)}
+        </pre>
       </div>
     )
   }

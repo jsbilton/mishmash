@@ -1,4 +1,5 @@
 const React = require('react')
+const { map } = require('ramda')
 const data = require('../../utils/data')()
 const { Link } = require('react-router')
 const Sessions = React.createClass({
@@ -15,7 +16,11 @@ const Sessions = React.createClass({
     .catch(err => console.log("error", err.message))
   },
     render() {
-      const li = session => <li key={session.doc.name}>{session.doc.name}</li>
+      const transform = map(sess => {
+        return <div key={sess.doc.name}>
+          <Link to={`/sessions/${sess.id}/show`}>{sess.doc.name}</Link>
+        </div>
+      })
 
         return (
             <div>
@@ -23,7 +28,7 @@ const Sessions = React.createClass({
                 </h1>
                 <Link to='/sessions/new'>New Session</Link>
                 <ul>
-                  {this.state.sessions.map(li)}
+                  {transform(this.state.sessions)}
                 </ul>
                 <Link to='/sessions'>Return to sessions list</Link>
                 |

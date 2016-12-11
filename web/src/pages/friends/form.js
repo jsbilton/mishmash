@@ -6,16 +6,19 @@ const FriendForm = React.createClass({
   getInitialState() {
     return {
       friend: {
-        name: '',
-        phone: '',
-        email: ''
+        name: ''
       },
       resolved: false
     }
   },
+  componentDidMount() {
+    if (this.props.params.id)
+     data.get('friends', this.props.params.id)
+    .then(friend => this.setState({friend}))
+  },
   handleChange(field){
     return (e) => {
-      console.log("something", e.target.value)
+      // console.log("something", e.target.value)
       let friend = {...this.state.friend}
       friend[field] = e.target.value
       this.setState({friend})
@@ -23,19 +26,21 @@ const FriendForm = React.createClass({
   },
   handleSubmit(e){
     e.preventDefault()
-    console.log(this.state.friend)
-    data.post('friends', this.state.friend)
-      .then(response => {
-        if (response.id) {
-          this.setState({resolved: response.id})
+    if (!this.state.friend._id) {
+      data.post('friends', this.state.friend)
+      .then(res => this.setState({resolved: true}))
+    } else {
+        data.put('friends', this.state.friend._id,
+        this.state.friend)
+        .then(res => this.setState({resolved: true}))
       }
-   })
  },
     render () {
+      const formState = this.state.friend._id ? 'Edit' : 'New'
         return (
             <div>
               {this.state.resolved ? <Redirect to='/friends' /> : null}
-                <h1>New Friend Form</h1>
+                <h1>{formState} Friend Form</h1>
                 <div>
                     <form onSubmit={this.handleSubmit}>
                         <label style={labelStyle}>Name</label>
