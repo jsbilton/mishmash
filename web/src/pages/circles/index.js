@@ -1,5 +1,6 @@
 const React = require('react')
 const { Link } = require('react-router')
+const { map } = require('ramda')
 const data = require('../../utils/data')()
 // const { pluck } = require('ramda')
 const Circles = React.createClass({
@@ -9,7 +10,6 @@ const Circles = React.createClass({
     }
   },
   componentDidMount() {
-  // console.log('circles', this.state.circles)
     data.list('circles')
       .then(circles => {
         console.log(circles)
@@ -18,16 +18,20 @@ const Circles = React.createClass({
       .catch(err => console.log("error", err.message))
   },
   render() {
-    const li = circle => <li key={circle.doc.title}>{circle.doc.title}</li>
-
+    const transform = map(c => {
+      return <div key={c.doc.title}><Link to={`/circles/${c.id}/show`}>{c.doc.title}</Link>
+    </div>
+  })
     return (
       <div>
         <h1>Circles</h1>
         <Link to='/circles/new'>New Circle</Link>
           <ul>
-            {this.state.circles.map(li)}
+            {transform(this.state.circles)}
           </ul>
           <Link to='/circles'>Return to Circles</Link>
+          |
+          <Link to='/'>Return to App Resource</Link>
           <pre>
             {JSON.stringify(this.state, null, 2)}
           </pre>

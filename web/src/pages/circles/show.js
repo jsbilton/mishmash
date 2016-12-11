@@ -5,33 +5,48 @@ const confirm = require('react-confirm2')
 const Circle = React.createClass({
   getInitialState() {
     return {
-      circle: {
-        id: '',
-        title: ''
-        // friend: []
-      },
-      removed: false
+      circle: '',
+      resolved: false
     }
   },
   componentDidMount() {
     data.get('circles', this.props.params.id)
-      .then(circle => this.setState({circle}))
+    .then(circle => this.setState({circle}))
   },
   handleRemove(e) {
     e.preventDefault()
-    confirm('Are you sure you want to remove this Circle?', () => {
-      data.remove('circles', this.props.params.id, this.state.circle)
-        .then(response => this.setState({removed: true}))
-    })
+     data.remove('circles', this.props.params.id)
+       .then(result =>
+         this.setState({resolved: true}))
+   },
+  handleConfirm(e) {
+    data.remove('circles', this.props.params.id, this.state.c)
+      .then(res => {
+        console.log(res)
+        return res
+      })
+      .then(res => {
+        this.setState({
+          deleted: true,
+          // you want to hide the
+          showconfirm: false
+        })
+      })
+  },
+  handleCancel(e) {
+    this.setState({showconfirm: false})
   },
   render () {
     return (
       <div>
-        {this.state.removed ? <Redirect to='/circles' /> : null}
+        {this.state.resolved ? <Redirect to='/circles' /> : null}
+        <h1>Show</h1>
           <h3>{this.state.circle.title}</h3>
-          <Link to={`/circles/${this.state.circle.id}/edit`}>Edit</Link>
-          <a href="" onClick={this.handleRemove}>Remove Circle</a>
-          <Link to='/circles'>Return</Link>
+          <nav>
+            <Link to={`/circles/${this.state.circle._id}/edit`}>Edit</Link>
+            <a href="#" onClick={this.handleRemove}>Remove Circle</a>
+            <Link to={`/circles`}>Return</Link>
+          </nav>
       </div>
     )
   }

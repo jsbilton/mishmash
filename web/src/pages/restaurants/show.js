@@ -46,12 +46,9 @@ const Restaurant = React.createClass({
         <h3>{this.state.restaurant.name}</h3>
         <nav>
           <Link to={`/restaurants/${this.state.restaurant._id}/edit`}>Edit</Link>
-          <a href="" onClick={this.handleRemove}>Remove</a>
+          <a href="#" onClick={this.handleRemove}>Remove</a>
           <Link to={`/restaurants`}>Back to restaurants</Link>
         </nav>
-
-
-
         <pre>
           {JSON.stringify(this.state, null, 2)}
         </pre>

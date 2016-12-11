@@ -6,17 +6,17 @@ const CircleForm = React.createClass({
   getInitialState() {
     return {
       circle: {
-        title: '',
-        friends: []
+        title: ''
+        // friends: []
       },
       resolved: false
     }
   },
   componentDidMount() {
-    // if (this.props.params.id) {
-    //   data.get('circles', this.props.params.id)
-    //   .then(circle => this.setState({circle}))
-    // }
+    if (this.props.params.id) {
+      data.get('circles', this.props.params.id)
+      .then(circle => this.setState({circle}))
+    }
   },
   handleChange(field) {
     return (e) => {
@@ -25,26 +25,18 @@ const CircleForm = React.createClass({
       this.setState({circle})
     }
   },
-  handleSubmit(e) {
-    e.preventDefault()
-    // if (this.state.circle.id) {
-    //   return data.put('circles', this.state.circle.id, this.state.circle)
-    //     .then(response => {
-    //       if (response.id) {
-    //         this.setState({resolved: response.id})
-    //       }
-    //     })
-    // }
-    console.log(this.state.circle)
-    data.post('circles', this.state.circle)
-      .then(response => {
-        if (response.id) {
-          this.setState({resolved: response.id})
-      }
-   })
+  handleSubmit (e) {
+   e.preventDefault()
+   if (!this.state.circle._id) {
+       data.post('circles', this.state.circle)
+       .then(res => this.setState({ resolved: true }))
+   } else {
+       data.put('circles', this.state.circle._id, this.state.circle)
+       .then(res => this.setState({ resolved: true}))
+   }
  },
   render() {
-    const formState = this.state.circle.id ? 'Edit' : 'New'
+    const formState = this.state.circle._id ? 'Edit' : 'New'
     return (
       <div>
         {this.state.resolved ? <Redirect to='/circles' /> : null }
