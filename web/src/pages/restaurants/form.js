@@ -2,7 +2,6 @@ const React = require('react')
 const labelStyle = { display: 'block'}
 const { Redirect, Link } = require('react-router')
 const data = require('../../utils/data')()
-// const Confirm = require('../../pages/restaurants/confirm.js')
 const RestaurantForm = React.createClass({
     getInitialState() {
         return {
@@ -44,6 +43,11 @@ const RestaurantForm = React.createClass({
          .then(res => this.setState({ resolved: true}))
      }
    },
+   handleSelect(e){
+     const restaurant = {...this.state.restaurant}
+     restaurant.price_rating = {}
+     this.setState({restaurant})
+   },
     render() {
       const formState = this.state.restaurant._id ? 'Edit' : 'Name'
         return (
@@ -67,7 +71,15 @@ const RestaurantForm = React.createClass({
                         <label style={labelStyle}>Phone</label>
                         <input onChange={this.handleChange('phone')} value={this.state.restaurant.phone} type="text"/>
                         <label style={labelStyle}>Price Rating</label>
-                        <input onChange={this.handleChange('price_rating')} value={this.state.restaurant.price_rating} type="text"/>
+                        <select name="price-rater" id=""
+                          value={this.state.restaurant.price_rating}
+                          onChange={this.handleChange('price_rating')}>
+                          <option value='-1'>Select</option>
+                          <option value='1'>$$$$</option>
+                          <option value='2'>$$$</option>
+                          <option value='3'>$$</option>
+                          <option value='4'>$</option>
+                        </select>
                         <label style={labelStyle}>Preferences</label>
                         <input onChange={this.handleChange} value={this.state.restaurant.preferences} type="text"/>
                         <div>
