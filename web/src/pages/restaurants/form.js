@@ -2,7 +2,7 @@ const React = require('react')
 const labelStyle = { display: 'block'}
 const { Redirect, Link } = require('react-router')
 const data = require('../../utils/data')()
-const confirm = require('../../pages/restaurants/confirm.js')
+// const Confirm = require('../../pages/restaurants/confirm.js')
 const RestaurantForm = React.createClass({
     getInitialState() {
         return {
