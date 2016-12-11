@@ -23,7 +23,6 @@ const Restaurants = React.createClass({
         <Link to={`/restaurants/${rest.id}/show`}>{rest.doc.name}</Link>
       </div>
     })
-    // const li = restaurant => <li key={restaurant.doc.name}>{restaurant.doc.name}</li>
     return (
       <div>
         <h1>Restaurants List</h1>

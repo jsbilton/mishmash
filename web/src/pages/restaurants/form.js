@@ -2,6 +2,7 @@ const React = require('react')
 const labelStyle = { display: 'block'}
 const { Redirect, Link } = require('react-router')
 const data = require('../../utils/data')()
+const confirm = require('../../pages/restaurants/confirm.js')
 const RestaurantForm = React.createClass({
     getInitialState() {
         return {
@@ -12,7 +13,10 @@ const RestaurantForm = React.createClass({
                 state: '',
                 postal_code: '',
                 phone: '',
-                price_rating: ''
+                price_rating: '',
+                preferences: {
+
+                }
             },
             resolved: false
         }
@@ -30,27 +34,16 @@ const RestaurantForm = React.createClass({
         this.setState({restaurant})
       }
     },
-    handleSubmit(e) {
-      e.preventDefault()
-      if(this.state.restaurant.id) {
-        return data.put('restaurants', this.state.restaurant)
-        .then(res => {
-          if (res.id) {
-            this.setState({resolved: true})
-          }
-        })
-      }
-      // adding model, and then add document
-      data.post('restaurants', this.state.restaurant)
-      // then if successsful get a result
-        .then(res => {
-          if (res.id) {
-            //then set the state and change state and if introducing a new node need to add un the intial state a setting
-            this.setState({resolved: true})
-          }
-        })
-
-    },
+    handleSubmit (e) {
+     e.preventDefault()
+     if (!this.state.restaurant._id) {
+         data.post('restaurants', this.state.restaurant)
+         .then(res => this.setState({ resolved: true }))
+     } else {
+         data.put('restaurants', this.state.restaurant._id, this.state.restaurant)
+         .then(res => this.setState({ resolved: true}))
+     }
+   },
     render() {
       const formState = this.state.restaurant.id ? 'Edit' : 'Name'
         return (
@@ -75,6 +68,8 @@ const RestaurantForm = React.createClass({
                         <input onChange={this.handleChange('phone')} value={this.state.restaurant.phone} type="text"/>
                         <label style={labelStyle}>Price Rating</label>
                         <input onChange={this.handleChange('price_rating')} value={this.state.restaurant.price_rating} type="text"/>
+                        <label style={labelStyle}>Preferences</label>
+                        <input onChange={this.handleChange} value={this.state.restaurant.preferences} type="text"/>
                         <div>
                             <button>Submit</button>
                         </div>

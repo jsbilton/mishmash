@@ -177,7 +177,7 @@ function getFriend(id, callback) {
 function listFriends(callback) {
       const sortBy = 'friends'
       const sortToken = ''
-      const limit = 10
+      const limit = 20
       listDocs(sortBy, sortToken, limit, (e, r) => {
         if (e) callback(e, null)
         callback(null, r)
@@ -228,7 +228,7 @@ function deleteCircle(data, callback) {
 function listCircles(callback) {
       const sortBy = 'circles'
       const sortToken = ''
-      const limit = 10
+      const limit = 20
       listDocs(sortBy, sortToken, limit, (e, r) => {
         if (e) callback(e, null)
         callback(null, r)
@@ -279,7 +279,7 @@ function deleteRestaurant(data, callback) {
 function listRestaurants(callback) {
       const sortBy = 'restaurants'
       const sortToken = ''
-      const limit = 10
+      const limit = 20
       listDocs(sortBy, sortToken, limit, (e, r) => {
         if (e) callback(e, null)
         callback(null, r)
@@ -330,7 +330,7 @@ function deleteSession(data, callback) {
 function listSessions(callback) {
       const sortBy = 'sessions'
       const sortToken = ''
-      const limit = 10
+      const limit = 20
       listDocs(sortBy, sortToken, limit, (e, r) => {
         if (e) callback(e, null)
         callback(null, r)

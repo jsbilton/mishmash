@@ -16,6 +16,8 @@ const {
     About,
     Home
 } = require('./pages')
+
+// const Confirm = require('./pages/restaurants/confirm.js')
 const App = React.createClass({
     render() {
         return (
