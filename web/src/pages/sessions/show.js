@@ -1,7 +1,7 @@
 const React = require('react')
 const { Link, Redirect} = require('react-router')
 const data = require('../../utils/data')()
-const confirm = require('react-confirm2')
+const Confirm = require('../../components/confirm.js')
 const Session = React.createClass({
   getInitialState() {
       return {
@@ -15,8 +15,7 @@ const Session = React.createClass({
   },
   handleRemove(e) {
     e.preventDefault()
-      data.remove('sessions', this.props.params.id)
-        .then(response => this.setState({resolved: true}))
+    this.setState({showconfirm: true})
   },
   handleConfirm(e) {
     data.remove('sessions', this.props.params.id, this.state.session)
@@ -26,7 +25,7 @@ const Session = React.createClass({
       })
       .then(res => {
         this.setState({
-          deleted: true,
+          resolved: true,
           showconfirm: false
         })
       })
@@ -38,13 +37,24 @@ const Session = React.createClass({
         return (
             <div>
               {this.state.resolved ? <Redirect to='/sessions' /> : null }
-              <h1>Show</h1>
+              {this.state.showconfirm ?
+                <Confirm
+                  msg="Are you sure?"
+                  onCancel={this.handleCancel}
+                  onConfirm={this.handleConfirm} /> : null
+              }
+              {this.state.showconfirm ? null : <div><h1>Show</h1>
               <h3>{this.state.session._id}</h3>
               <nav>
                 <Link to={`/sessions/${this.state.session._id}/edit`}>Edit</Link>
                 <a href="#" onClick={this.handleRemove}>Remove</a>
                 <Link to={`/sessions`}>Return to Sessions</Link>
-              </nav>
+                </nav>
+              </div>
+              }
+              <pre>
+                {JSON.stringify(this.state, null, 2)}
+              </pre>
 
             </div>
         )
