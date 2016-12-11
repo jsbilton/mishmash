@@ -5,16 +5,14 @@ const data = require('../../utils/data')()
 const FriendForm = React.createClass({
   getInitialState() {
     return {
-      friend: {
-        name: ''
-      },
+      friend: '',
       resolved: false
     }
   },
   componentDidMount() {
     if (this.props.params.id)
-     data.get('friends', this.props.params.id)
-    .then(friend => this.setState({friend}))
+       data.get('friends', this.props.params.id)
+      .then(friend => this.setState({friend}))
   },
   handleChange(field){
     return (e) => {
@@ -26,20 +24,20 @@ const FriendForm = React.createClass({
   },
   handleSubmit(e){
     e.preventDefault()
-    if (!this.state.friend._id) {
-      data.post('friends', this.state.friend)
-      .then(res => this.setState({resolved: true}))
-    } else {
-        data.put('friends', this.state.friend._id,
-        this.state.friend)
+      if (!this.state.friend._id) {
+        data.post('friends', this.state.friend)
         .then(res => this.setState({resolved: true}))
+      } else {
+          data.put('friends', this.state.friend._id,
+          this.state.friend)
+          .then(res => this.setState({resolved: true}))
       }
- },
+   },
     render () {
       const formState = this.state.friend._id ? 'Edit' : 'New'
         return (
             <div>
-              {this.state.resolved ? <Redirect to='/friends' /> : null}
+              {this.state.resolved ? <Redirect to={`/friends`} /> : null}
                 <h1>{formState} Friend Form</h1>
                 <div>
                     <form onSubmit={this.handleSubmit}>

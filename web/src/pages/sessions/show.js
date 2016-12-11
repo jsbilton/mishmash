@@ -39,11 +39,11 @@ const Session = React.createClass({
             <div>
               {this.state.resolved ? <Redirect to='/sessions' /> : null }
               <h1>Show</h1>
-              <h3>{this.state.session.id}</h3>
+              <h3>{this.state.session._id}</h3>
               <nav>
                 <Link to={`/sessions/${this.state.session._id}/edit`}>Edit</Link>
-                <a href="" onClick={this.handleRemove}>Remove</a>
-                <Link to='/sessions'>Return to Sessions</Link>
+                <a href="#" onClick={this.handleRemove}>Remove</a>
+                <Link to={`/sessions`}>Return to Sessions</Link>
               </nav>
 
             </div>

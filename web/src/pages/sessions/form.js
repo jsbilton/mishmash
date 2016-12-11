@@ -5,11 +5,7 @@ const labelStyle = { display: 'block' }
 const SessionForm = React.createClass({
   getInitialState () {
     return {
-      session: {
-        name: '',
-        circleId: '',
-        friendId: ''
-      },
+      session: '',
       resolved: false
     }
   },
@@ -28,20 +24,20 @@ const SessionForm = React.createClass({
   },
   handleSubmit(e) {
     e.preventDefault()
-    if (!this.state.session._id) {
-      data.post('sessions', this.state.session)
-      .then(res =>  this.setState({resolved: true}))
-    } else {
-      data.put('sessions', this.state.session._id, this.state.session)
-      .then(res => this.setState({ resolved: true}))
-    }
+      if (!this.state.session._id) {
+        data.post('sessions', this.state.session)
+        .then(res =>  this.setState({resolved: true}))
+      } else {
+        data.put('sessions', this.state.session._id, this.state.session)
+        .then(res => this.setState({ resolved: true}))
+      }
   },
   render() {
     const formState = this.state.session._id ? 'Edit' : 'Name'
    return (
       <div>
         {this.state.resolved ? <Redirect to={`/sessions`} /> : null}
-        <h1>Session Form Page</h1>
+        <h1>{formState} Session Form</h1>
         <div>
           <form onSubmit={this.handleSubmit}>
             <label style={labelStyle}>Name of Session</label>

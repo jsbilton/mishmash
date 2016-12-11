@@ -10,7 +10,7 @@ const Friend = React.createClass({
     }
   },
   componentDidMount() {
-    data.get('friends', this.prop.params.id)
+    data.get('friends', this.props.params.id)
     .then(friend => this.setState({friend}))
   },
   handleRemove(e){
@@ -19,7 +19,7 @@ const Friend = React.createClass({
         .then(result => this.setState({ resolved: true }))
   },
   handleConfirm(e) {
-    data.remove('friends', this.props.params.id, this.state.f)
+    data.remove('friends', this.props.params.id, this.state.friend)
       .then(res => {
         console.log(res)
         return res
