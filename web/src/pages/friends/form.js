@@ -1,5 +1,6 @@
 const React = require('react')
 const labelStyle = { display: 'block' }
+const { FormGroup, FormControl, ControlLabel, HelpBlock, ButtonToolbar, Button } = require('react-bootstrap')
 const { Redirect, Link } = require('react-router')
 const data = require('../../utils/data')()
 const FriendForm = React.createClass({
@@ -41,23 +42,32 @@ const FriendForm = React.createClass({
                 <h1>{formState} Friend Form</h1>
                 <div>
                     <form onSubmit={this.handleSubmit}>
-                        <label style={labelStyle}>Name</label>
-                        <input
-                          onChange={this.handleChange('name')}
-                          value={this.state.friend.name}
-                          type="text"/>
-                        <label style={labelStyle}>Phone</label>
-                        <input
-                          onChange={this.handleChange('phone')}
-                          value={this.state.friend.phone}
-                          type="text"/>
-                        <label style={labelStyle}>Email</label>
-                        <input
-                          onChange={this.handleChange('email')}
-                          value={this.state.friend.email}
-                          type="text"/>
+                        <FormGroup>
+                          <ControlLabel style={labelStyle}>Name</ControlLabel>
+                          <FormControl
+                            onChange={this.handleChange('name')}
+                            value={this.state.friend.name}
+                            type="text"/>
+                          <HelpBlock>First and Last Name</HelpBlock>
+                        </FormGroup>
+                        <FormGroup>
+                          <ControlLabel style={labelStyle}>Phone</ControlLabel>
+                          <FormControl
+                            onChange={this.handleChange('phone')}
+                            value={this.state.friend.phone}
+                            type="text"/>
+                        </FormGroup>
+                        <FormGroup>
+                          <ControlLabel style={labelStyle}>Email</ControlLabel>
+                          <FormControl
+                            onChange={this.handleChange('email')}
+                            value={this.state.friend.email}
+                            type="text"/>
+                        </FormGroup>
                         <div>
-                          <button>Submit</button>
+                          <ButtonToolbar>
+                            <Button>Submit</Button>
+                          </ButtonToolbar>
                         </div>
                     </form>
                     <Link to='/friends'>Back to Friends</Link>

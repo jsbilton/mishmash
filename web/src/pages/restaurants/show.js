@@ -1,5 +1,7 @@
 const React = require('react')
 const { Link, Redirect } = require('react-router')
+const { ButtonToolbar, Button } =require('react-bootstrap')
+
 const data = require('../../utils/data')()
 const Confirm = require('../../components/confirm.js')
 // const Confirm = require('react-confirm2')
@@ -45,30 +47,23 @@ const Restaurant = React.createClass({
             onCancel={this.handleCancel}
             onConfirm={this.handleConfirm} /> : null
         }
+        {this.state.showconfirm ? null : <div>
+          <header>
+            <div style={{float: 'left'}}>
+              <img src="http://www.fillmurray.com/g/30/30" />
+            </div>
+            <h1>{this.state.restaurant.name}</h1>
+          </header>
 
-          {this.state.showconfirm ? null : <div>
-            <h1>Show</h1>
-            <h3>{this.state.restaurant.name}</h3>
-            <nav>
-              <Link to={`/restaurants/${this.state.restaurant._id}/edit`}>Edit</Link>
-              |
-              <a href="#" onClick={this.handleRemove}>Remove</a>
-              |
-              <Link to="/restaurants">Index</Link>
-            </nav>
-          </div>
-          }
-
-
-        {/* <h1>Show</h1>
-        <h3>{this.state.restaurant.name}</h3>
-        <nav>
-          <Link to={`/restaurants/${this.state.restaurant._id}/edit`}>Edit</Link>
-          |
-          <a href="#" onClick={this.handleRemove}>Remove</a>
-          |
-          <Link to={`/restaurants`}>Index</Link>
-        </nav> */}
+          <nav>
+            <Link to={`/restaurants/${this.state.restaurant._id}/edit`}>Edit</Link>
+            |
+            <a href="#" onClick={this.handleRemove}>Remove</a>
+            |
+            <Link to="/restaurants">Index</Link>
+          </nav>
+        </div>
+        }
         <pre>
           {JSON.stringify(this.state, null, 2)}
         </pre>

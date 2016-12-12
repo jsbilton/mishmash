@@ -1,5 +1,6 @@
 const React = require('react')
 const { Redirect, Link } = require('react-router')
+const { FormGroup, FormControl, ControlLabel, ButtonToolbar, Button } = require('react-bootstrap')
 const data = require('../../utils/data')()
 const labelStyle = { display: 'block' }
 const SessionForm = React.createClass({
@@ -40,23 +41,32 @@ const SessionForm = React.createClass({
         <h1>{formState} Session Form</h1>
         <div>
           <form onSubmit={this.handleSubmit}>
-            <label style={labelStyle}>Name of Session</label>
-            <input
-              onChange={this.handleChange('name')}
-              value={this.state.session.name}
-              type="text"/>
-            <label style={labelStyle}>Name of the Circle</label>
-            <input
-              onChange={this.handleChange('circleId')}
-              value={this.state.session.circleId}
-              type="text"/>
-            <label style={labelStyle}>Friend in Circle</label>
-            <input
-              onChange={this.handleChange('friendId')}
-              value={this.state.session.friendId}
-              type="text"/>
+            <FormGroup>
+              <ControlLabel style={labelStyle}>Name of Session</ControlLabel>
+              <FormControl
+                onChange={this.handleChange('name')}
+                value={this.state.session.name}
+                type="text"/>
+            </FormGroup>
+            <FormGroup>
+              <ControlLabel style={labelStyle}>Name of the Circle</ControlLabel>
+              <FormControl
+                onChange={this.handleChange('circleId')}
+                value={this.state.session.circleId}
+                type="text"/>
+            </FormGroup>
+            <FormGroup>
+              <ControlLabel style={labelStyle}>Friend in Circle</ControlLabel>
+              <FormControl
+                onChange={this.handleChange('friendId')}
+                value={this.state.session.friendId}
+                type="text"/>
+            </FormGroup>
+
             <div>
-              <button>Submit</button>
+              <ButtonToolbar>
+                <Button>Submit</Button>
+              </ButtonToolbar>
             </div>
           </form>
           <Link to='/sessions'>Return to Sessions List</Link>

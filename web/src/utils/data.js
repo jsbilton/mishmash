@@ -16,7 +16,7 @@ module.exports = function(){
       headers: {
         'Content-type': 'application/json'
       }
-    })  
+    })
     .then(toJSON)
 
   const get = (model, id) =>

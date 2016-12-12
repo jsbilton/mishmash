@@ -1,6 +1,8 @@
 const React = require('react')
 const labelStyle = { display: 'block'}
 const { Redirect, Link } = require('react-router')
+const { FormGroup, FormControl, ControlLabel, HelpBlock, ButtonToolbar, Button } = require('react-bootstrap')
+const { map } = require('ramda')
 const data = require('../../utils/data')()
 const RestaurantForm = React.createClass({
     getInitialState() {
@@ -12,7 +14,9 @@ const RestaurantForm = React.createClass({
                 state: '',
                 postal_code: '',
                 phone: '',
-                price_rating: '',
+                price_rating: {
+                  id: null
+                },
                 preferences: {
 
                 }
@@ -45,7 +49,7 @@ const RestaurantForm = React.createClass({
    },
    handleSelect(e){
      const restaurant = {...this.state.restaurant}
-     restaurant.price_rating = {}
+     restaurant.price_rating = { id: e.target.value}
      this.setState({restaurant})
    },
     render() {
@@ -55,35 +59,51 @@ const RestaurantForm = React.createClass({
               {this.state.resolved ? <Redirect to={`/restaurants`} /> : null}
                 <h1>{formState} Restaurant Form</h1>
                 <div>
-                    <form onSubmit={this.handleSubmit}>
-                        <label style={labelStyle}>Name</label>
-                        <input onChange={this.handleChange('name')} value={this.state.restaurant.name} type="text"/>
-
-                        <label style={labelStyle}>Address</label>
-                        <input onChange={this.handleChange('address')} value={this.state.restaurant.address} type="text"/>
-
-                        <label style={labelStyle}>City</label>
-                        <input onChange={this.handleChange('city')} value={this.state.restaurant.city} type="text"/>
-                        <label style={labelStyle}>State</label>
-                        <input onChange={this.handleChange('state')} value={this.state.restaurant.state} type="text"/>
-                        <label style={labelStyle}>Postal Code</label>
-                        <input onChange={this.handleChange('postal_code')} value={this.state.restaurant.postal_code} type="text"/>
-                        <label style={labelStyle}>Phone</label>
-                        <input onChange={this.handleChange('phone')} value={this.state.restaurant.phone} type="text"/>
-                        <label style={labelStyle}>Price Rating</label>
-                        <select name="price-rater" id=""
-                          value={this.state.restaurant.price_rating}
-                          onChange={this.handleChange('price_rating')}>
-                          <option value='-1'>Select</option>
-                          <option value='1'>$$$$</option>
-                          <option value='2'>$$$</option>
-                          <option value='3'>$$</option>
-                          <option value='4'>$</option>
-                        </select>
-                        <label style={labelStyle}>Preferences</label>
-                        <input onChange={this.handleChange} value={this.state.restaurant.preferences} type="text"/>
+                  <form onSubmit={this.handleSubmit}>
+                        <FormGroup>
+                          <ControlLabel style={labelStyle}>Name</ControlLabel>
+                          <FormControl onChange={this.handleChange('name')} value={this.state.restaurant.name} type="text"/>
+                          <HelpBlock>Must Provide: First and Last Name</HelpBlock>
+                        </FormGroup>
+                        <FormGroup>
+                          <ControlLabel style={labelStyle}>Address</ControlLabel>
+                          <FormControl onChange={this.handleChange('address')} value={this.state.restaurant.address} type="text"/>
+                        </FormGroup>
+                        <FormGroup>
+                          <ControlLabel style={labelStyle}>City</ControlLabel>
+                          <FormControl onChange={this.handleChange('city')} value={this.state.restaurant.city} type="text"/>
+                        </FormGroup>
+                        <FormGroup>
+                          <ControlLabel style={labelStyle}>State</ControlLabel>
+                          <FormControl onChange={this.handleChange('state')} value={this.state.restaurant.state} type="text"/>
+                        </FormGroup>
+                        <FormGroup>
+                          <ControlLabel style={labelStyle}>Postal Code</ControlLabel>
+                          <FormControl onChange={this.handleChange('postal_code')} value={this.state.restaurant.postal_code} type="text"/>
+                          <HelpBlock>Must Provide: User Zip Code</HelpBlock>
+                        </FormGroup>
+                        <FormGroup>
+                          <ControlLabel style={labelStyle}>Phone</ControlLabel>
+                          <FormControl onChange={this.handleChange('phone')} value={this.state.restaurant.phone} type="text"/>
+                        </FormGroup>
+                        <FormGroup>
+                          <ControlLabel style={labelStyle}>Price Rating</ControlLabel>
+                          {/* <select
+                            value={this.state.restaurant.price}
+                            onChange={this.handleSelect}>
+                            <option key={price_rating.id} value='-1'>Select</option>
+                            {this.state.restaurant.price_rating.map(price_rating =>
+                            <option value={price_rating.id}>{price_rating.name}</option>)}
+                          </select> */}
+                        </FormGroup>
+                        <FormGroup>
+                          <ControlLabel style={labelStyle}>Preferences</ControlLabel>
+                          <FormControl onChange={this.handleSelect} value={this.state.restaurant.preferences} type="text"/>
+                        </FormGroup>
                         <div>
-                            <button>Submit</button>
+                          <ButtonToolbar>
+                            <Button>Submit</Button>
+                          </ButtonToolbar>
                         </div>
                     </form>
                     <Link to='/restaurants'>Return to Restaurants List</Link>

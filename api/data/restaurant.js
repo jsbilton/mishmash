@@ -13,7 +13,19 @@ const db = new PouchDB(urlFormat(config.get('cloudant')))
             "state": "SC",
             "postal_code": "29464",
             "phone": "843.881.9890",
-            "price_rating": "4",
+            "price_rating": {
+                "id": 1,
+                "name": "$$$$"
+            },{
+                "id": 2,
+                "name": "$$$"
+            },{
+                "id": 3,
+                "name": "$$"
+            },{
+                "id": 4,
+                "name": "$"
+            },
             "image_url": "http://www.fillmurray.com/50/50",
             "reservation_url": ""
         }, {

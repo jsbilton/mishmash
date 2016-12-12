@@ -1,5 +1,6 @@
 const React = require('react')
-const {BrowserRouter, Match} = require('react-router')
+const { Button, Jumbotron } = require('react-bootstrap')
+const { BrowserRouter, Match, Link } = require('react-router')
 const {
     Session,
     SessionForm,
@@ -23,7 +24,26 @@ const App = React.createClass({
         return (
             <BrowserRouter>
                 <div>
-                    <h1>MishMash</h1>
+                  <header>
+                      <Jumbotron>
+                        <h1>MishMash</h1>
+                      </Jumbotron>
+                    <nav>
+                      <Link to="/">{
+                   (params) => <Button {...params}>Hungry Now!</Button>}
+                     </Link>
+
+                      <Link to="/restaurants">{
+                   (params) => <Button {...params}>My Restaurants</Button>}
+                     </Link>
+
+                      <Link to="/friends">{
+                   (params) => <Button {...params}>My Friends</Button>}</Link>
+
+                      <Link to="/circles">{
+                   (params) => <Button {...params}>My Circles</Button>}</Link>
+                    </nav>
+                  </header>
                     <Match exactly pattern='/circles' component={Circles} />
                     <Match pattern='/circles/new' component={CircleForm} />
                     <Match pattern='/circles/:id/show' component={Circle} />
