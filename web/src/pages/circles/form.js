@@ -1,6 +1,6 @@
 const React = require('react')
 const labelStyle = { display: 'block' }
-const { FormGroup, FormControl, ControlLabel, HelpBlock, ButtonToolbar, Button } = require('react-bootstrap')
+const { FormGroup, FormControl, ControlLabel, HelpBlock, Button } = require('react-bootstrap')
 
 const data = require('../../utils/data')()
 const { Link, Redirect } = require('react-router')
@@ -8,7 +8,7 @@ const CircleForm = React.createClass({
   getInitialState() {
     return {
       circle: {
-        title: ''
+        title: '',
         // friends: []
       },
       resolved: false
@@ -51,19 +51,29 @@ const CircleForm = React.createClass({
                 value={this.state.circle.title}
                 onChange={this.handleChange('title')}
                 type="text"/>
-                <HelpBlock>Name for Circle</HelpBlock>
+                <HelpBlock>Select a Circle or Create a New One</HelpBlock>
             </FormGroup>
-            <FormGroup>
+            {/* <FormGroup>
               <ControlLabel style={labelStyle}>Friends</ControlLabel>
               <FormControl
                 value={this.state.circle.friends}
                 onChange={this.handleChange('friends')}
                 type="text"/>
-            </FormGroup>
+                  <HelpBlock>Friends will populate based on Circle selection above</HelpBlock>
+            </FormGroup> */}
             <div>
-              <ButtonToolbar>
+             <label htmlFor="">Friends</label>
+               <select name="" id="">
+                 <option value="friend_email">Friends</option>
+                 <option value="friend_janice@gmail.com">Janice Johnson</option>
+                 <option value="friend_traveller@gmail.com">Chris Stapleton</option>
+                 <option value="friend_jerry@gmail.com">Jerry Garcia</option>
+               </select>
+            </div>
+            <div>
+              <div>
                 <Button>Submit</Button>
-              </ButtonToolbar>
+              </div>
             </div>
           </form>
           <Link to='/circles'>Return</Link>

@@ -1,12 +1,12 @@
 const React = require('react')
 const labelStyle = { display: 'block' }
-const { FormGroup, FormControl, ControlLabel, HelpBlock, ButtonToolbar, Button } = require('react-bootstrap')
+const { FormGroup, FormControl, ControlLabel, HelpBlock, Button } = require('react-bootstrap')
 const { Redirect, Link } = require('react-router')
 const data = require('../../utils/data')()
 const FriendForm = React.createClass({
   getInitialState() {
     return {
-      friend: '',
+      friend:'',
       resolved: false
     }
   },
@@ -42,14 +42,16 @@ const FriendForm = React.createClass({
                 <h1>{formState} Friend Form</h1>
                 <div>
                     <form onSubmit={this.handleSubmit}>
+
                         <FormGroup>
                           <ControlLabel style={labelStyle}>Name</ControlLabel>
                           <FormControl
                             onChange={this.handleChange('name')}
                             value={this.state.friend.name}
                             type="text"/>
-                          <HelpBlock>First and Last Name</HelpBlock>
+                          <HelpBlock>Must Provide: First and Last Name</HelpBlock>
                         </FormGroup>
+
                         <FormGroup>
                           <ControlLabel style={labelStyle}>Phone</ControlLabel>
                           <FormControl
@@ -57,18 +59,20 @@ const FriendForm = React.createClass({
                             value={this.state.friend.phone}
                             type="text"/>
                         </FormGroup>
+
                         <FormGroup>
                           <ControlLabel style={labelStyle}>Email</ControlLabel>
                           <FormControl
                             onChange={this.handleChange('email')}
                             value={this.state.friend.email}
                             type="text"/>
+                            <HelpBlock>Must Provide: Email</HelpBlock>
                         </FormGroup>
+
                         <div>
-                          <ButtonToolbar>
                             <Button>Submit</Button>
-                          </ButtonToolbar>
                         </div>
+
                     </form>
                     <Link to='/friends'>Back to Friends</Link>
                 </div>

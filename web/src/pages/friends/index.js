@@ -1,5 +1,7 @@
 const React = require('react')
 const { Link } = require('react-router')
+const { Button } = require('react-bootstrap')
+
 const { map } = require('ramda')
 const data = require('../../utils/data')()
 const Friends = React.createClass({
@@ -24,7 +26,7 @@ const Friends = React.createClass({
     return (
       <div>
         <h1>Say hello to my little friends</h1>
-        <Link to='/friends/new'>New Friend</Link>
+        <Link to="/friends/new">{(params) => <Button {...params}>Add A Friend</Button>}</Link>
           <ul>
             {transform(this.state.friends)}
           </ul>

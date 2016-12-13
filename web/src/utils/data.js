@@ -1,8 +1,17 @@
 const fetch = require('isomorphic-fetch')
 const toJSON = res => res.json()
 const url = process.env.REACT_APP_API
+// const urlAPI = 'http://opentable.herokuapp.com/api/restaurants?zip={zip}'
 
-module.exports = function(){
+module.exports = function() {
+
+  // const listRecommendations =
+  //   fetch(urlAPI)
+  //
+  //     .then(toJSON)
+  //     .then(results => results.Search
+  //       ? this.setState({ results })
+  //       : this.setState({error: results}))
 
   const list = (model) =>
     fetch(`${url}/${model}`)
@@ -44,6 +53,7 @@ module.exports = function(){
      }).then(toJSON)
 
   return {
+    // listRecommendations,
     list,
     post,
     get,

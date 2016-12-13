@@ -1,10 +1,7 @@
 const React = require('react')
 const { Link, Redirect } = require('react-router')
-const { ButtonToolbar, Button } =require('react-bootstrap')
-
 const data = require('../../utils/data')()
 const Confirm = require('../../components/confirm.js')
-// const Confirm = require('react-confirm2')
 const Restaurant = React.createClass({
   getInitialState() {
     return {
@@ -50,7 +47,7 @@ const Restaurant = React.createClass({
         {this.state.showconfirm ? null : <div>
           <header>
             <div style={{float: 'left'}}>
-              <img src="http://www.fillmurray.com/g/30/30" />
+              <img src="http://www.fillmurray.com/g/30/30" alt="filler"/>
             </div>
             <h1>{this.state.restaurant.name}</h1>
           </header>
@@ -60,7 +57,7 @@ const Restaurant = React.createClass({
             |
             <a href="#" onClick={this.handleRemove}>Remove</a>
             |
-            <Link to="/restaurants">Index</Link>
+            <Link to={`/restaurants`}>Index</Link>
           </nav>
         </div>
         }

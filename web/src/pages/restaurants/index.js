@@ -1,6 +1,7 @@
 const React = require('react')
 const data = require('../../utils/data')()
 const { Link } = require('react-router')
+const { Button } = require('react-bootstrap')
 const { map } = require('ramda')
 const Restaurants = React.createClass({
   getInitialState() {
@@ -9,12 +10,15 @@ const Restaurants = React.createClass({
     }
   },
   componentDidMount() {
+    // change resource to different API
+    //data.list('listRecommendations', this.props.params.id)
     data.list('restaurants')
     .then(restaurants => {
       this.setState({
         restaurants: restaurants.rows
       })
     })
+    // data.listOpenTable('')
     .catch(err => console.log("error", err.message))
   },
   render () {
@@ -26,7 +30,7 @@ const Restaurants = React.createClass({
     return (
       <div>
         <h1>Restaurants List</h1>
-        <Link to='/restaurants/new'>New Restaurant</Link>
+        <Link to="/restaurants/new">{(params) => <Button {...params}>Add A Restaurant</Button>}</Link>
         <ul>
           {transform(this.state.restaurants)}
         </ul>

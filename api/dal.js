@@ -297,14 +297,13 @@ function createSession(session, callback) {
       return callback(new Error('400Unnecessary id property for create session'))
   } else if (session.hasOwnProperty('_rev') === true) {
       return callback(new Error('400Unnecessary rev property for create session'))
-  } else if (session.hasOwnProperty('name') !== true) {
-      return callback(new Error('400Missing name for create session'))
+  } else if (session.hasOwnProperty('name') === true) {
+      return callback(new Error('400Unnecessary name for create session'))
   } else {
 
         session.type = 'session'
-        session._id = 'session_' + session.name
+        session._id = 'session_' + Date.now()
 
-        //session_ + Date.now()
 
           db.put(session).then(function(res) {
             return callback(null, res)

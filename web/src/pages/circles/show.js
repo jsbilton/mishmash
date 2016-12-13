@@ -18,7 +18,7 @@ const Circle = React.createClass({
     this.setState({showconfirm: true})
    },
   handleConfirm(e) {
-    data.remove('circles', this.props.params.id, this.state.circle)
+    data.remove('circles', this.props.params.id, this.state.c)
       .then(res => {
         console.log(res)
         return res

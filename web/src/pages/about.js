@@ -1,6 +1,6 @@
 const React = require('react')
 const { Link } = require('react-router')
-const { ButtonToolbar, Button } = require('react-bootstrap')
+const { Button } = require('react-bootstrap')
 
 const About = React.createClass({
   render() {
