@@ -1,6 +1,6 @@
 const React = require('react')
 const labelStyle = { display: 'block' }
-const { FormGroup, FormControl, ControlLabel, HelpBlock, Button } = require('react-bootstrap')
+const { FormGroup, FormControl, ControlLabel, HelpBlock } = require('react-bootstrap')
 
 const data = require('../../utils/data')()
 const { Link, Redirect } = require('react-router')
@@ -9,7 +9,7 @@ const CircleForm = React.createClass({
     return {
       circle: {
         title: '',
-        // friends: []
+        friends: []
       },
       resolved: false
     }
@@ -42,42 +42,42 @@ const CircleForm = React.createClass({
     return (
       <div>
         {this.state.resolved ? <Redirect to='/circles' /> : null }
-        <h1>{formState} Circle Form</h1>
-        <div>
-          <form onSubmit={this.handleSubmit}>
-            <FormGroup>
-              <ControlLabel style={labelStyle}>Name</ControlLabel>
-              <FormControl
-                value={this.state.circle.title}
-                onChange={this.handleChange('title')}
-                type="text"/>
-                <HelpBlock>Select a Circle or Create a New One</HelpBlock>
-            </FormGroup>
-            {/* <FormGroup>
-              <ControlLabel style={labelStyle}>Friends</ControlLabel>
-              <FormControl
-                value={this.state.circle.friends}
-                onChange={this.handleChange('friends')}
-                type="text"/>
-                  <HelpBlock>Friends will populate based on Circle selection above</HelpBlock>
-            </FormGroup> */}
-            <div>
-             <label htmlFor="">Friends</label>
-               <select name="" id="">
-                 <option value="friend_email">Friends</option>
-                 <option value="friend_janice@gmail.com">Janice Johnson</option>
-                 <option value="friend_traveller@gmail.com">Chris Stapleton</option>
-                 <option value="friend_jerry@gmail.com">Jerry Garcia</option>
-               </select>
-            </div>
-            <div>
+          <h1>{formState} Circle Form</h1>
+          <div>
+            <form onSubmit={this.handleSubmit}>
+              <FormGroup>
+                <ControlLabel style={labelStyle}>Name</ControlLabel>
+                <FormControl
+                  value={this.state.circle.title}
+                  onChange={this.handleChange('title')}
+                  type="text"/>
+                  <HelpBlock>Select a Circle or Create a New One</HelpBlock>
+              </FormGroup>
+              <FormGroup>
+                <ControlLabel style={labelStyle}>Friends</ControlLabel>
+                <FormControl
+                  value={this.state.circle.friends}
+                  onChange={this.handleChange('friends')}
+                  type="text"/>
+                    <HelpBlock>Friends will populate based on Circle selection above</HelpBlock>
+              </FormGroup>
+              {/* <div>
+               <label>Friends</label>
+                 <select onChange={this.handleChange} value={this.state.circle.friends}>
+                   <option value="friend_email">Friends</option>
+                   <option value="friend_janice@gmail.com">Janice Johnson</option>
+                   <option value="friend_traveller@gmail.com">Chris Stapleton</option>
+                   <option value="friend_jerry@gmail.com">Jerry Garcia</option>
+                 </select>
+              </div> */}
               <div>
-                <Button>Submit</Button>
+                <div>
+                  <button>Submit</button>
+                </div>
               </div>
-            </div>
-          </form>
-          <Link to='/circles'>Return</Link>
-        </div>
+            </form>
+            <Link to='/circles'>Return</Link>
+          </div>
       </div>
     )
   }

@@ -44,6 +44,15 @@ const RestaurantForm = React.createClass({
             .then(res => this.setState({ resolved: true}))
         }
     },
+  //   handleSubmit(e) {
+  //   e.preventDefault()
+  //   fetch('https://www.omdbapi.com/?r=json&s=' + this.state.search)
+  //     .then(res => res.json())
+  //     .then(results => results.Search
+  //       ? this.setState({ results })
+  //       : this.setState({error: results}))
+  //     .catch(error => this.setState({ error }))
+  // },
     render() {
       const formState = this.state.restaurant.id ? 'Edit' : 'Name'
         return (
@@ -92,7 +101,7 @@ const RestaurantForm = React.createClass({
                         <FormControl onChange={this.handleChange} value={this.state.restaurant.preferences} type="text"/>
                       </FormGroup>
                       <div>
-                        <Button>Submit</Button>
+                        <button>Submit</button>
                       </div>
                     </form>
                     <Link to='/restaurants'>Return to Restaurants List</Link>

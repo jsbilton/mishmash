@@ -70,7 +70,7 @@ const FriendForm = React.createClass({
                         </FormGroup>
 
                         <div>
-                            <Button>Submit</Button>
+                            <button>Submit</button>
                         </div>
 
                     </form>

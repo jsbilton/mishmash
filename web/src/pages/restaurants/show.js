@@ -5,8 +5,11 @@ const Confirm = require('../../components/confirm.js')
 const Restaurant = React.createClass({
   getInitialState() {
     return {
-      restaurant:'',
-      resolved: false,
+      restaurant:{
+        id: '',
+        name: ''
+      },
+      resolved: false
     }
   },
   componentDidMount() {

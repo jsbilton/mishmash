@@ -5,7 +5,11 @@ const Confirm = require('../../components/confirm.js')
 const Circle = React.createClass({
   getInitialState() {
     return {
-      circle: '',
+      circle: {
+        id: '',
+        title: '',
+        friends: []
+      },
       resolved: false
     }
   },
@@ -39,6 +43,7 @@ const Circle = React.createClass({
         {this.state.resolved ? <Redirect to='/circles' /> : null}
 
         {this.state.showconfirm ?
+          
           <Confirm
             msg="Are you sure?"
             onCancel={this.handleCancel}
@@ -48,6 +53,7 @@ const Circle = React.createClass({
         {this.state.showconfirm ? null : <div>
         <h1>Show</h1>
           <h3>{this.state.circle.title}</h3>
+          <h3>{this.state.circle.friends}</h3>
           <nav>
             <Link to={`/circles/${this.state.circle._id}/edit`}>Edit</Link>
             <a href="#" onClick={this.handleRemove}>Remove Circle</a>
