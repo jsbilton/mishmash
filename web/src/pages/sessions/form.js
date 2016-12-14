@@ -1,31 +1,40 @@
 const React = require('react')
 const { Redirect, Link } = require('react-router')
-const { FormGroup, FormControl, ControlLabel, HelpBlock, Button } = require('react-bootstrap')
+const { Button } = require('react-bootstrap')
 const data = require('../../utils/data')()
-// const urlAPI = 'http://opentable.herokuapp.com/api/restaurants?zip={zip}'
-const labelStyle = { display: 'block' }
+const { pluck, map } = require('ramda')
+// const labelStyle = { display: 'block' }
 const SessionForm = React.createClass({
   getInitialState () {
     return {
+      // set defalts
       session: {
+        circle: {},
+        members: [],
+        rating: 1
+      },
+      friends: [],
       circles: [],
-      restaurants: [],
-      isDefault: false
-    },
       resolved: false
-
     }
   },
   componentDidMount() {
-    if (this.props.params.id) {
-      data.get('sessions', this.props.params.id)
-      .then(session => this.setState({session}))
-    }
-      data.list('circles')
-      .then(circles => {
-        this.setState({circles: circles.rows, isDefault: true})
-      })
-      .catch(err => console.log("error", err.message))
+
+    // we dont need to name a session just a time stamp
+    // new Date().toISOString()
+    // if (this.props.params.id) {
+    //   data.get('sessions', this.props.params.id)
+    //   .then(session => this.setState({session}))
+    // }
+    // R.pluck('a')([{a: 1}, {a: 2}]); //=> [1, 2]
+    data.list('friends')
+    .then(friend => this.setState({friends: pluck("doc", friend.rows)}))
+
+    data.list('circles')
+    .then(circle => {
+      this.setState({circles: circle.rows})
+    })
+    .catch(err => console.log("error", err.message))
   },
   handleChange(field){
     return (e) => {
@@ -44,13 +53,41 @@ const SessionForm = React.createClass({
         .then(res => this.setState({ resolved: true}))
       }
   },
+  handleSelectCircle(circle) {
+    return e => {
+      e.preventDefault()
+      let session = {...this.state.session}
+      session.circle.friends.map(friend => {
+        data.get('friends', friend._id)
+        .then(response => session.members.unshift(response))
+      })
+      this.setState({session})
+    }
+  },
+  handleSelectFriend(friend) {
+    return e => {
+      let session ={...this.state.session}
+      session.members.unshift(friend)
+      this.setState({session})
+    }
+  },
   render() {
+    // no need to edit a session but will leave this & put in handleSubmit
     const formState = this.state.session._id ? 'Edit' : 'New'
+
+    const transformCircles = (circle) => {
+      return <div key={circle._id} onClick={this.handleSelectCircle(circle)}>{circle.title}</div>
+    }
+    const transformFriends = (friend) => {
+      return <div key={friend._id} onClick={this.handleSelectFriend}>{friend.name}</div>
+    }
+    const transformMembers = (friend) => {
+      return <div key={friend._id}>{friend.name}</div>
+    }
    return (
       <div>
         {this.state.resolved ? <Redirect to={`/sessions`} /> : null}
-        {this.state.circles ?
-          // zip code input
+        {/* {this.state.circles ?
           <FormGroup>
             <ControlLabel>
               <FormControl
@@ -58,7 +95,7 @@ const SessionForm = React.createClass({
                 value={this.state.session.id}
               />
             </ControlLabel>
-        </FormGroup> : null }
+        </FormGroup> : null } */}
 
         <h1>{formState} Session Form</h1>
         <div>
@@ -71,17 +108,27 @@ const SessionForm = React.createClass({
                 type="text"/>
                 <HelpBlock>Must Provide a Session Name</HelpBlock>
             </FormGroup> */}
-            <FormGroup>
+            {/* <FormGroup>
               <ControlLabel style={labelStyle}>Name of the Circle</ControlLabel>
               <FormControl
                 onChange={this.handleChange('circleId')}
                 value={this.state.session.circleId}
                 type="text"/>
                 <HelpBlock>Select a Circle or choose Default Circle</HelpBlock>
-            </FormGroup>
+            </FormGroup> */}
             <div>
-
+              <h2>Party People</h2>
+                {map(transformMembers, this.state.session.members)}
+              <h2>Circle</h2>
+                {map(transformCircles, this.state.circles)}
             </div>
+            <div>
+              <h2>Friends</h2>
+                {map(transformFriends, this.state.friends)}
+            </div>
+            {/* <div>
+              {this.state.session.friendsId}
+            </div> */}
             {/* <FormGroup>
               <ControlLabel style={labelStyle}>Friend in Circle</ControlLabel>
               <FormControl

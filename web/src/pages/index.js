@@ -12,5 +12,6 @@ module.exports = {
   Restaurant: require('./restaurants/show'),
   Sessions: require('./sessions'),
   SessionForm: require('./sessions/form'),
-  Session: require('./sessions/show')
+  Session: require('./sessions/show'),
+  EateryMap: require('./map/react-map')
 }

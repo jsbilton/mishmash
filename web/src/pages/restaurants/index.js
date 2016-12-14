@@ -20,7 +20,7 @@ const Restaurants = React.createClass({
           </div>
         }
       return (
-        <div className="restaurants-list">
+        <div className="restaurants-list pa4">
           <h1>Restaurants</h1>
           <div>
               {map(transform, this.state.restaurants)}

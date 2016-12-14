@@ -11,4 +11,6 @@ function randomEatery() {
               return answers [index]
 }
 
-module.exports =
+  randomRest () {
+   return Math.floor((Math.random() * restaurants.length) + 0)
+ },

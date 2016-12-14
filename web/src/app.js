@@ -15,7 +15,8 @@ const {
     Circles,
     CircleForm,
     About,
-    Home
+    Home,
+    EateryMap
 } = require('./pages')
 
 const App = React.createClass({
@@ -31,7 +32,7 @@ const App = React.createClass({
                             <Link to="/sessions/new">{(params) => <Button {...params}>Hungry Now!</Button>}
                             </Link>
                         </div>
-                        <nav>
+                        <nav className="pa4">
                             <Link to="/restaurants">{(params) => <Button {...params}>My Restaurants</Button>}
                             </Link>
                             <Link to="/friends">{(params) => <Button {...params}>My Friends</Button>}</Link>
