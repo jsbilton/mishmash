@@ -13,11 +13,12 @@ const Restaurants = React.createClass({
     },
     render() {
         const transform = (restaurant) => {
-          return <div class="restaurant-item" key={restaurant.id}>
+          return <div className="restaurant-item v-top" key={restaurant.id}>
                         <Link to={`/restaurants/${restaurant.name}/show`}></Link>
-                            <h3 className="f3 fw1 pa3 mv0">{restaurant.name}</h3>
-                            <div className="cf pa2">
-                              <div className="fl w-50 w-25-m w-20-l pa2">
+                            {/* <h3 className="f3 fw1 pa3 mv0">{restaurant.name}</h3> */}
+                            <div className="fl w-50 w-25-m w-20-l pa4 v-top">
+                              <h3 className="f3 fw1 pa3 mv0">{restaurant.name}</h3>
+                              <div className="">
                                 <a href={restaurant.reserve_url} className="db link dim tc">
                                   <img src={restaurant.image_url} alt="recommended-rest" className="w-100 db outline black-10" />
                                   <dl className="mt2 f6 lh-copy">
@@ -48,7 +49,7 @@ const Restaurants = React.createClass({
 
       return (
         <div className="restaurants-list pa4">
-          <h1 className="fw1 pa3 mv0">Restaurants</h1>
+          <h1>Restaurants</h1>
             <div>
                 {map(transform, this.state.restaurants)}
             </div>
