@@ -43,7 +43,7 @@ const Circle = React.createClass({
         {this.state.resolved ? <Redirect to='/circles' /> : null}
 
         {this.state.showconfirm ?
-          
+
           <Confirm
             msg="Are you sure?"
             onCancel={this.handleCancel}

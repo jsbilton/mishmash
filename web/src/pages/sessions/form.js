@@ -7,7 +7,7 @@ const { pluck, map } = require('ramda')
 const SessionForm = React.createClass({
   getInitialState () {
     return {
-      // set defalts
+      // set defaults
       session: {
         circle: {},
         members: [],
@@ -28,11 +28,14 @@ const SessionForm = React.createClass({
     // }
     // R.pluck('a')([{a: 1}, {a: 2}]); //=> [1, 2]
     data.list('friends')
-    .then(friend => this.setState({friends: pluck("doc", friend.rows)}))
+    .then(friend => this.setState({
+      friends: pluck("doc", friend.rows)}))
 
     data.list('circles')
     .then(circle => {
-      this.setState({circles: circle.rows})
+      console.log("circle stuff", circle.rows)
+      this.setState({
+        circles: pluck("doc", circle.rows)})
     })
     .catch(err => console.log("error", err.message))
   },
@@ -40,25 +43,41 @@ const SessionForm = React.createClass({
     return (e) => {
       let session = {...this.state.session}
       session[field]= e.target.value
-      this.setState({session})
+      this.setState({
+        session
+      })
      }
   },
-  handleSubmit(e) {
-    e.preventDefault()
-      if (!this.state.session._id) {
-        data.post('sessions', this.state.session)
-        .then(res =>  this.setState({resolved: true}))
-      } else {
-        data.put('sessions', this.state.session._id, this.state.session)
-        .then(res => this.setState({ resolved: true}))
-      }
-  },
+  // handleSubmit(e) {
+  //   e.preventDefault()
+  //     if (!this.state.session._id) {
+  //       data.post('sessions', this.state.session)
+  //       .then(res =>  this.setState({resolved: true}))
+  //     } else {
+  //       data.put('sessions', this.state.session._id, this.state.session)
+  //       .then(res => this.setState({ resolved: true}))
+  //     }
+  // },
+  // handleSubmit(e) {
+  //   e.preventDefault()
+  //     if (!this.state.circle._id) {
+  //       data.post('circles', this.state.circle)
+  //       .then(res =>  this.setState({
+  //         resolved: true
+  //       }))
+  //     } else {
+  //       data.put('circles', this.state.circle._id, this.state.circle)
+  //       .then(res => this.setState({
+  //         resolved: true
+  //       }))
+  //     }
+  // },
   handleSelectCircle(circle) {
     return e => {
       e.preventDefault()
       let session = {...this.state.session}
       session.circle.friends.map(friend => {
-        data.get('friends', friend._id)
+        return data.get('friends', friend._id)
         .then(response => session.members.unshift(response))
       })
       this.setState({session})
@@ -79,7 +98,7 @@ const SessionForm = React.createClass({
       return <div key={circle._id} onClick={this.handleSelectCircle(circle)}>{circle.title}</div>
     }
     const transformFriends = (friend) => {
-      return <div key={friend._id} onClick={this.handleSelectFriend}>{friend.name}</div>
+      return <div key={friend._id} onClick={this.handleSelectFriend(friend)}>{friend.name}</div>
     }
     const transformMembers = (friend) => {
       return <div key={friend._id}>{friend.name}</div>
@@ -117,13 +136,13 @@ const SessionForm = React.createClass({
                 <HelpBlock>Select a Circle or choose Default Circle</HelpBlock>
             </FormGroup> */}
             <div>
-              <h2>Party People</h2>
+              <h2>Individual Members Added from Friends List</h2>
                 {map(transformMembers, this.state.session.members)}
-              <h2>Circle</h2>
+              <h2>Existing Circles List</h2>
                 {map(transformCircles, this.state.circles)}
             </div>
             <div>
-              <h2>Friends</h2>
+              <h2>All Friends List</h2>
                 {map(transformFriends, this.state.friends)}
             </div>
             {/* <div>
@@ -137,6 +156,9 @@ const SessionForm = React.createClass({
                 type="text"/>
                 <HelpBlock>These friends will populate based on the Circle Selection</HelpBlock>
             </FormGroup> */}
+            <div>
+              <Button>Submit</Button>
+            </div>
             <div className="link-to-api">
               <Link to="/restaurants">{(params) => <Button {...params}>Let's Eat! Redirect to OpenTable</Button>}
               </Link>

@@ -61,6 +61,14 @@ const CircleForm = React.createClass({
                   type="text"/>
                     <HelpBlock>Friends will populate based on Circle selection above</HelpBlock>
               </FormGroup>
+              <FormGroup>
+                <ControlLabel style={labelStyle}>Email</ControlLabel>
+                <FormControl
+                  value={this.state.circle.email}
+                  onChange={this.handleChange('email')}
+                  type="text"/>
+                    <HelpBlock>Need to add Email</HelpBlock>
+              </FormGroup>
               {/* <div>
                <label>Friends</label>
                  <select onChange={this.handleChange} value={this.state.circle.friends}>
