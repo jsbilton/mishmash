@@ -203,6 +203,7 @@ function createCircle(circle, callback) {
       circle.type = 'circle'
       circle._id = 'circle_' + circle.title
       circle.isDefault = false
+      circle.createdDate = new Date().toISOString()
 
       db.put(circle).then(function(response) {
         return callback(null, response)

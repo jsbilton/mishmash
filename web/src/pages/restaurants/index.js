@@ -22,7 +22,7 @@ const Restaurants = React.createClass({
                                   <img src={restaurant.image_url} alt="recommended-rest" className="w-100 db outline black-10" />
                                   <dl className="mt2 f6 lh-copy">
                                     <dt className="clip"></dt>
-                                    <dd className="ml0 black truncate w-100">{restaurant.city}{restaurant.state}</dd>
+                                    <dd className="ml0 black truncate w-100">{restaurant.city}, {restaurant.state}</dd>
                                     <dt className="clip"></dt>
                                     <dd className="ml0 gray truncate w-100">Book Reservations</dd>
                                   </dl>
@@ -30,7 +30,7 @@ const Restaurants = React.createClass({
                               </div>
                             </div>
                           </div>
-
+        }
           // return <div class="restaurant-item" key={restaurant.id}>
           //   <Link to={`/restaurants/${restaurant.name}/show`}></Link>
           //   <h3 className="f3 fw4 pa3 mv0">{restaurant.name}</h3>
@@ -42,13 +42,13 @@ const Restaurants = React.createClass({
           //     </div>
           //   </div>
           // </div>
-        }
+
 
 
 
       return (
         <div className="restaurants-list pa4">
-          <h1>Restaurants</h1>
+          <h1 className="fw1 pa3 mv0">Restaurants</h1>
             <div>
                 {map(transform, this.state.restaurants)}
             </div>

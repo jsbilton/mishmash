@@ -1,6 +1,6 @@
 const React = require('react')
 const labelStyle = { display: 'block' }
-const { FormGroup, FormControl, ControlLabel, HelpBlock, Button } = require('react-bootstrap')
+const { FormGroup, FormControl, ControlLabel, HelpBlock } = require('react-bootstrap')
 const { Redirect, Link } = require('react-router')
 const data = require('../../utils/data')()
 const FriendForm = React.createClass({

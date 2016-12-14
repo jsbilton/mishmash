@@ -1,7 +1,7 @@
 const React = require('react')
 const labelStyle = { display: 'block'}
 const { Redirect, Link } = require('react-router')
-const { FormGroup, FormControl, ControlLabel, Button} = require('react-bootstrap')
+const { FormGroup, FormControl, ControlLabel} = require('react-bootstrap')
 const data = require('../../utils/data')()
 const RestaurantForm = React.createClass({
     getInitialState() {

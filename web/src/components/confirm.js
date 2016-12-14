@@ -6,7 +6,7 @@ const Confirm = React.createClass({
     return (
 
       <div>
-        <h1>{this.props.msg}</h1>
+        <h1 className="link tc ph3 pv1 db bg-animate bg-dark-blue hover-bg-blue white f6 br1">{this.props.msg}</h1>
         <button onClick={this.props.onConfirm}>Ok</button>
         <button onClick={this.props.onCancel}>Cancel</button>
       </div>
