@@ -93,16 +93,16 @@ const SessionForm = React.createClass({
   render() {
     // no need to edit a session but will leave this & put in handleSubmit
     const formState = this.state.session._id ? 'Edit' : 'New'
-
+    const transformMembers = (friend) => {
+      return <div key={friend._id}>{friend.name}</div>
+    }
     const transformCircles = (circle) => {
       return <div key={circle._id} onClick={this.handleSelectCircle(circle)}>{circle.title}</div>
     }
     const transformFriends = (friend) => {
       return <div key={friend._id} onClick={this.handleSelectFriend(friend)}>{friend.name}</div>
     }
-    const transformMembers = (friend) => {
-      return <div key={friend._id}>{friend.name}</div>
-    }
+
    return (
       <div>
         {this.state.resolved ? <Redirect to={`/sessions`} /> : null}
@@ -138,13 +138,17 @@ const SessionForm = React.createClass({
             <div>
               <h2>Individual Members Added from Friends List</h2>
                 {map(transformMembers, this.state.session.members)}
-              <h2>Existing Circles List</h2>
-                {map(transformCircles, this.state.circles)}
             </div>
-            <div>
-              <h2>All Friends List</h2>
-                {map(transformFriends, this.state.friends)}
-            </div>
+            <article className="cf">
+                <div className="fl w-50 bg-near-white tc">
+                  <h2>Existing Circles List</h2>
+                    {map(transformCircles, this.state.circles)}
+                </div>
+                <div className="fl w-50 bg-light-gray tc">
+                  <h2>All Friends List</h2>
+                    {map(transformFriends, this.state.friends)}
+                </div>
+            </article>
             {/* <div>
               {this.state.session.friendsId}
             </div> */}

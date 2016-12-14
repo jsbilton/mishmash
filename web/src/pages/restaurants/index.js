@@ -13,18 +13,45 @@ const Restaurants = React.createClass({
     },
     render() {
         const transform = (restaurant) => {
-          return <div className="restaurant-item" key={restaurant.id}>
-            <Link to={`/restaurants/${restaurant.name}/show`}></Link>
-            <p>{restaurant.name}</p>
-            <img src={restaurant.image_url} alt="restaurant-pic"/>
-          </div>
+          return <div class="restaurant-item" key={restaurant.id}>
+                        <Link to={`/restaurants/${restaurant.name}/show`}></Link>
+                            <h3 className="f3 fw1 pa3 mv0">{restaurant.name}</h3>
+                            <div className="cf pa2">
+                              <div className="fl w-50 w-25-m w-20-l pa2">
+                                <a href={restaurant.reserve_url} className="db link dim tc">
+                                  <img src={restaurant.image_url} alt="recommended-rest" className="w-100 db outline black-10" />
+                                  <dl className="mt2 f6 lh-copy">
+                                    <dt className="clip"></dt>
+                                    <dd className="ml0 black truncate w-100">{restaurant.city}{restaurant.state}</dd>
+                                    <dt className="clip"></dt>
+                                    <dd className="ml0 gray truncate w-100">Book Reservations</dd>
+                                  </dl>
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+
+          // return <div class="restaurant-item" key={restaurant.id}>
+          //   <Link to={`/restaurants/${restaurant.name}/show`}></Link>
+          //   <h3 className="f3 fw4 pa3 mv0">{restaurant.name}</h3>
+          //   <div className="cf pa2">
+          //     <div className="fl w-50 w-25-m w-20-l pa2">
+          //       <a href={restaurant.reserve_url} className="db link dim tc">
+          //         <img src={restaurant.image_url} className="w-100 db outline black-10" alt="restaurant-pic"/>
+          //       </a>
+          //     </div>
+          //   </div>
+          // </div>
         }
+
+
+
       return (
         <div className="restaurants-list pa4">
           <h1>Restaurants</h1>
-          <div>
-              {map(transform, this.state.restaurants)}
-          </div>
+            <div>
+                {map(transform, this.state.restaurants)}
+            </div>
           <div>
             <Link to='/restaurants'>Return to Restaurant List</Link>
              |
