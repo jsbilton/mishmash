@@ -1,9 +1,7 @@
 const React = require('react')
 const { Redirect, Link } = require('react-router')
-const { Button } = require('react-bootstrap')
 const data = require('../../utils/data')()
 const { pluck, map } = require('ramda')
-// const labelStyle = { display: 'block' }
 const SessionForm = React.createClass({
   getInitialState () {
     return {
@@ -127,68 +125,39 @@ const SessionForm = React.createClass({
             </ControlLabel>
         </FormGroup> : null } */}
 
-        <h1>{formState} Session Form</h1>
-        <button onClick={this.createSession} type="session">Create New Session</button>
-        <pre>
+        {/* <h1>{formState} Session Form</h1> */}
+        {/* <button onClick={this.createSession} type="session">Create New Session</button> */}
+        {/* <pre>
           {JSON.stringify(this.state.session, null, 2)}
-        </pre>
+        </pre> */}
         <div>
           <form onSubmit={this.handleCircleSubmit}>
-            {/* <FormGroup>
-              <ControlLabel style={labelStyle}>Name of Session</ControlLabel>
-              <FormControl
-                onChange={this.handleChange('name')}
-                value={this.state.session.name}
-                type="text"/>
-                <HelpBlock>Must Provide a Session Name</HelpBlock>
-            </FormGroup> */}
-            {/* <FormGroup>
-              <ControlLabel style={labelStyle}>Name of the Circle</ControlLabel>
-              <FormControl
-                onChange={this.handleChange('circleId')}
-                value={this.state.session.circleId}
-                type="text"/>
-                <HelpBlock>Select a Circle or choose Default Circle</HelpBlock>
-            </FormGroup> */}
-            <div>
-              <h2>Adding existing friends to a new circle in this session</h2>
+            <div className="tc">
+              <h2>Create a New Circle or Add to One</h2>
                 {map(transformMembers, this.state.session.members)}
             </div>
             <div>
-              <button>Submit</button>
+              <button class="f6 tc grow no-underline br-pill ba bw2 ph3 pv2 mb2 dib dark-blue" href="#0">Submit</button>
             </div>
-            <article className="cf">
-                <div className="circles-list fl w-50 bg-near-white tc">
+            <article className="cf pa3 pa5-ns">
+                <div className="circles-list f4 bold center mw6 fl w-50 bg-near-white tc dim:hover dim:focus">
                   <h2>Existing Circles List</h2>
                     {map(transformCircles, this.state.circles)}
                 </div>
-                <div className="friends-list fl w-50 bg-light-gray tc">
+                <div className="friends-list f4 bold center mw6 fl w-50 bg-light-gray tc">
                   <h2>All Friends List</h2>
                     {map(transformFriends, this.state.friends)}
                 </div>
             </article>
-            {/* <div>
-              {this.state.session.friendsId}
-            </div> */}
-            {/* <FormGroup>
-              <ControlLabel style={labelStyle}>Friend in Circle</ControlLabel>
-              <FormControl
-                onChange={this.handleChange('friendId')}
-                value={this.state.session.friendId}
-                type="text"/>
-                <HelpBlock>These friends will populate based on the Circle Selection</HelpBlock>
-            </FormGroup> */}
           </form>
-
-            <div className="link-to-api">
-              <Link to="/restaurants">{(params) => <Button {...params}>Let's Eat! Redirect to OpenTable</Button>}
-              </Link>
+            <div className="link-to-api tc pa4 ">
+              {/* <Link to="/restaurants">{(params) => <Button {...params}>Let's Eat! Redirect to OpenTable</Button>}
+              </Link> */}
+              <Link to="/restaurants" className="f6 grow no-underline br-pill ba bw2 ph3 pv2 mb2 dib dark-blue" href="#0">Let's Eat!</Link>
             </div>
-          <Link to='/sessions'>Return to Sessions List</Link>
+
+          {/* <Link to='/sessions'>Return to Sessions List</Link> */}
         </div>
-        <pre>
-          {JSON.stringify(this.state, null, 2)}
-        </pre>
       </div>
     )
   }

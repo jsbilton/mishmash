@@ -25,7 +25,7 @@ const Friends = React.createClass({
   })
     return (
       <div>
-        <h1>Say hello to my little friends</h1>
+        <h1 className="tc fw1 san francisco">Say hello to my little friends</h1>
         <Link to="/friends/new">{(params) => <Button {...params}>Add A Friend</Button>}</Link>
           <ul>
             {transform(this.state.friends)}
@@ -33,9 +33,6 @@ const Friends = React.createClass({
           <Link to='/friends'>Return to Friend List: This Page</Link>
           |
           <Link to='/'>Return to App Resource</Link>
-        <pre>
-          {JSON.stringify(this.state, null, 2)}
-        </pre>
       </div>
     )
   }

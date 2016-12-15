@@ -37,41 +37,41 @@ const FriendForm = React.createClass({
     render () {
       const formState = this.state.friend._id ? 'Edit' : 'New'
         return (
-            <div>
+            <div className="new-friend-form pa4 br2">
               {this.state.resolved ? <Redirect to={`/friends`} /> : null}
                 <h1>{formState} Friend Form</h1>
                 <div>
                     <form onSubmit={this.handleSubmit}>
+                      <div className="friend-form ba-ns pa4">
+                          <FormGroup>
+                            <ControlLabel style={labelStyle}>Name</ControlLabel>
+                            <FormControl
+                              onChange={this.handleChange('name')}
+                              value={this.state.friend.name}
+                              type="text"/>
+                            <HelpBlock>Must Provide: First and Last Name</HelpBlock>
+                          </FormGroup>
 
-                        <FormGroup>
-                          <ControlLabel style={labelStyle}>Name</ControlLabel>
-                          <FormControl
-                            onChange={this.handleChange('name')}
-                            value={this.state.friend.name}
-                            type="text"/>
-                          <HelpBlock>Must Provide: First and Last Name</HelpBlock>
-                        </FormGroup>
+                          <FormGroup>
+                            <ControlLabel style={labelStyle}>Phone</ControlLabel>
+                            <FormControl
+                              onChange={this.handleChange('phone')}
+                              value={this.state.friend.phone}
+                              type="text"/>
+                          </FormGroup>
 
-                        <FormGroup>
-                          <ControlLabel style={labelStyle}>Phone</ControlLabel>
-                          <FormControl
-                            onChange={this.handleChange('phone')}
-                            value={this.state.friend.phone}
-                            type="text"/>
-                        </FormGroup>
-
-                        <FormGroup>
-                          <ControlLabel style={labelStyle}>Email</ControlLabel>
-                          <FormControl
-                            onChange={this.handleChange('email')}
-                            value={this.state.friend.email}
-                            type="text"/>
-                            <HelpBlock>Must Provide: Email</HelpBlock>
-                        </FormGroup>
-
-                        <div>
-                            <button>Submit</button>
-                        </div>
+                          <FormGroup>
+                            <ControlLabel style={labelStyle}>Email</ControlLabel>
+                            <FormControl
+                              onChange={this.handleChange('email')}
+                              value={this.state.friend.email}
+                              type="text"/>
+                              <HelpBlock>Must Provide: Email</HelpBlock>
+                          </FormGroup>
+                      </div>
+                      <div>
+                          <button>Submit</button>
+                      </div>
 
                     </form>
                     <Link to='/friends'>Back to Friends</Link>

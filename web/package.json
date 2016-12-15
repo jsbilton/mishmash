@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/jsbilton/mishmash#readme",
   "dependencies": {
+    "animate.css": "^3.5.2",
     "es6-promise": "^4.0.5",
     "isomorphic-fetch": "^2.2.1",
     "ramda": "^0.22.1",
@@ -27,6 +28,10 @@
     "react-confirm2": "^0.2.3",
     "react-dom": "^15.4.1",
     "react-router": "^4.0.0-alpha.6",
-    "react-scripts": "^0.8.1"
+    "react-scripts": "^0.8.1",
+    "rebass": "^0.3.3"
+  },
+  "devDependencies": {
+    "tachyons-hovers": "^2.5.1"
   }
 }

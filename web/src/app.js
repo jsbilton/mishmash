@@ -1,5 +1,7 @@
 const React = require('react')
-const {Button, Jumbotron} = require('react-bootstrap')
+const {Button} = require('react-bootstrap')
+const {Space, Banner, Heading} = require('rebass')
+
 const {BrowserRouter, Match, Link} = require('react-router')
 const {
     Session,
@@ -24,21 +26,31 @@ const App = React.createClass({
         return (
             <BrowserRouter>
                 <div>
-                    <header>
-                        <Jumbotron>
-                            <h1>MishMash</h1>
-                        </Jumbotron>
+                    <div className="san francisco fw1">
+                        <header>
+                            <Banner align="center" backgroundImage="https://static.pexels.com/photos/163018/food-business-lunch-restaurant-lunch-163018.jpeg">
+                                <Heading level={2} size={0}>
+                                    <Link className="san francisco fw1 white-80 link:hover link link:link" to="/sessions/new">MishMash</Link>
+                                </Heading>
+                            </Banner>
+                        </header>
+                        <hr/>
                         <div>
-                            <Link to="/sessions/new">{(params) => <Button {...params}>Hungry Now!</Button>}
-                            </Link>
+
+                            <div className="tc pa2 link dim black b f1 fw2 ml6 dark-gray tc">
+                              <div className="dib">
+                                <Link className="link pa2 dim gray f4 f3-ns dib hover-near-black no-underline" to="/about" title="About">About</Link>
+                                <Space x={3}/>
+                                <Link className="link pa2 dim gray f4 f3-ns dib hover-near-black" to="/friends" title="friends">Friends</Link>
+                                <Space x={3}/>
+                                <Link className="link pa2 dim gray f4 f3-ns dib hover-near-black" to="/circles" title="circles">Circles</Link>
+                                <Space x={3}/>
+                              </div>
+                            </div>
+                          <hr/>
                         </div>
-                        <nav className="pa4">
-                            <Link to="/restaurants">{(params) => <Button {...params}>My Restaurants</Button>}
-                            </Link>
-                            <Link to="/friends">{(params) => <Button {...params}>My Friends</Button>}</Link>
-                            <Link to="/circles">{(params) => <Button {...params}>My Circles</Button>}</Link>
-                        </nav>
-                    </header>
+                        {/* </header> */}
+                    </div>
                     <Match exactly pattern='/circles' component={Circles}/>
                     <Match pattern='/circles/new' component={CircleForm}/>
                     <Match pattern='/circles/:id/show' component={Circle}/>
