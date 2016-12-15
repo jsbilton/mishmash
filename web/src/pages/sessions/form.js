@@ -133,30 +133,28 @@ const SessionForm = React.createClass({
         <div>
           <form onSubmit={this.handleCircleSubmit}>
             <div className="tc">
-              <h2>Create a New Circle or Add to One</h2>
-                {map(transformMembers, this.state.session.members)}
+              <div>
+                <h2 className="fw1 tc san francisco">Create Circle or Add Friends to Circle</h2>
+                  {map(transformMembers, this.state.session.members)}
+              </div>
+              <div>
+                <button className="f6 grow br-pill ba bw2 ph3 pv2 mb2 dib dark-blue" href="#0">Submit</button>
+              </div>
+              <article className="cf pa3">
+                  <div className="circles-list f4 br-pill bold center fl w-100 w-50-ns bg-near-white tc">
+                    <h2 className="pa2 fwl avenir">Existing Circles List</h2>
+                      {map(transformCircles, this.state.circles)}
+                  </div>
+                  <div className="friends-list f4 br-pill bold center fl w-100 w-50-ns bg-light-gray tc">
+                    <h2 className="pa2 fw1 avenir">All Friends List</h2>
+                      {map(transformFriends, this.state.friends)}
+                  </div>
+              </article>
             </div>
-            <div>
-              <button class="f6 tc grow no-underline br-pill ba bw2 ph3 pv2 mb2 dib dark-blue" href="#0">Submit</button>
-            </div>
-            <article className="cf pa3 pa5-ns">
-                <div className="circles-list f4 bold center mw6 fl w-50 bg-near-white tc dim:hover dim:focus">
-                  <h2>Existing Circles List</h2>
-                    {map(transformCircles, this.state.circles)}
-                </div>
-                <div className="friends-list f4 bold center mw6 fl w-50 bg-light-gray tc">
-                  <h2>All Friends List</h2>
-                    {map(transformFriends, this.state.friends)}
-                </div>
-            </article>
           </form>
-            <div className="link-to-api tc pa4 ">
-              {/* <Link to="/restaurants">{(params) => <Button {...params}>Let's Eat! Redirect to OpenTable</Button>}
-              </Link> */}
+            <div className="link-to-api tc pa4">
               <Link to="/restaurants" className="f6 grow no-underline br-pill ba bw2 ph3 pv2 mb2 dib dark-blue" href="#0">Let's Eat!</Link>
             </div>
-
-          {/* <Link to='/sessions'>Return to Sessions List</Link> */}
         </div>
       </div>
     )

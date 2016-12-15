@@ -3,7 +3,7 @@
 
 ###Elevator Pitch
 
->A progressive web application (PWA) that takes the hassle out of deciding where to eat for lunch. Simply shake your phone and MishMash will pick the best place to eat lunch based upon preferences and history. Easily access restaurant information and create reservations.
+>A progressive web application (PWA) that takes the hassle out of deciding where to eat for lunch. Simply click and MishMash will pick the best place to eat lunch based upon preferences and history. Easily access restaurant information and create reservations.
 
 ###High level Process
 

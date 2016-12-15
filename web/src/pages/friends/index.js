@@ -24,16 +24,14 @@ const Friends = React.createClass({
     </div>
   })
     return (
-      <div>
-        <h1 className="tc fw1 san francisco">Say hello to my little friends</h1>
-        <Link to="/friends/new">{(params) => <Button {...params}>Add A Friend</Button>}</Link>
+      <div className="tc">
+        <h1 className="fw1 san francisco">Say hello to my little friends</h1>
+        <Link to="/friends/new" className="f6 grow no-underline br-pill ba bw2 ph3 pv2 mb2 dib dark-blue" href="#0">Add A Friend</Link>
           <ul>
             {transform(this.state.friends)}
           </ul>
-          <Link to='/friends'>Return to Friend List: This Page</Link>
-          |
-          <Link to='/'>Return to App Resource</Link>
       </div>
+
     )
   }
 })

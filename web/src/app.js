@@ -30,7 +30,8 @@ const App = React.createClass({
                         <header>
                             <Banner align="center" backgroundImage="https://static.pexels.com/photos/163018/food-business-lunch-restaurant-lunch-163018.jpeg">
                                 <Heading level={2} size={0}>
-                                    <Link className="san francisco fw1 white-80 link:hover link link:link" to="/sessions/new">MishMash</Link>
+                                    <Link className="big-title-app san francisco fw1 white-90" to="/sessions/new">MishMash
+                                  </Link>
                                 </Heading>
                             </Banner>
                         </header>

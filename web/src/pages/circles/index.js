@@ -1,7 +1,7 @@
 const React = require('react')
 const { Link } = require('react-router')
 const { map } = require('ramda')
-const { Button } = require('react-bootstrap')
+// const { Button } = require('react-bootstrap')
 const data = require('../../utils/data')()
 // const { pluck } = require('ramda')
 const Circles = React.createClass({
@@ -24,18 +24,12 @@ const Circles = React.createClass({
     </div>
   })
     return (
-      <div>
-        <h1>Circles</h1>
-          <Link to="/circles/new">{(params) => <Button {...params}>Add A Circle</Button>}</Link>
+      <div className="tc">
+        <h1 className="fw1 tc san francisco">Circles</h1>
+          <Link to="/circles/new" className="f6 grow no-underline br-pill ba bw2 ph3 pv2 mb2 dib dark-blue" href="#0">Create A Circle</Link>
           <ul>
             {transform(this.state.circles)}
           </ul>
-          <Link to='/circles'>Return to Circles</Link>
-          |
-          <Link to='/'>Return to App Resource</Link>
-          <pre>
-            {JSON.stringify(this.state, null, 2)}
-          </pre>
       </div>
     )
   }
