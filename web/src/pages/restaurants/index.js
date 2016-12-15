@@ -36,8 +36,9 @@ const Restaurants = React.createClass({
         }
         return (
             <div className="restaurants-list pa4">
-                <h1 className="tc fw1 san francisco">Restaurants</h1>
+                <h1 className="tc fw1 san francisco b--mid-grey">Restaurants</h1>
                   <h3 className="tc fw1 cursive">Select to Make Your Reservations Now!</h3>
+                <hr/>
                 <div>
                     {map(transform, this.state.restaurants)}
                 </div>

@@ -57,7 +57,7 @@ const Friend = React.createClass({
                 <h1 className="fw1 tc san francisco">All the things about my friends</h1>
                 <article className="mw5 center bg-white br3 pa3 pa4-ns mv3 ba b--black-10 shadow-4">
                   <div className="tc">
-                    <img src="http://fillmurray.com/200/300" class="br-100 h3 w3 dib" title="friend-profile-card" alt="friend-pic"/>
+                    <img src="http://fillmurray.com/200/300" className="br-1 h3 w3 dib" title="friend-profile-card" alt="friend-pic"/>
                     <h2 className="fw1 f4 tc san francisco">{this.state.friend.name}</h2>
                     <hr className="mw3 bb bw1 b--black-10"/>
                   </div>

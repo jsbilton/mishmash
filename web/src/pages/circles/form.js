@@ -6,6 +6,7 @@ const CircleForm = React.createClass({
     return {
       circle: {
         title: '',
+        email: '',
         friends: []
       },
       resolved: false
@@ -35,31 +36,32 @@ const CircleForm = React.createClass({
    }
  },
   render() {
-    const formState = this.state.circle._id ? 'Edit' : 'New'
+    const formState = this.state.circle._id ? 'Edit' : 'Circle'
     return (
-      <div>
+      <div className="new-circle-form">
         {this.state.resolved ? <Redirect to='/circles' /> : null }
-        <h1 className="fw1 san francisco tc">{formState} {this.state.circle.title}</h1>
-        <div>
-          <div className="pa4-l">
-                    <form onSubmit={this.handleSubmit}className="bg-light-green mw7 center pa4 br2-ns ba b--black-10">
+        <h1 className="fw1 san francisco tc">{formState} Circle</h1>
+          <div className="circle-form pa4">
+            <div className="pa4-l">
+                    <form
+                      onSubmit={this.handleSubmit} className="bg-light-green mw7 center pa4 br2-ns ba b--black-10">
                       <fieldset className="cf bn ma0 pa0">
-                        <legend className="pt1 pb2 f5 f4-ns mb3 black-80">Update Circle</legend>
+                        <legend className="pt1 pb2 f5 f4-ns mb3 black-80">Circle</legend>
                         <div className="cf">
                           <label htmlFor="">Title</label>
-                          <input className="f6 f5-l input-reset bn db black-80 bg-white pa3 lh-solid w-100 w-75-m w-80-l br2-ns br--left-ns" placeholder="Circle Title" name="title" defaultValue id="title" onChange={this.handleChange('title')}
+                          <input className="f6 f5-l input-reset bn db black-80 bg-white pa3 lh-solid w-100 w-75-m w-80-l br2-ns br--left-ns" name="title" defaultValue id="title" onChange={this.handleChange('title')}
                           value={this.state.circle.title}
                           type="text"/>
                         </div>
-                        <div class="cf">
+                        <div className="cf">
                           <label htmlFor="">Friend</label>
-                          <input className="f6 f5-l input-reset bn db black-80 bg-white pa3 lh-solid w-100 w-75-m w-80-l br2-ns br--left-ns" placeholder="Your Friend" name="friend" defaultValue id="friend" onChange={this.handleChange('friends')}
+                          <input className="f6 f5-l input-reset bn db black-80 bg-white pa3 lh-solid w-100 w-75-m w-80-l br2-ns br--left-ns" name="friend" defaultValue id="friend" onChange={this.handleChange('friends')}
                           value={this.state.circle.friends}
                           type="text"/>
                         </div>
-                        <div class="cf">
+                        <div className="cf">
                           <label htmlFor="">Friend Email</label>
-                          <input className="f6 f5-l input-reset bn db black-80 bg-white pa3 lh-solid w-100 w-75-m w-80-l br2-ns br--left-ns" placeholder="Your Email Address" name="Friend_Email_Adress" defaultValue id="Friend_Email_Adress" onChange={this.handleChange('email')}
+                          <input className="f6 f5-l input-reset bn db black-80 bg-white pa3 lh-solid w-100 w-75-m w-80-l br2-ns br--left-ns" name="Friend_Email_Adress" defaultValue id="Friend_Email_Address" onChange={this.handleChange('email')}
                           value={this.state.circle.email}
                           type="email"/>
                         </div>
@@ -70,12 +72,12 @@ const CircleForm = React.createClass({
                     </form>
                   </div>
                 </div>
-                <hr/>
-                <div className="tc pb2 ma4">
-                  <Link to={`/circles`}
-                    className="f6 dib ph2 link mid-gray dim">
-                    Back to My Friends</Link>
-                </div>
+              <hr/>
+              <div className="tc pb2 ma4">
+                <Link to={`/circles`}
+                  className="f6 dib ph2 link mid-gray dim">
+                  Back to My Friends</Link>
+              </div>
           </div>
 
     )

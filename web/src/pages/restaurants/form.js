@@ -1,7 +1,7 @@
 const React = require('react')
-const labelStyle = { display: 'block'}
+// const labelStyle = { display: 'block'}
 const { Redirect, Link } = require('react-router')
-const { FormGroup, FormControl, ControlLabel} = require('react-bootstrap')
+// const { FormGroup, FormControl, ControlLabel} = require('react-bootstrap')
 const data = require('../../utils/data')()
 const RestaurantForm = React.createClass({
     getInitialState() {
@@ -61,7 +61,7 @@ const RestaurantForm = React.createClass({
                 <h1>{formState} Restaurant Form</h1>
                 <div>
                     <form onSubmit={this.handleSubmit}>
-                      <FormGroup>
+                      {/* <FormGroup>
                         <ControlLabel style={labelStyle}>Name</ControlLabel>
                         <FormControl onChange={this.handleChange('name')} value={this.state.restaurant.name} type="text"/>
                       </FormGroup>
@@ -99,7 +99,7 @@ const RestaurantForm = React.createClass({
                       <FormGroup>
                         <ControlLabel style={labelStyle}>Preferences</ControlLabel>
                         <FormControl onChange={this.handleChange} value={this.state.restaurant.preferences} type="text"/>
-                      </FormGroup>
+                      </FormGroup> */}
                       <div>
                         <button>Submit</button>
                       </div>

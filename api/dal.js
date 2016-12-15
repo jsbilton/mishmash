@@ -4,7 +4,7 @@ PouchDB.plugin(require('pouchdb-mapreduce'))
 const fetchConfig = require('zero-config')
 
 var config = fetchConfig(path.join(__dirname, '..'), {
-  dcValue: 'test'
+  dcValue: 'circle'
 })
 const urlFormat = require("url").format
 const db = new PouchDB(config.get("cloudant"))
@@ -151,7 +151,7 @@ function createFriend(friend, callback) {
 } else {
 
       friend.type = 'friend'
-      friend._id = 'friend_' + friend.name + friend.email
+      friend._id = 'friend_' + friend.name + '_' + friend.email.split(' ').join('_')
 
       db.put(friend).then(function(response) {
         return callback(null, response)
@@ -201,7 +201,7 @@ function createCircle(circle, callback) {
 
 ///  defaults properites if success
       circle.type = 'circle'
-      circle._id = 'circle_' + circle.title
+      circle._id = 'circle_' + circle.title.split(' ').join('_')
       circle.isDefault = false
       circle.createdDate = new Date().toISOString()
 
@@ -254,7 +254,7 @@ function createRestaurant(restaurant, callback) {
   }  else {
 
      restaurant.type = 'restaurant'
-     restaurant._id = 'restaurant_' + restaurant.name + restaurant.postal_code
+     restaurant._id = 'restaurant_' + restaurant.name + '_'+ restaurant.postal_code.split(' ').join('_')
 
 
     db.put(restaurant).then(function(res) {

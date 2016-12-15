@@ -14,6 +14,7 @@ const Circle = React.createClass({
     }
   },
   componentDidMount() {
+    console.log(this.props.params.id)
     data.get('circles', this.props.params.id)
     .then(circle => this.setState({circle}))
   },
@@ -58,10 +59,12 @@ const Circle = React.createClass({
           : null }
 
             {this.state.showconfirm ? null : <div className="fw1 tc san francisco">
+
               <h1 className="fw1 tc san francisco">All about that Circle</h1>
+
               <article className="mw5 center bg-white br3 pa3 pa4-ns mv3 ba b--black-10 shadow-5">
                 <div className="tc">
-                  <img src="http://fillmurray.com/200/300" class="br-100 h3 w3 dib" title="circle-group-card" alt="circle-pic"/>
+                  <img src="http://fillmurray.com/200/300" className="br-100 h3 w3 dib" title="circle-group-card" alt="circle-pic"/>
                   <h2 className="fw1 f4 tc san francisco">{this.state.circle.title}</h2>
                   <hr className="mw3 bb bw1 b--black-10"/>
                 </div>
@@ -70,19 +73,20 @@ const Circle = React.createClass({
                   </a>
                 </p>
               </article>
+
               <footer className="pv4 ph3 ph5-m ph6-l mid-gray">
-                <div className="f6 db tc">Manage {this.state.circle.name}</div>
+                <div className="f6 db tc">Manage {this.state.circle.title}</div>
                 <div className="tc mt3">
                   <Link to={`/circles/${this.state.circle._id}/edit`}
                     className="f6 dib ph2 link mid-gray dim">
                     Update</Link>
-                    <a href="#" className="f6 dib ph2 link mid-gray dim" onClick={this.handleRemove}>Remove Circle</a>
-
+                    <a href="#" className="f6 dib ph2 link mid-gray dim" onClick={this.handleRemove}>Remove {this.state.circle.title}</a>
                   <Link to={`/circles`}
                     className="f6 dib ph2 link mid-gray dim">
                     Back to My Circles</Link>
                 </div>
               </footer>
+
             </div>
         }
       </div>
