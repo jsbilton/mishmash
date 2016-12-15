@@ -4,7 +4,7 @@ const Confirm = React.createClass({
   render () {
     console.log(this.props)
     return (
-      <div className="popup">
+      <div className="popup shadow-2">
         <div className="upper">{this.props.msg}</div>
         <div className="stroke"></div>
         <div className="lower">

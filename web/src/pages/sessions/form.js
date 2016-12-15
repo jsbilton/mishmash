@@ -101,7 +101,7 @@ const SessionForm = React.createClass({
   },
   render() {
     // no need to edit a session but will leave this & put in handleSubmit
-    const formState = this.state.session._id ? 'Edit' : 'New'
+    // const formState = this.state.session._id ? 'Edit' : 'New'
     const transformMembers = (friend) => {
       return <div key={friend._id}>{friend.name}</div>
     }
@@ -115,21 +115,6 @@ const SessionForm = React.createClass({
    return (
       <div>
         {this.state.resolved ? <Redirect to={`/sessions`} /> : null}
-        {/* {this.state.circles ?
-          <FormGroup>
-            <ControlLabel>
-              <FormControl
-                onChange={this.handleChange}
-                value={this.state.session.id}
-              />
-            </ControlLabel>
-        </FormGroup> : null } */}
-
-        {/* <h1>{formState} Session Form</h1> */}
-        {/* <button onClick={this.createSession} type="session">Create New Session</button> */}
-        {/* <pre>
-          {JSON.stringify(this.state.session, null, 2)}
-        </pre> */}
         <div>
           <form onSubmit={this.handleCircleSubmit}>
             <div className="tc">

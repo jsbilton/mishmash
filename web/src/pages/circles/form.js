@@ -1,7 +1,4 @@
 const React = require('react')
-const labelStyle = { display: 'block' }
-const { FormGroup, FormControl, ControlLabel, HelpBlock } = require('react-bootstrap')
-
 const data = require('../../utils/data')()
 const { Link, Redirect } = require('react-router')
 const CircleForm = React.createClass({
@@ -42,51 +39,45 @@ const CircleForm = React.createClass({
     return (
       <div>
         {this.state.resolved ? <Redirect to='/circles' /> : null }
-          <h1>{formState} Circle Form</h1>
-          <div>
-            <form onSubmit={this.handleSubmit}>
-              <FormGroup>
-                <ControlLabel style={labelStyle}>Name</ControlLabel>
-                <FormControl
-                  value={this.state.circle.title}
-                  onChange={this.handleChange('title')}
-                  type="text"/>
-                  <HelpBlock>Select a Circle or Create a New One</HelpBlock>
-              </FormGroup>
-              <FormGroup>
-                <ControlLabel style={labelStyle}>Friends</ControlLabel>
-                <FormControl
-                  value={this.state.circle.friends}
-                  onChange={this.handleChange('friends')}
-                  type="text"/>
-                    <HelpBlock>Friends will populate based on Circle selection above</HelpBlock>
-              </FormGroup>
-              <FormGroup>
-                <ControlLabel style={labelStyle}>Email</ControlLabel>
-                <FormControl
-                  value={this.state.circle.email}
-                  onChange={this.handleChange('email')}
-                  type="text"/>
-                    <HelpBlock>Need to add Email</HelpBlock>
-              </FormGroup>
-              {/* <div>
-               <label>Friends</label>
-                 <select onChange={this.handleChange} value={this.state.circle.friends}>
-                   <option value="friend_email">Friends</option>
-                   <option value="friend_janice@gmail.com">Janice Johnson</option>
-                   <option value="friend_traveller@gmail.com">Chris Stapleton</option>
-                   <option value="friend_jerry@gmail.com">Jerry Garcia</option>
-                 </select>
-              </div> */}
-              <div>
-                <div>
-                  <button>Submit</button>
+        <h1 className="fw1 san francisco tc">{formState} {this.state.circle.title}</h1>
+        <div>
+          <div className="pa4-l">
+                    <form onSubmit={this.handleSubmit}className="bg-light-green mw7 center pa4 br2-ns ba b--black-10">
+                      <fieldset className="cf bn ma0 pa0">
+                        <legend className="pt1 pb2 f5 f4-ns mb3 black-80">Update Circle</legend>
+                        <div className="cf">
+                          <label htmlFor="">Title</label>
+                          <input className="f6 f5-l input-reset bn db black-80 bg-white pa3 lh-solid w-100 w-75-m w-80-l br2-ns br--left-ns" placeholder="Circle Title" name="title" defaultValue id="title" onChange={this.handleChange('title')}
+                          value={this.state.circle.title}
+                          type="text"/>
+                        </div>
+                        <div class="cf">
+                          <label htmlFor="">Friend</label>
+                          <input className="f6 f5-l input-reset bn db black-80 bg-white pa3 lh-solid w-100 w-75-m w-80-l br2-ns br--left-ns" placeholder="Your Friend" name="friend" defaultValue id="friend" onChange={this.handleChange('friends')}
+                          value={this.state.circle.friends}
+                          type="text"/>
+                        </div>
+                        <div class="cf">
+                          <label htmlFor="">Friend Email</label>
+                          <input className="f6 f5-l input-reset bn db black-80 bg-white pa3 lh-solid w-100 w-75-m w-80-l br2-ns br--left-ns" placeholder="Your Email Address" name="Friend_Email_Adress" defaultValue id="Friend_Email_Adress" onChange={this.handleChange('email')}
+                          value={this.state.circle.email}
+                          type="email"/>
+                        </div>
+                        <div className="submit-new-circle tc">
+                          <input className="f6 f5-l button-reset fl pv3 tc bn bg-animate bg-black-70 hover-bg-black white pointer w-100 w-25-m w-20-l br2-ns br--right-ns" type="submit" defaultValue="Submit" />
+                        </div>
+                      </fieldset>
+                    </form>
+                  </div>
                 </div>
-              </div>
-            </form>
-            <Link to='/circles'>Return</Link>
+                <hr/>
+                <div className="tc pb2 ma4">
+                  <Link to={`/circles`}
+                    className="f6 dib ph2 link mid-gray dim">
+                    Back to My Friends</Link>
+                </div>
           </div>
-      </div>
+
     )
   }
 })

@@ -1,9 +1,6 @@
 const React = require('react')
 const data = require('../../utils/data')()
 const {Link} = require('react-router')
-const {Card, CardImage, Heading} = require('rebass')
-
-// const { Button } = require('react-bootstrap')
 const {map} = require('ramda')
 
 const Restaurants = React.createClass({

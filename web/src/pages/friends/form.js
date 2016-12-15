@@ -1,6 +1,4 @@
 const React = require('react')
-const labelStyle = { display: 'block' }
-const { FormGroup, FormControl, ControlLabel, HelpBlock } = require('react-bootstrap')
 const { Redirect, Link } = require('react-router')
 const data = require('../../utils/data')()
 const FriendForm = React.createClass({
@@ -35,72 +33,49 @@ const FriendForm = React.createClass({
       }
    },
     render () {
-      const formState = this.state.friend._id ? 'Edit' : 'New'
+      const formState = this.state.friend._id ? 'Edit' : 'New Friend'
         return (
-            <div className="new-friend-form pa4 br2">
+            <div className="new-friend-form">
               {this.state.resolved ? <Redirect to={`/friends`} /> : null}
-                <h1>{formState} Friend Form</h1>
+                <h1 className="fw1 san francisco tc">{formState} {this.state.friend.name}</h1>
                 <div>
-                    <form onSubmit={this.handleSubmit}>
-                      <div className="friend-form ba-ns pa4">
-
+                      <div className="friend-form pa4">
                         <div className="pa4-l">
-                            <form className="bg-light-red mw7 center pa4 br2-ns ba b--black-10">
+                            <form onSubmit={this.handleSubmit}className="bg-light-green mw7 center pa4 br2-ns ba b--black-10">
                               <fieldset className="cf bn ma0 pa0">
-                                <legend className="pa0 f5 f4-ns mb3 black-80">Update Friends</legend>
+                                <legend className="pt1 pb2 f5 f4-ns mb3 black-80">Update Friends</legend>
+
                                 <div className="cf">
                                   <label htmlFor="">Name</label>
-                                  <input className="f6 f5-l input-reset bn fl black-80 bg-white pa3 lh-solid w-100 w-75-m w-80-l br2-ns br--left-ns" placeholder="Your Name" type="text" name="name" defaultValue id="name" onChange={this.handleChange('name')}
+                                  <input className="f6 f5-l input-reset bn db black-80 bg-white pa3 lh-solid w-100 w-75-m w-80-l br2-ns br--left-ns" placeholder="Your Name" name="name" defaultValue id="name" onChange={this.handleChange('name')}
                                   value={this.state.friend.name}
                                   type="text"/>
-
+                                </div>
+                                <div class="cf">
                                   <label htmlFor="">Phone</label>
-                                  <input className="f6 f5-l input-reset bn fl black-80 bg-white pa3 lh-solid w-100 w-75-m w-80-l br2-ns br--left-ns" placeholder="Your Phone" type="text" name="phone" defaultValue id="phone" onChange={this.handleChange('phone')}
+                                  <input className="f6 f5-l input-reset bn db black-80 bg-white pa3 lh-solid w-100 w-75-m w-80-l br2-ns br--left-ns" placeholder="Your Phone" name="phone" defaultValue id="phone" onChange={this.handleChange('phone')}
                                   value={this.state.friend.phone}
-                                  type="text"/>
-
+                                  type="phone_number"/>
+                                </div>
+                                <div class="cf">
                                   <label htmlFor="">Email</label>
-                                  <input className="f6 f5-l input-reset bn fl black-80 bg-white pa3 lh-solid w-100 w-75-m w-80-l br2-ns br--left-ns" placeholder="Your Email Address" type="text" name="Email_Adress" defaultValue id="Email_Adress" onChange={this.handleChange('email')}
+                                  <input className="f6 f5-l input-reset bn db black-80 bg-white pa3 lh-solid w-100 w-75-m w-80-l br2-ns br--left-ns" placeholder="Your Email Address" name="Email_Adress" defaultValue id="Email_Adress" onChange={this.handleChange('email')}
                                   value={this.state.friend.email}
-                                  type="text"/>
-                                  <input className="f6 f5-l button-reset fl pv3 tc bn bg-animate bg-black-70 hover-bg-black white pointer w-100 w-25-m w-20-l br2-ns br--right-ns" type="submit" defaultValue="Subscribe" />
-
+                                  type="email"/>
+                                </div>
+                                <div>
+                                  <input className="inherit f6 f5-l button-reset fl pv3 tc bn bg-animate bg-black-70 hover-bg-black white pointer w-100 w-25-m w-20-l br2-ns br--right-ns" type="submit" defaultValue="Submit" />
                                 </div>
                               </fieldset>
                             </form>
                           </div>
-                          <FormGroup>
-                            <ControlLabel style={labelStyle}>Name</ControlLabel>
-                            <FormControl
-                              onChange={this.handleChange('name')}
-                              value={this.state.friend.name}
-                              type="text"/>
-                            <HelpBlock>Must Provide: First and Last Name</HelpBlock>
-                          </FormGroup>
-
-                          <FormGroup>
-                            <ControlLabel style={labelStyle}>Phone</ControlLabel>
-                            <FormControl
-                              onChange={this.handleChange('phone')}
-                              value={this.state.friend.phone}
-                              type="text"/>
-                          </FormGroup>
-
-                          <FormGroup>
-                            <ControlLabel style={labelStyle}>Email</ControlLabel>
-                            <FormControl
-                              onChange={this.handleChange('email')}
-                              value={this.state.friend.email}
-                              type="text"/>
-                              <HelpBlock>Must Provide: Email</HelpBlock>
-                          </FormGroup>
-                      </div>
-                      <div>
-                          <button>Submit</button>
-                      </div>
-
-                    </form>
-                    <Link to='/friends'>Back to Friends</Link>
+                        </div>
+                        <hr/>
+                        <div className="tc pb2 ma4">
+                          <Link to={`/friends`}
+                            className="f6 dib ph2 link mid-gray dim">
+                            Back to My Friends</Link>
+                        </div>
                 </div>
             </div>
         )
