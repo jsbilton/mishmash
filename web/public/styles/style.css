@@ -1,0 +1,119 @@
+.circles-list > div,
+.friends-list > div {
+  cursor: pointer;
+  padding:10px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+
+* {
+ -webkit-font-smoothing:antialiased;
+}
+
+
+
+
+/* RESET BUTTON */
+.confirm button::-moz-focus-inner {
+ border:0 !important;
+ padding:0 !important
+}
+
+.confirm button {
+ width:auto !important;
+ border:0 none;
+ margin:0;
+ padding:0;
+ background:transparent;
+ overflow:visible;
+ font:14px arial, sans-serif;
+ #vertical-align:middle; /* IE6,IE7 */
+}
+
+/* STYLES */
+.confirm .popup {
+ margin: 2% auto !important;
+ width:320px !important;
+}
+
+.confirm .upper {
+ box-sizing:border-box;
+ padding:12% 10%;
+ background-color:#fff;
+ height:120px;
+ font-family:helvetica;
+ color: rgba(100,100,100,0.6);
+ font-size:18px;
+ transition: color 0.4s ease;
+}
+
+.confirm .upper:hover {
+ color: rgba(100,100,100,1);
+}
+
+.confirm .stroke {
+ height:5px;
+ background: #1763a6; /* Old browsers */
+ background: -webkit-gradient(linear, 0 0, 100% 0, from(#1763a6), color-stop(0.47, #419ca6), color-stop(0.91, #54bf83));
+ background: -webkit-linear-gradient(left, #1763a6 0%, #419ca6 47%, #54bf83 91%);
+ background: -moz-linear-gradient(left, #1763a6 0%, #419ca6 47%, #54bf83 91%);
+ background: -o-linear-gradient(left, #1763a6 0%, #419ca6 47%, #54bf83 91%);
+ background: linear-gradient(left, #1763a6 0%, #419ca6 47%, #54bf83 91%); /* FF3.6+ */ /* Chrome,Safari4+ */ /* Chrome10+,Safari5.1+ */ /* Opera 11.10+ */ /* IE10+ */ /* W3C */
+ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1763a6', endColorstr='#54bf83',GradientType=1 ); /* IE6-9 */
+}
+
+.confirm .lower {
+ box-sizing:border-box;
+ background-color: #333;
+ height:60px;
+ width:100%;
+ padding: 6% 15%;
+ color: rgb(200,200,200)
+}
+
+ .confirm button {
+ float:left;
+ height:18px;
+ line-height:18px;
+ display:block;
+ color: rgba(255, 255, 255, 0.6);
+ width:25%;
+ transition: color 0.3s ease;
+}
+
+.confirm button:last-child {
+  margin-left:50%;
+}
+
+.confirm button i {
+ width:19px;
+ height:18px;
+ display:block;
+ float:left;
+}
+
+.confirm button:hover {
+ cursor: pointer;
+}
+
+.confirm button:hover {
+ color: rgba(255,255,255,1);
+}
+
+.confirm button:hover .icon-ok {
+ color:rgba(100,255,100,0.5);
+}
+
+.confirm button:hover .icon-remove {
+ color:rgba(255,100,100,0.5);
+}
+
+.confirm {
+  /*position: absolute !important;*/
+  /*left: 0 !important;
+  top: 0 !important;*/
+  width: 100% !important;
+  /*height: 100% !important;*/
+  border: none !important;
+  /*background-color: rgba(0, 0, 0, 0.8) !important;*/
+}
