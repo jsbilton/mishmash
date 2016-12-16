@@ -8,7 +8,7 @@ module.exports = {
   FriendForm: require('./friends/form'),
   Friend: require('./friends/show'),
   Restaurants: require('./restaurants'),
-  RestaurantForm: require('./restaurants/form'),
+  // RestaurantForm: require('./restaurants/form'),
   Restaurant: require('./restaurants/show'),
   Sessions: require('./sessions'),
   SessionForm: require('./sessions/form'),

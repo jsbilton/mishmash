@@ -19,7 +19,6 @@ const FriendForm = React.createClass({
   },
   handleChange(field){
     return (e) => {
-      // console.log("something", e.target.value)
       let friend = {...this.state.friend}
       friend[field] = e.target.value
       this.setState({friend})
@@ -45,16 +44,16 @@ const FriendForm = React.createClass({
                 <h1 className="fw1 san francisco tc">{formState} Friend</h1>
 
                 <div className="friend-form pa4">
-                        <div className="pa4-l">
-                          <div className="bg-light-green mw7 center pa4 br2-ns ba b--black-10">
+                  <div className="pa4-l">
+                          <form
+                            onSubmit={this.handleSubmit} className="bg-light-green mw7 center pa4 br2-ns ba b--black-10" >
                               <fieldset className="cf bn ma0 pa0">
                                 <legend className="pt1 pb2 f5 f4-ns mb3 black-80">Friends</legend>
-                                <form onSubmit={this.handleSubmit}>
                                   <div className="cf">
                                     <label htmlFor="">Name</label>
-                                    <input className="f6 f5-l input-reset bn db black-80 bg-white pa3 lh-solid w-100 w-75-m w-80-l br2-ns br--left-ns"  name="name" onChange={this.handleChange('name')}
+                                    <input className="f6 f5-l input-reset bn db black-80 bg-white pa3 lh-solid w-100 w-75-m w-80-l br2-ns br--left-ns" name="name" onChange={this.handleChange('name')}
                                     value={this.state.friend.name}
-                                    type="text"/>
+                                    type="big_name" />
                                   </div>
                                   <div className="cf">
                                     <label htmlFor="">Phone</label>
@@ -66,14 +65,13 @@ const FriendForm = React.createClass({
                                     <label htmlFor="">Email</label>
                                     <input className="f6 f5-l input-reset bn db black-80 bg-white pa3 lh-solid w-100 w-75-m w-80-l br2-ns br--left-ns" name="Email_Address" onChange={this.handleChange('email')}
                                     value={this.state.friend.email}
-                                    type="email"/>
+                                    type="big_email"/>
                                   </div>
-                                  <div>
-                                    <input className="inherit f6 f5-l button-reset fl pv3 tc bn bg-animate bg-black-70 hover-bg-black white pointer w-100 w-25-m w-20-l br2-ns br--right-ns" type="submit" defaultValue="Submit" />
+                                  <div className="submit-new-circle">
+                                    <input className="f6 f5-l button-reset fl pv3 tc bn bg-animate bg-black-70 hover-bg-black white pointer w-100 w-25-m w-20-l br2-ns br--right-ns" type="submit" />
                                   </div>
-                                </form>
-
-                              </fieldset>
+                                </fieldset>
+                              </form>
                           </div>
                         </div>
                         <hr/>
@@ -83,10 +81,7 @@ const FriendForm = React.createClass({
                             Back to My Friends</Link>
                         </div>
                 </div>
-                {/* <pre>
-                  {JSON.stringify(this.state,null,2)}
-                </pre> */}
-            </div>
+
         )
     }
 })

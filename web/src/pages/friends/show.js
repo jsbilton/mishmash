@@ -57,14 +57,14 @@ const Friend = React.createClass({
                 <h1 className="fw1 tc san francisco">All the things about my friends</h1>
                 <article className="mw5 center bg-white br3 pa3 pa4-ns mv3 ba b--black-10 shadow-4">
                   <div className="tc">
-                    <img src="http://fillmurray.com/200/300" className="br-1 h3 w3 dib" title="friend-profile-card" alt="friend-pic"/>
+                    <img src="http://fillmurray.com/300/300" className="br3 h3 dib" title="circle-group-card" alt="circle-pic"/>
                     <h2 className="fw1 f4 tc san francisco">{this.state.friend.name}</h2>
-                    <hr className="mw3 bb bw1 b--black-10"/>
+                    <hr/>
                   </div>
-                  <p className="lh-copy measure center f6 black-70">
-                    <a className="link hover-bg moon-gray san francisco db" href={this.state.friend.email}>Email {this.state.friend.name}
-                    </a>
+                  <div className="lh-copy measure center f6 black-70">
+                    <p className="link hover-bg near-black san francisco db" >{this.state.friend.email}
                   </p>
+                </div>
                 </article>
                 <footer className="pv4 ph3 ph5-m ph6-l mid-gray">
                   <div className="f6 db tc">Manage {this.state.friend.name}</div>

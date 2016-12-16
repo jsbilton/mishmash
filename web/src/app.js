@@ -6,7 +6,7 @@ const {
     SessionForm,
     Sessions,
     Restaurant,
-    RestaurantForm,
+    // RestaurantForm,
     Restaurants,
     Friend,
     FriendForm,
@@ -16,7 +16,7 @@ const {
     CircleForm,
     About,
     Home,
-    EateryMap
+    FormComponent
 } = require('./pages')
 
 const App = React.createClass({
@@ -28,7 +28,7 @@ const App = React.createClass({
                         <header>
                             <Banner align="center" backgroundImage="https://static.pexels.com/photos/163018/food-business-lunch-restaurant-lunch-163018.jpeg">
                                 <Heading level={2} size={0}>
-                                    <Link className="big-title-app san francisco fw1 white-90" to="/sessions/new">MishMash
+                                    <Link className="big-title-app san francisco f1 fw1 white" to="/sessions/new">MishMash
                                     </Link>
                                 </Heading>
                             </Banner>
@@ -59,9 +59,9 @@ const App = React.createClass({
                     <Match pattern='/friends/:id/edit' component={FriendForm}/>
 
                     <Match exactly pattern='/restaurants' component={Restaurants}/>
-                    <Match pattern='/restaurants/new' component={RestaurantForm}/>
+                    {/* <Match pattern='/restaurants/new' component={RestaurantForm}/> */}
                     <Match pattern='/restaurants/:id/show' component={Restaurant}/>
-                    <Match pattern='/restaurants/:id/edit' component={RestaurantForm}/>
+                    {/* <Match pattern='/restaurants/:id/edit' component={RestaurantForm}/> */}
 
                     <Match exactly pattern='/sessions' component={Sessions}/>
                     <Match pattern='/sessions/new' component={SessionForm}/>

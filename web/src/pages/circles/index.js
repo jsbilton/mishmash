@@ -25,9 +25,9 @@ const Circles = React.createClass({
   })
     return (
       <div className="tc">
-        <h1 className="fw1 tc san francisco">Circles</h1>
-          <Link to="/circles/new" className="f6 grow no-underline br-pill ba bw2 ph3 pv2 mb2 dib dark-blue" href="#0">Create A Circle</Link>
-          <ul className="fw1 list pl0 shadow-5 ml0 center mw6 ba b--light-silver br2">
+        <h1 className="fw1 tc san francisco">My Circles</h1>
+          <Link to="/circles/new" className="f6 shadow-5 grow no-underline br-pill ba bw2 ph3 pv2 ma4 dib dark-blue" href="#0">Create A Circle</Link>
+          <ul className="fw1 list pl0 shadow-2 ml0 center mw6 ba b--light-silver br2">
             {transform(this.state.circles)}
           </ul>
       </div>

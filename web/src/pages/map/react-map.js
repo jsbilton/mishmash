@@ -21,6 +21,7 @@ const EateryMap = React.createClass({
   render() {
     return (
       <div>
+        <h1>Map</h1>
         <GettingStartedGoogleMap
         containerElement={
           <div style={{height: '400px'}} />

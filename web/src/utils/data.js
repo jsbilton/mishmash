@@ -7,6 +7,7 @@ module.exports = function() {
 
   const listRecommendations = (zip) =>
     fetch(`http://opentable.herokuapp.com/api/restaurants?zip=${zip}`)
+    // fetch (`http://opentable.herokuapp.com/api/restaurants?zip={zip}&{price}=2)`
       .then(toJSON)
 
 

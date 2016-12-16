@@ -151,7 +151,7 @@ function createFriend(friend, callback) {
 } else {
 
       friend.type = 'friend'
-      friend._id = 'friend_' + friend.name + '_' + friend.email.split(' ').join('_')
+      friend._id = 'friend_' + friend.name.trim().split(' ').join('_') + friend.email.split(' ').join('_')
 
       db.put(friend).then(function(response) {
         return callback(null, response)
@@ -177,7 +177,7 @@ function getFriend(id, callback) {
 function listFriends(callback) {
       const sortBy = 'friends'
       const sortToken = ''
-      const limit = 20
+      const limit = 30
       listDocs(sortBy, sortToken, limit, (e, r) => {
         if (e) callback(e, null)
         callback(null, r)
@@ -201,7 +201,7 @@ function createCircle(circle, callback) {
 
 ///  defaults properites if success
       circle.type = 'circle'
-      circle._id = 'circle_' + circle.title.split(' ').join('_')
+      circle._id = 'circle_' + circle.title.trim().split(' ').join('_')
       circle.isDefault = false
       circle.createdDate = new Date().toISOString()
 
@@ -229,7 +229,7 @@ function deleteCircle(data, callback) {
 function listCircles(callback) {
       const sortBy = 'circles'
       const sortToken = ''
-      const limit = 20
+      const limit = 40
       listDocs(sortBy, sortToken, limit, (e, r) => {
         if (e) callback(e, null)
         callback(null, r)
@@ -254,7 +254,7 @@ function createRestaurant(restaurant, callback) {
   }  else {
 
      restaurant.type = 'restaurant'
-     restaurant._id = 'restaurant_' + restaurant.name + '_'+ restaurant.postal_code.split(' ').join('_')
+     restaurant._id = 'restaurant_' + restaurant.name.trim().split(' ').join('_') +  restaurant.postal_code.trim().split(' ').join('_')
 
 
     db.put(restaurant).then(function(res) {
@@ -280,7 +280,7 @@ function deleteRestaurant(data, callback) {
 function listRestaurants(callback) {
       const sortBy = 'restaurants'
       const sortToken = ''
-      const limit = 20
+      const limit = 40
       listDocs(sortBy, sortToken, limit, (e, r) => {
         if (e) callback(e, null)
         callback(null, r)

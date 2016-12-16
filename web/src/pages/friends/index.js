@@ -23,14 +23,14 @@ const Friends = React.createClass({
   })
     return (
       <section className="mw5 mw7-ns center pa3 ph5-ns">
-        <h1 className="fw1 san francisco mt0">Say hello to my little friends</h1>
+        <h1 className="fw1 san francisco mt0 tc">Say hello to my little friends</h1>
         <div className="mw5 mw7-ns center pa3 ph5-ns">
-            <ul className="fw1 list pl0 shadow-5 ml0 no-underline center mw6 link ba b--light-silver br2">
+            <ul className="fw1 list pl0 shadow-5 ml0 no-underline mw6 link ba b--light-silver br2">
               {transform(this.state.friends)}
             </ul>
         </div>
         <div className="add-a-friend-button tc">
-            <Link to="/friends/new" className="f6 grow br-pill ba bw2 ph3 pv2 mb2 dib dark-blue" href="#0">Add A Friend</Link>
+            <Link to="/friends/new" className="f6 grow shadow-5 br-pill ba bw2 ph3 pv2 mb2 dib dark-blue" href="#0">Add A Friend</Link>
         </div>
     </section>
     )

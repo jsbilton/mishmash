@@ -6,10 +6,10 @@ const About = React.createClass({
            <header>
              <h1 className="fw1 tc san francisco">About</h1>
              <div>
-               <ul className="fw1 list tc">
-                 <li>A progressive web application (PWA) that takes the hassle out of deciding where to eat for lunch.</li>
-                 <li>Simply click and MishMash will pick the best place to eat lunch based upon preferences and history.</li>
-                 <li>Easily create reservations.</li>
+               <ul className="fw1 list avenir tc f6">
+                 <li>MishMash takes the hassle out of deciding where to eat</li>
+                 <li>With MishMash you can easily create reservations</li>
+                 <li>Simply click <a href="/sessions/new">MishMash</a> and select dining mates for a wonderful outing with your friends!</li>
                </ul>
             </div>
             </header>
